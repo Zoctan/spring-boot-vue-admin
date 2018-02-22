@@ -23,7 +23,7 @@ export const constantRouterMap = [
     component: Layout,
     redirect: 'dashboard',
     icon: 'zujian',
-    name: '首页',
+    hidden: true,
     children: [
       { path: 'dashboard', name: 'xx', icon: 'zonghe', component: _import('dashboard/index') }
     ]
@@ -37,17 +37,6 @@ export default new Router({
 })
 
 export const asyncRouterMap = [
-  {
-    path: '/example',
-    component: Layout,
-    redirect: 'noredirect',
-    icon: 'zujian',
-    name: 'Example',
-    children: [
-      { path: 'index', name: 'Form', icon: 'zonghe', component: _import('page/form') }
-    ]
-  },
-
   {
     path: '/admin/role',
     component: Layout,
