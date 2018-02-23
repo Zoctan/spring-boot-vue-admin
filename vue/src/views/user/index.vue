@@ -39,11 +39,11 @@
     </el-pagination>
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form class="small-space" :model="tmpUser" :rules="createRules" ref="tmpUser" label-position="left" label-width="75px" style='width: 300px; margin-left:50px;'>
-        <el-form-item label="用户名" required>
-          <el-input type="text" v-model="tmpUser.username" :readonly="readonly" />
+        <el-form-item label="用户名" prop="username" required>
+          <el-input name="username" type="text" v-model="tmpUser.username" :readonly="readonly" />
         </el-form-item>
-        <el-form-item label="密码" required>
-          <el-input type="password" v-model="tmpUser.password" :readonly="readonly" />
+        <el-form-item label="密码" prop="password" required>
+          <el-input name="password" type="password" v-model="tmpUser.password" :readonly="readonly" />
         </el-form-item>
         <el-form-item label="角色" required>
           <el-select v-model="tmpUser.roleId" placeholder="请选择">
@@ -135,14 +135,14 @@ export default {
         this.roleList = response.data.list
       })
     },
-    handleSizeChange(val) {
+    handleSizeChange(size) {
       // 改变每页数量
-      this.listQuery.size = val
+      this.listQuery.size = size
       this.handleFilter()
     },
-    handleCurrentChange(val) {
+    handleCurrentChange(page) {
       // 改变页码
-      this.listQuery.page = val
+      this.listQuery.page = page
       this.getUserList()
     },
     handleFilter() {
@@ -150,9 +150,9 @@ export default {
       this.listQuery.page = 1
       this.getUserList()
     },
-    getIndex($index) {
+    getIndex(index) {
       // 表格序号
-      return (this.listQuery.page - 1) * this.listQuery.size + $index + 1
+      return (this.listQuery.page - 1) * this.listQuery.size + index + 1
     },
     showCreate() {
       // 显示新增对话框
@@ -207,14 +207,14 @@ export default {
         }
       })
     },
-    removeUser($index) {
+    removeUser(index) {
       const _vue = this
       this.$confirm('确定删除此用户?', '提示', {
         confirmButtonText: '确定',
         showCancelButton: false,
         type: 'warning'
       }).then(() => {
-        const user = _vue.list[$index]
+        const user = _vue.list[index]
         user.deleteStatus = '2'
         remove(user).then(data => {
           if (data.status === 200) {
