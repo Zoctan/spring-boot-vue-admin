@@ -19,7 +19,7 @@ router.beforeEach((to, from, next) => {
       // 如果没有角色名
       if (store.getters.authList.length === 0) {
         // 获取用户信息
-        store.dispatch('GetInfo').then(data => {
+        store.dispatch('Info').then(data => {
           // 生成路由
           store.dispatch('GenerateRoutes', data).then(() => {
             router.addRoutes(store.getters.addRouters)

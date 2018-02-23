@@ -8,25 +8,29 @@ import Layout from '../views/layout/Layout'
 
 Vue.use(Router)
 
- /**
+/**
   * icon : the icon show in the sidebar
   * hidden : if `hidden:true` will not show in the sidebar
-  * redirect : if `redirect:noredirect` will not redirect in the levelbar
-  * noDropdown : if `noDropdown:true` will not has submenu in the sidebar
+  * redirect : if `redirect:noRedirect` will not redirect in the levelbar
+  * noDropDown : if `noDropDown:true` will not has submenu in the sidebar
   * meta : `{ role: ['admin'] }`  will control the page role
   **/
 export const constantRouterMap = [
   { path: '/login', component: _import('login/index'), hidden: true },
-  { path: '/404', component: _import('404'), hidden: true },
+  { path: '/404', component: _import('errorPage/404'), hidden: true },
+  { path: '/401', component: _import('errorPage/401'), hidden: true },
   {
-    path: '/',
+    path: '',
     component: Layout,
     redirect: 'dashboard',
-    icon: 'zujian',
-    hidden: true,
-    children: [
-      { path: 'dashboard', name: 'xx', icon: 'zonghe', component: _import('dashboard/index') }
-    ]
+    icon: 'dashboard',
+    noDropDown: true,
+    children: [{
+      path: 'dashboard',
+      name: '仪表盘',
+      component: _import('dashboard/index'),
+      meta: { title: 'dashboard', noCache: true }
+    }]
   }
 ]
 
@@ -38,25 +42,31 @@ export default new Router({
 
 export const asyncRouterMap = [
   {
-    path: '/admin/role',
+    path: '/role',
     component: Layout,
-    redirect: '/admin/role/index',
-    icon: 'tubiao',
-    noDropdown: true,
-    children: [
-      { path: 'index', name: 'Role', component: _import('admin/role/index'), meta: { auth: ['role:list'] }}
-    ]
+    redirect: '/role/index',
+    icon: 'permission',
+    noDropDown: true,
+    children: [{
+      path: 'index',
+      name: '角色管理',
+      component: _import('role/index'),
+      meta: { auth: ['role:list'] }
+    }]
   },
 
   {
-    path: '/admin/user',
+    path: '/user',
     component: Layout,
-    redirect: '/admin/user/index',
-    icon: 'tubiao',
-    noDropdown: true,
-    children: [
-      { path: 'index', name: 'user', component: _import('admin/user/index'), meta: { auth: ['user:list'] }}
-    ]
+    redirect: '/user/index',
+    icon: 'username',
+    noDropDown: true,
+    children: [{
+      path: 'index',
+      name: '用户管理',
+      component: _import('user/index'),
+      meta: { auth: ['user:list'] }
+    }]
   },
 
   { path: '*', redirect: '/404', hidden: true }

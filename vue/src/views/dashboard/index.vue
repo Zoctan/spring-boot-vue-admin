@@ -1,9 +1,10 @@
 <template>
   <div class="dashboard-container">
-    <div class='dashboard-text'>role:
-      <ul>
-        <li v-for='auth in authList' :key='auth'>{{auth}}</li>
-      </ul>
+    <div class='dashboard-text'>
+      <h4>用户权限</h4>
+      <ol>
+        <li v-for='auth in authList' :key='auth'>{{ auth }}</li>
+      </ol>
     </div>
   </div>
 </template>

@@ -40,7 +40,7 @@ export function login(loginForm) {
   })
 }
 
-export function getInfo() {
+export function info() {
   return fetch({
     url: '/user/info',
     method: 'get'

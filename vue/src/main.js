@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import ElementUI from 'element-ui'
 import './styles/element-variables.scss'
-import locale from 'element-ui/lib/locale/lang/en'
 import App from './App'
 import router from './router'
 import store from './store'
@@ -10,7 +9,7 @@ import '@/permission' // 权限
 import { default as fetch } from './utils/fetch'
 import { hasPermission } from './utils/hasPermission'
 
-Vue.use(ElementUI, { locale })
+Vue.use(ElementUI, { size: 'medium' })
 
 // 全局的常量
 Vue.prototype.fetch = fetch

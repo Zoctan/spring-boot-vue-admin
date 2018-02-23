@@ -6,7 +6,7 @@ import { getToken } from '@/utils/token'
 // 创建axios实例
 const service = axios.create({
   baseURL: process.env.BASE_API, // api的base_url
-  timeout: 5000,                  // 请求超时时间
+  timeout: 5000, // 请求超时时间
   // 所有请求都以Json形式传送
   headers: {
     'Content-type': 'application/json;charset=UTF-8'
@@ -16,7 +16,8 @@ const service = axios.create({
 // request拦截器
 service.interceptors.request.use(config => {
   if (store.getters.token) {
-    config.headers['Authorization'] = getToken() // 让每个请求携带自定义token 请根据实际情况自行修改
+    // 让每个请求携带自定义token 请根据实际情况自行修改
+    config.headers['Authorization'] = getToken()
   }
   return config
 }, error => {
@@ -45,7 +46,7 @@ service.interceptors.response.use(
           cancelButtonText: '取消',
           type: 'warning'
         }).then(() => {
-          store.dispatch('FedLogOut').then(() => {
+          store.dispatch('FedLogout').then(() => {
             location.reload()// 为了重新实例化vue-router对象 避免bug
           })
         })

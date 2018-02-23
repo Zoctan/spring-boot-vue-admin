@@ -1,4 +1,4 @@
-import { login, logout, getInfo } from '@/api/user'
+import { login, logout, info } from '@/api/user'
 import { getToken, setToken, removeToken } from '@/utils/token'
 
 const user = {
@@ -63,9 +63,9 @@ const user = {
     },
 
     // 获取用户信息
-    GetInfo({ commit }) {
+    Info({ commit }) {
       return new Promise((resolve, reject) => {
-        getInfo().then(response => {
+        info().then(response => {
           const data = response.data
           // 储存用户信息
           commit('SET_USER', data)
@@ -77,7 +77,7 @@ const user = {
     },
 
     // 登出
-    LogOut({ commit }) {
+    Logout({ commit }) {
       return new Promise((resolve, reject) => {
         logout().then(() => {
           // 清除token等相关角色信息
@@ -91,7 +91,7 @@ const user = {
     },
 
     // 前端 登出
-    FedLogOut({ commit }) {
+    FedLogout({ commit }) {
       return new Promise(resolve => {
         commit('RESET_USER')
         removeToken()

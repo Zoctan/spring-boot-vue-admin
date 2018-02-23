@@ -1,9 +1,39 @@
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
-// ____    __    ____ ____    ____  __    __       ______          __          ___      .______    __  //
-// \   \  /  \  /   / \   \  /   / |  |  |  |     /  __  \        |  |        /   \     |   _  \  |  | //
-//  \   \/    \/   /   \   \/   /  |  |  |  |    |  |  |  |       |  |       /  ^  \    |  |_)  | |  | //
-//   \            /     \_    _/   |  |  |  |    |  |  |  | .--.  |  |      /  /_\  \   |   ___/  |  | //
-//    \    /\    /        |  |     |  `--'  |    |  `--'  | |  `--'  |     /  _____  \  |  |      |  | //
-//     \__/  \__/         |__|      \______/      \______/   \______/     /__/     \__\ | _|      |__| //
-//                                                                                                     //
-/////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////
+//                                                           //
+//                   ::                                      //
+//                 ttttii;;,                                 //
+//                itttttii;i;,                               //
+//              tttttjttii;i;;:                              //
+//               tiiittjtiiii;;;;                            //
+//               iiittittttiii;i;;                           //
+//                iiiiittjiiii;;i;,                          //
+//                 iitiitttti;;;i;;                          //
+//                 tiitiiitjii;;;;;                          //
+//                 tiiitiiitji;;i;,                          //
+//                :,.iiiiiiiii;;i;;                          //
+//             ,iiiii;iitiiiiii;ii                           //
+//            iiiiti;;;;;iiiiiiti        ijtttt              //
+//           iitiiti;i;;;iiiii f        jjjjtttti,           //
+//         iiiiiiiiiiiiii;;.   ,      .fjfjjjttttii          //
+//        iiiiiiiiiiiiii;;;;    i   iitttttttjttttii         //
+//       :iiiiiiiii;iiiiii;;t   t   iitttiittttttttii        //
+//       iiiiiiiiiiiiiiiiitttitit   ;ttitiitiitjjttii        //
+//       iiiiiiiiiiittiiiiiiitt. j   L,tiitiiiittttiii       //
+//      ;iitiiiiiiiittiiiitt;j   f  L     tiiitiitttti       //
+//            ,;iiiiiiii      j  G G         iiiitttii       //
+//                            f  GE            :iiitii       //
+//                             j GL               iiii       //
+//                             fDG                 iii       //
+//                              DG                  ti:      //
+//                              DG                   ti      //
+//                              D                     ;      //
+//                             LG:                           //
+//                             Gf                            //
+//                             DL                            //
+//                             GL                            //
+//                             GG                            //
+//                             LG                            //
+//                                                           //
+//            Great oaks from little acorns grow.            //
+//                                                           //
+///////////////////////////////////////////////////////////////
