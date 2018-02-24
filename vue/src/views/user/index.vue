@@ -40,10 +40,10 @@
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form class="small-space" :model="tmpUser" :rules="createRules" ref="tmpUser" label-position="left" label-width="75px" style='width: 300px; margin-left:50px;'>
         <el-form-item label="用户名" prop="username" required>
-          <el-input name="username" type="text" v-model="tmpUser.username" :readonly="readonly" />
+          <el-input type="text" v-model="tmpUser.username" :disabled="disabled" />
         </el-form-item>
         <el-form-item label="密码" prop="password" required>
-          <el-input name="password" type="password" v-model="tmpUser.password" :readonly="readonly" />
+          <el-input type="password" v-model="tmpUser.password" :disabled="disabled" />
         </el-form-item>
         <el-form-item label="角色" required>
           <el-select v-model="tmpUser.roleId" placeholder="请选择">
@@ -107,7 +107,7 @@ export default {
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
       },
       btnLoading: false,
-      readonly: false
+      disabled: false
     }
   },
   created() {
@@ -156,10 +156,10 @@ export default {
     },
     showCreate() {
       // 显示新增对话框
+      this.dialogStatus = 'create'
       this.tmpUser.username = ''
       this.tmpUser.password = ''
-      this.readonly = false
-      this.dialogStatus = 'create'
+      this.disabled = false
       this.dialogFormVisible = true
     },
     createUser() {
@@ -184,11 +184,11 @@ export default {
     },
     showUpdate(index) {
       // 显示修改对话框
+      this.dialogStatus = 'update'
       this.tempUser = this.userList[index]
       console.info(this.tempUser.username)
       this.tempUser.password = '******'
-      this.readonly = true
-      this.dialogStatus = 'update'
+      this.disabled = true
       this.dialogFormVisible = true
     },
     updateUser() {

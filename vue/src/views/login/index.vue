@@ -6,13 +6,13 @@
         <span class="svg-container svg-container_login">
           <icon-svg icon-class="username" />
         </span>
-        <el-input name="username" type="text" @keyup.enter.native="handleLogin" v-model="loginForm.username" autoComplete="on" placeholder="请输入用户名" />
+        <el-input type="text" @keyup.enter.native="handleLogin" v-model="loginForm.username" autoComplete="on" placeholder="请输入用户名" />
       </el-form-item>
       <el-form-item prop="password">
         <span class="svg-container">
           <icon-svg icon-class="password" />
         </span>
-        <el-input name="password" :type="passwordType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on" placeholder="请输入密码" />
+        <el-input :type="passwordType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on" placeholder="请输入密码" />
         <span class="show-pwd" @click="showPwd">
           <icon-svg icon-class="eye" />
         </span>
