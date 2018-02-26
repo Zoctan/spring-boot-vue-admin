@@ -3,7 +3,7 @@
     <div class="filter-container">
       <el-form>
         <el-form-item>
-          <el-button type="primary" icon="plus" v-if="hasPermission('user:add')" @click="showCreate">添加</el-button>
+          <el-button type="primary" icon="plus" v-if="hasPermission('user:add')" @click.native.prevent="showCreate">添加</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -23,8 +23,8 @@
       </el-table-column>
       <el-table-column align="center" label="管理" v-if="hasPermission('user:update')">
         <template slot-scope="scope">
-          <el-button type="primary" icon="edit" @click="showUpdate(scope.$index)">修改</el-button>
-          <el-button type="danger" icon="delete" v-if="scope.row.id !== userId" @click="removeUser(scope.$index)">删除</el-button>
+          <el-button type="primary" icon="edit" @click.native.prevent="showUpdate(scope.$index)">修改</el-button>
+          <el-button type="danger" icon="delete" v-if="scope.row.id !== userId" @click.native.prevent="removeUser(scope.$index)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -49,7 +49,8 @@
           <el-select v-model="tmpUser.roleId" placeholder="请选择">
             <el-option v-for="item in roleList"
                        :key="item.id"
-                       :value="item.nameZh" />
+                       :label="item.nameZh"
+                       :value="item.id" />
           </el-select>
         </el-form-item>
       </el-form>
@@ -67,6 +68,12 @@ import { list as getRoleList } from '@/api/role'
 import { mapGetters } from 'vuex'
 
 export default {
+  created() {
+    this.getUserList()
+    if (this.hasPermission('user:add') || this.hasPermission('user:update')) {
+      this.getRoleList()
+    }
+  },
   data() {
     const validateUsername = (rule, value, callback) => {
       if (value.length < 3) {
@@ -110,12 +117,6 @@ export default {
       disabled: false
     }
   },
-  created() {
-    this.getUserList()
-    if (this.hasPermission('user:add') || this.hasPermission('user:update')) {
-      this.getRoleList()
-    }
-  },
   computed: {
     ...mapGetters([
       'userId'
@@ -156,11 +157,11 @@ export default {
     },
     showCreate() {
       // 显示新增对话框
+      this.dialogFormVisible = true
       this.dialogStatus = 'create'
       this.tmpUser.username = ''
       this.tmpUser.password = ''
       this.disabled = false
-      this.dialogFormVisible = true
     },
     createUser() {
       this.$refs.tmpUser.validate(valid => {
@@ -184,12 +185,11 @@ export default {
     },
     showUpdate(index) {
       // 显示修改对话框
-      this.dialogStatus = 'update'
-      this.tempUser = this.userList[index]
-      console.info(this.tempUser.username)
-      this.tempUser.password = '******'
-      this.disabled = true
       this.dialogFormVisible = true
+      this.dialogStatus = 'update'
+      this.tmpUser.username = this.userList[index].username
+      this.tmpUser.password = '******'
+      this.disabled = true
     },
     updateUser() {
       update(this.tmpUser).then(data => {
