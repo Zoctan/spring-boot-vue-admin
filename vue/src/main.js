@@ -6,13 +6,13 @@ import router from './router'
 import store from './store'
 import '@/icons' // icon
 import '@/permission' // 权限
-import { default as fetch } from './utils/fetch'
+import { default as request } from './utils/request'
 import { hasPermission } from './utils/hasPermission'
 
 Vue.use(ElementUI, { size: 'medium' })
 
 // 全局的常量
-Vue.prototype.fetch = fetch
+Vue.prototype.request = request
 Vue.prototype.hasPermission = hasPermission
 
 // 生产环境时自动设置为 false 以阻止 vue 在启动时生成生产提示。

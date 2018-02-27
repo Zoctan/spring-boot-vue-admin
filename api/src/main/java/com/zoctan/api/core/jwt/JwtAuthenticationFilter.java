@@ -29,7 +29,8 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         response.setHeader("Access-Control-Allow-Origin", "*");
         response.setHeader("Access-Control-Allow-Credentials", "true");
         response.setHeader("Access-Control-Allow-Headers", "Content-Type, Content-Length, Authorization, Accept, X-Requested-With");
-        response.setHeader("Access-Control-Allow-Methods", "*");
+        // 明确允许通过的方法，不建议使用*
+        response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Expose-Headers", "*");
         // web axios.js send
@@ -41,6 +42,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         if (token != null) {
             final String username = this.jwtUtil.getUsername(token);
             log.info("JwtFilter => user<{}> token : {}", username, token);
+            log.info("request URL<{}> Method<{}>", request.getRequestURL(), request.getMethod());
 
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 if (this.jwtUtil.validateToken(token)) {
@@ -53,7 +55,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 }
             }
         } else {
-            log.info("Anonymous request URL<{}>", request.getRequestURL());
+            log.info("Anonymous request URL<{}> Method<{}>", request.getRequestURL(), request.getMethod());
         }
         filterChain.doFilter(request, response);
     }

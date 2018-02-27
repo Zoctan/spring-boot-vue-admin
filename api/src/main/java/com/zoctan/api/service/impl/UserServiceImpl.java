@@ -83,7 +83,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     @Override
     public void update(final User user) {
         // 如果修改了密码
-        if (user.getPassword() != null) {
+        if (user.getPassword() != null && user.getPassword().length() >= 6) {
             // 密码修改后需要加密
             user.setPassword(this.passwordEncoder.encode(user.getPassword().trim()));
         }

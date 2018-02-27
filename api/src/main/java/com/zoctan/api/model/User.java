@@ -22,6 +22,7 @@ public class User {
     /**
      * 邮箱
      */
+    @NotEmpty(message = "邮箱不能为空")
     @Email
     private String email;
 
@@ -62,11 +63,24 @@ public class User {
     @Column(name = "last_login_time")
     private Timestamp lastLoginTime;
 
+    /* ---------- 以下字段来自联表查询 ------------*/
     /**
-     * 用户的角色
+     * 用户的角色Id
+     */
+    @Transient
+    private Long roleId;
+
+    /**
+     * 用户的角色名
      */
     @Transient
     private String roleName;
+
+    /**
+     * 用户的角色中文名
+     */
+    @Transient
+    private String roleNameZh;
 
     /**
      * 用户的角色对应的权限

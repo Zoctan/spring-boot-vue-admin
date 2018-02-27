@@ -27,9 +27,9 @@ CREATE TABLE `user_role` (
   `role_id` bigint(20) unsigned NOT NULL COMMENT '角色Id',
   PRIMARY KEY (`user_id`,`role_id`),
   KEY `role_id` (`role_id`),
-  CONSTRAINT `user_role_fk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
-  CONSTRAINT `user_role_fk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='用户角色表';
+  CONSTRAINT `user_role_fk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `user_role_fk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='用户角色表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

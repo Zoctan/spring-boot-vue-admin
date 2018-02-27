@@ -27,7 +27,7 @@ public class ${modelNameUpperCamel}Controller {
     }
 
     @DeleteMapping("/{id}")
-    public Result delete(@PathVariable Integer id) {
+    public Result delete(@PathVariable Long id) {
         ${modelNameLowerCamel}Service.deleteById(id);
         return ResultGenerator.genOkResult();
     }
@@ -39,7 +39,7 @@ public class ${modelNameUpperCamel}Controller {
     }
 
     @GetMapping("/{id}")
-    public Result detail(@PathVariable Integer id) {
+    public Result detail(@PathVariable Long id) {
         ${modelNameUpperCamel} ${modelNameLowerCamel} = ${modelNameLowerCamel}Service.findById(id);
         return ResultGenerator.genOkResult(${modelNameLowerCamel});
     }

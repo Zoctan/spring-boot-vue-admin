@@ -1,6 +1,7 @@
 <template>
-  <el-menu mode="vertical" theme="dark" :default-active="$route.path">
-    <sidebar-item :routes='permission_routers'></sidebar-item>
+  <!-- http://element-cn.eleme.io/#/zh-CN/component/menu -->
+  <el-menu mode="vertical" :default-active="$route.path">
+    <sidebar-item :routes="permission_routers" />
   </el-menu>
 </template>
 

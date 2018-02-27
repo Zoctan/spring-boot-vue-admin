@@ -16,15 +16,13 @@
       <el-table-column align="center" label="用户名" prop="username" />
       <el-table-column align="center" label="角色" >
         <template slot-scope="scope">
-          <span v-for="item in roleList">
-            <el-tag type="success" v-if="item.name === scope.row.roleName" v-text="item.nameZh" />
-          </span>
+          <el-tag type="success" v-text="scope.row.roleNameZh" />
         </template>
       </el-table-column>
       <el-table-column align="center" label="管理" v-if="hasPermission('user:update')">
         <template slot-scope="scope">
-          <el-button type="primary" icon="edit" @click.native.prevent="showUpdate(scope.$index)">修改</el-button>
-          <el-button type="danger" icon="delete" v-if="scope.row.id !== userId" @click.native.prevent="removeUser(scope.$index)">删除</el-button>
+          <el-button type="primary" icon="edit" v-if="scope.row.username !== username" @click.native.prevent="showUpdate(scope.$index)">修改</el-button>
+          <el-button type="danger" icon="delete" v-if="hasPermission('user:delete') && scope.row.username !== username" @click.native.prevent="removeUser(scope.$index)">删除</el-button>
         </template>
       </el-table-column>
     </el-table>
@@ -39,13 +37,16 @@
     </el-pagination>
     <el-dialog :title="textMap[dialogStatus]" :visible.sync="dialogFormVisible">
       <el-form class="small-space" :model="tmpUser" :rules="createRules" ref="tmpUser" label-position="left" label-width="75px" style='width: 300px; margin-left:50px;'>
+        <el-form-item label="邮箱" prop="email" required>
+          <el-input type="text" v-model="tmpUser.email" :readonly="readonly" />
+        </el-form-item>
         <el-form-item label="用户名" prop="username" required>
-          <el-input type="text" v-model="tmpUser.username" :disabled="disabled" />
+          <el-input type="text" v-model="tmpUser.username" :readonly="readonly" />
         </el-form-item>
         <el-form-item label="密码" prop="password" required>
-          <el-input type="password" v-model="tmpUser.password" :disabled="disabled" />
+          <el-input type="password" v-model="tmpUser.password" :readonly="readonly" />
         </el-form-item>
-        <el-form-item label="角色" required>
+        <el-form-item label="角色" v-if="dialogStatus === 'update'" required>
           <el-select v-model="tmpUser.roleId" placeholder="请选择">
             <el-option v-for="item in roleList"
                        :key="item.id"
@@ -65,16 +66,24 @@
 <script>
 import { list as getUserList, register, update, remove } from '@/api/user'
 import { list as getRoleList } from '@/api/role'
+import { isValidateEmail } from '@/utils/validate'
 import { mapGetters } from 'vuex'
 
 export default {
   created() {
     this.getUserList()
-    if (this.hasPermission('user:add') || this.hasPermission('user:update')) {
+    if (this.hasPermission('user:update')) {
       this.getRoleList()
     }
   },
   data() {
+    const validateEmail = (rule, value, callback) => {
+      if (!isValidateEmail(value)) {
+        callback(new Error('邮箱格式错误'))
+      } else {
+        callback()
+      }
+    }
     const validateUsername = (rule, value, callback) => {
       if (value.length < 3) {
         callback(new Error('用户名不能小于3位'))
@@ -91,35 +100,38 @@ export default {
     }
     return {
       userList: [], // 用户列表
+      roleList: [], // 角色列表
       listLoading: false, // 数据加载等待动画
       total: 0, // 数据总数
       listQuery: {
         page: 1, // 页码
-        size: 30 // 每页条数
+        size: 30 // 每页数量
       },
-      roleList: [], // 角色列表
       dialogStatus: 'create',
       dialogFormVisible: false,
       textMap: {
         update: '修改角色',
         create: '新建用户'
       },
+      btnLoading: false, // 按钮等待动画
+      readonly: false, // 只读输入框
       tmpUser: {
+        id: '',
+        email: '',
         username: '',
         password: '',
         roleId: ''
       },
       createRules: {
+        email: [{ required: true, trigger: 'blur', validator: validateEmail }],
         username: [{ required: true, trigger: 'blur', validator: validateUsername }],
         password: [{ required: true, trigger: 'blur', validator: validatePassword }]
-      },
-      btnLoading: false,
-      disabled: false
+      }
     }
   },
   computed: {
     ...mapGetters([
-      'userId'
+      'username'
     ])
   },
   methods: {
@@ -159,26 +171,27 @@ export default {
       // 显示新增对话框
       this.dialogFormVisible = true
       this.dialogStatus = 'create'
+      this.tmpUser.email = ''
       this.tmpUser.username = ''
       this.tmpUser.password = ''
-      this.disabled = false
+      this.readonly = false
     },
     createUser() {
       this.$refs.tmpUser.validate(valid => {
         if (valid) {
           this.btnLoading = true
           register(this.tmpUser).then(response => {
-            console.info(response.data)
-            if (response.data.status === 200) {
+            if (response.status === 200) {
+              this.$message.success('添加成功')
               this.getUserList()
               this.dialogFormVisible = false
             } else {
-              this.$message.error(response.data.message)
+              this.$message.error(response.message)
             }
             this.btnLoading = false
           })
         } else {
-          console.log('error submit!!')
+          console.log('表单未通过验证')
           return false
         }
       })
@@ -187,9 +200,12 @@ export default {
       // 显示修改对话框
       this.dialogFormVisible = true
       this.dialogStatus = 'update'
+      this.tmpUser.id = this.userList[index].id
+      this.tmpUser.email = this.userList[index].email
       this.tmpUser.username = this.userList[index].username
-      this.tmpUser.password = '******'
-      this.disabled = true
+      this.tmpUser.password = ''
+      this.tmpUser.roleId = this.userList[index].roleId
+      this.readonly = true
     },
     updateUser() {
       update(this.tmpUser).then(data => {
@@ -208,19 +224,19 @@ export default {
       })
     },
     removeUser(index) {
-      const _vue = this
       this.$confirm('确定删除此用户?', '提示', {
         confirmButtonText: '确定',
         showCancelButton: false,
         type: 'warning'
       }).then(() => {
-        const user = _vue.list[index]
-        user.deleteStatus = '2'
-        remove(user).then(data => {
-          if (data.status === 200) {
-            _vue.getUserList()
+        const id = this.userList[index].id
+        remove(id).then(response => {
+          console.info(response)
+          if (response.status === 200) {
+            this.$message.success('删除成功')
+            this.getUserList()
           } else {
-            _vue.$message.error('删除失败')
+            this.$message.error('删除失败')
           }
         })
       })

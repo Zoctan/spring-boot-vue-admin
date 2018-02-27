@@ -1,7 +1,7 @@
-import fetch from '@/utils/fetch'
+import request from '@/utils/request'
 
 export function list(params) {
-  return fetch({
+  return request({
     url: '/user',
     method: 'get',
     params
@@ -9,23 +9,22 @@ export function list(params) {
 }
 
 export function update(userForm) {
-  return fetch({
+  return request({
     url: '/user',
-    method: 'post',
+    method: 'put',
     data: userForm
   })
 }
 
-export function remove(params) {
-  return fetch({
-    url: '/user',
-    method: 'delete',
-    params
+export function remove(userId) {
+  return request({
+    url: '/user/' + userId,
+    method: 'delete'
   })
 }
 
 export function register(registerForm) {
-  return fetch({
+  return request({
     url: '/user',
     method: 'post',
     data: registerForm
@@ -33,7 +32,7 @@ export function register(registerForm) {
 }
 
 export function login(loginForm) {
-  return fetch({
+  return request({
     url: '/user/login',
     method: 'post',
     data: loginForm
@@ -41,14 +40,14 @@ export function login(loginForm) {
 }
 
 export function info() {
-  return fetch({
+  return request({
     url: '/user/info',
     method: 'get'
   })
 }
 
 export function logout() {
-  return fetch({
+  return request({
     url: '/user/logout',
     method: 'get'
   })

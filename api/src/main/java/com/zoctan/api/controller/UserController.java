@@ -14,7 +14,6 @@ import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -100,14 +99,13 @@ public class UserController {
             @ApiImplicitParam(name = "page", value = "页号", dataType = "Integer"),
             @ApiImplicitParam(name = "size", value = "页数", dataType = "Integer")
     })
-    @Cacheable(value = "userList")
+    //@Cacheable(value = "userList")
     @GetMapping
     public Result list(@RequestParam(defaultValue = "0") final Integer page,
                        @RequestParam(defaultValue = "0") final Integer size) {
-        log.info("no cache => find in database");
+        //log.info("no cache => find in database");
         PageHelper.startPage(page, size);
-        final List<User> list;
-        list = this.userService.findAllUserWithRole();
+        final List<User> list = this.userService.findAllUserWithRole();
         final PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genOkResult(pageInfo);
     }

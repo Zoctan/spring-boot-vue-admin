@@ -1,7 +1,7 @@
-import fetch from '@/utils/fetch'
+import request from '@/utils/request'
 
 export function list(params) {
-  return fetch({
+  return request({
     url: '/role',
     method: 'get',
     params

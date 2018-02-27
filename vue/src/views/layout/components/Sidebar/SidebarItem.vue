@@ -13,7 +13,7 @@
         <template v-for="child in item.children" v-if="!child.hidden">
           <sidebar-item class="menu-indent" v-if="child.children && child.children.length > 0" :routes="[child]" />
           <router-link v-else class="menu-indent" :to="item.path + '/' + child.path">
-            <el-menu-item :index="item.path+'/'+child.path">{{ child.name }}</el-menu-item>
+            <el-menu-item :index="item.path + '/' + child.path">{{ child.name }}</el-menu-item>
           </router-link>
         </template>
       </el-submenu>

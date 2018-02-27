@@ -27,8 +27,8 @@ CREATE TABLE `role_auth` (
   `auth_id` bigint(20) unsigned NOT NULL COMMENT '权限Id',
   PRIMARY KEY (`role_id`, `auth_id`),
   KEY `auth_id` (`auth_id`),
-  CONSTRAINT `role_auth_fk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`),
-  CONSTRAINT `role_auth_fk_2` FOREIGN KEY (`auth_id`) REFERENCES `auth` (`id`)
+  CONSTRAINT `role_auth_fk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  CONSTRAINT `role_auth_fk_2` FOREIGN KEY (`auth_id`) REFERENCES `auth` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COMMENT='角色权限表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 

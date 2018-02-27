@@ -14,20 +14,24 @@
     </resultMap>
 
     <resultMap id="UserWithRoleMap" type="com.zoctan.api.model.User" extends="UserMap">
+        <result column="roleId" jdbcType="BIGINT" property="roleId" />
         <result column="roleName" jdbcType="VARCHAR" property="roleName" />
+        <result column="roleNameZh" jdbcType="VARCHAR" property="roleNameZh" />
     </resultMap>
 
     <select id="findAllUserWithRole" resultMap="UserWithRoleMap">
         SELECT
         u.*,
-        r.name as roleName
+        r.id as roleId,
+        r.name as roleName,
+        r.name_zh as roleNameZh
         FROM `user` u
         LEFT JOIN `user_role` ur ON u.id = ur.user_id
         LEFT JOIN `role` r ON ur.role_id = r.id
     </select>
 
     <resultMap id="UserDetailMap" type="com.zoctan.api.model.User" extends="UserWithRoleMap">
-        <!-- 1 role -> ..auth -->
+        <!-- 1角色对应多权限 -->
         <collection property="authList" ofType="String">
             <result column="auth" jdbcType="VARCHAR" property="code" />
         </collection>

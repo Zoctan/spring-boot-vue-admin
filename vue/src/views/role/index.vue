@@ -112,7 +112,7 @@ export default {
   methods: {
     getAllPermission() {
       // 查询所有权限
-      this.fetch({
+      this.request({
         url: '/auth',
         method: 'get'
       }).then(data => {
@@ -122,7 +122,7 @@ export default {
     getList() {
       // 查询列表
       this.listLoading = true
-      this.fetch({
+      this.request({
         url: '/user/listRole',
         method: 'get'
       }).then(data => {
@@ -164,7 +164,7 @@ export default {
         return
       }
       // 添加新角色
-      this.fetch({
+      this.request({
         url: '/user/addRole',
         method: 'post',
         data: this.tempRole
@@ -181,7 +181,7 @@ export default {
         return
       }
       // 修改角色
-      this.fetch({
+      this.request({
         url: '/user/updateRole',
         method: 'post',
         data: this.tempRole
@@ -224,7 +224,7 @@ export default {
         type: 'warning'
       }).then(() => {
         const role = _vue.list[$index]
-        _vue.fetch({
+        _vue.request({
           url: '/user/deleteRole',
           method: 'post',
           data: {
