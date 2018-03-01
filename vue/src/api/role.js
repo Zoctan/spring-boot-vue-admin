@@ -7,3 +7,19 @@ export function list(params) {
     params
   })
 }
+
+export function add(role) {
+  return request({
+    url: '/role',
+    method: 'post',
+    data: role
+  })
+}
+
+export function updateUserRole(user) {
+  return request({
+    url: '/user/role',
+    method: 'put',
+    data: user
+  })
+}

@@ -111,20 +111,14 @@ public class UserController {
     }
 
     @ApiOperation(value = "用户登录")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "username", value = "用户名", required = true, dataType = "String"),
-            @ApiImplicitParam(name = "password", value = "用户密码", required = true, dataType = "String")
-    })
+    @ApiImplicitParam(name = "user", value = "用户实体", required = true, dataType = "User")
     @PostMapping("/login")
-    public Result login(@RequestBody @Valid final User user,
-                        final BindingResult bindingResult) throws NullPointerException {
+    public Result login(@RequestBody final User user) {
         // {"username":"admin", "password":"123456"}
-        if (bindingResult.hasErrors()) {
-            final String msg = bindingResult.getFieldError().getDefaultMessage();
-            return ResultGenerator.genFailedResult(msg);
-        } else {
-            return this.getToken(user);
+        if (user.getUsername() == null || user.getPassword() == null) {
+            return ResultGenerator.genFailedResult("用户名或密码不能为空");
         }
+        return this.getToken(user);
     }
 
     /**

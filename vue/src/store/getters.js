@@ -10,7 +10,7 @@ const getters = {
   registerTime: state => state.user.registerTime,
   resume: state => state.user.resume,
   roleName: state => state.user.roleName,
-  authList: state => state.user.authList,
+  permissionCodeList: state => state.user.permissionCodeList,
 
   permission_routers: state => state.permission.routers,
   addRouters: state => state.permission.addRouters

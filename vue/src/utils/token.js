@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
 
 const TokenKey = 'User-Token'
-// 1 day
+// 有效期 1 天
 const expires = 1
 
 export function getToken() {

@@ -17,7 +17,7 @@ router.beforeEach((to, from, next) => {
       next({ path: '/' })
     } else {
       // 如果没有角色名
-      if (store.getters.authList.length === 0) {
+      if (store.getters.roleName === null) {
         // 获取用户信息
         store.dispatch('Info').then(data => {
           // 生成路由

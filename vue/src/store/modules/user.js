@@ -5,14 +5,14 @@ const user = {
   state: {
     token: getToken(),
     userId: -1,
-    email: '',
-    username: '',
-    avatar: '',
+    email: null,
+    username: null,
+    avatar: null,
     lastLoginTime: -1,
     registerTime: -1,
-    resume: '',
-    roleName: '',
-    authList: []
+    resume: null,
+    roleName: null,
+    permissionCodeList: []
   },
 
   mutations: {
@@ -28,19 +28,19 @@ const user = {
       state.registerTime = user.registerTime
       state.resume = user.resume
       state.roleName = user.roleName
-      state.authList = user.authList
+      state.permissionCodeList = user.permissionCodeList
     },
     RESET_USER: (state) => {
-      state.token = ''
+      state.token = null
       state.userId = -1
-      state.email = ''
-      state.username = ''
-      state.avatar = ''
+      state.email = null
+      state.username = null
+      state.avatar = null
       state.lastLoginTime = -1
       state.registerTime = -1
-      state.resume = ''
-      state.roleName = ''
-      state.authList = []
+      state.resume = null
+      state.roleName = null
+      state.permissionCodeList = []
     }
   },
 

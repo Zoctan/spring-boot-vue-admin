@@ -34,7 +34,7 @@ CREATE TABLE `user` (
   PRIMARY KEY (`id`),
   UNIQUE KEY `ix_user_username` (`username`),
   UNIQUE KEY `ix_user_email` (`email`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='用户表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +43,9 @@ CREATE TABLE `user` (
 
 LOCK TABLES `user` WRITE;
 /*!40000 ALTER TABLE `user` DISABLE KEYS */;
-INSERT INTO `user` VALUES (1,'admin@qq.com','admin','$2a$10$M7BhgckiGHh/iNJJi2uWYuamkmZ9bzGLKp3TOcVUi80YADPpOB/S.','https://www.tupianku.com/view/large/13862/640.jpeg','IT','2018-02-01 00:00:00','2018-02-01 00:00:00'),(2,'user@qq.com','user','$2a$10$yk6L05BPkba5ThNzT9oU8ergum/Xfy9tLO2nqmfh.Q4UVdQueb82q','https://www.tupianku.com/view/large/13862/640.jpeg','To Test','2018-02-02 00:00:00','2018-02-02 00:00:00');
+INSERT INTO `user` VALUES (1,'admin@qq.com','admin','$2a$10$M7BhgckiGHh/iNJJi2uWYuamkmZ9bzGLKp3TOcVUi80YADPpOB/S.','https://www.tupianku.com/view/large/13862/640.jpeg','IT','2018-02-01 00:00:00','2018-02-01 00:00:00');
+INSERT INTO `user` VALUES (2,'user@qq.com','user','$2a$10$M7BhgckiGHh/iNJJi2uWYuamkmZ9bzGLKp3TOcVUi80YADPpOB/S','https://www.tupianku.com/view/large/13862/640.jpeg','A normal user','2018-02-02 00:00:00','2018-02-02 00:00:00');
+INSERT INTO `user` VALUES (3,'test@qq.com','test','$2a$10$M7BhgckiGHh/iNJJi2uWYuamkmZ9bzGLKp3TOcVUi80YADPpOB/S','https://www.tupianku.com/view/large/13862/640.jpeg','To Test','2018-02-03 00:00:00','2018-02-03 00:00:00');
 /*!40000 ALTER TABLE `user` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

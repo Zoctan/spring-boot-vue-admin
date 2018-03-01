@@ -4,8 +4,8 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zoctan.api.core.response.Result;
 import com.zoctan.api.core.response.ResultGenerator;
-import com.zoctan.api.model.Auth;
-import com.zoctan.api.service.AuthService;
+import com.zoctan.api.model.RolePermission;
+import com.zoctan.api.service.RolePermissionService;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -15,40 +15,40 @@ import java.util.List;
  * Created by Zoctan on 2018/02/17.
  */
 @RestController
-@RequestMapping("/auth")
-public class AuthController {
+@RequestMapping("/role/permission")
+public class RolePermissionController {
     @Resource
-    private AuthService authService;
+    private RolePermissionService rolePermissionService;
 
     @PostMapping
-    public Result add(@RequestBody final Auth auth) {
-        this.authService.save(auth);
+    public Result add(@RequestBody final RolePermission rolePermission) {
+        this.rolePermissionService.save(rolePermission);
         return ResultGenerator.genOkResult();
     }
 
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable final Integer id) {
-        this.authService.deleteById(id);
+        this.rolePermissionService.deleteById(id);
         return ResultGenerator.genOkResult();
     }
 
     @PutMapping
-    public Result update(@RequestBody final Auth auth) {
-        this.authService.update(auth);
+    public Result update(@RequestBody final RolePermission rolePermission) {
+        this.rolePermissionService.update(rolePermission);
         return ResultGenerator.genOkResult();
     }
 
     @GetMapping("/{id}")
     public Result detail(@PathVariable final Integer id) {
-        final Auth auth = this.authService.findById(id);
-        return ResultGenerator.genOkResult(auth);
+        final RolePermission rolePermission = this.rolePermissionService.findById(id);
+        return ResultGenerator.genOkResult(rolePermission);
     }
 
     @GetMapping
     public Result list(@RequestParam(defaultValue = "0") final Integer page,
                        @RequestParam(defaultValue = "0") final Integer size) {
         PageHelper.startPage(page, size);
-        final List<Auth> list = this.authService.findAll();
+        final List<RolePermission> list = this.rolePermissionService.findAll();
         final PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genOkResult(pageInfo);
     }

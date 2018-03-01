@@ -25,9 +25,9 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         final List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         // 角色
         authorities.add(new SimpleGrantedAuthority(user.getRoleName()));
-        // 权限
-        for (final String auth : user.getAuthList()) {
-            authorities.add(new SimpleGrantedAuthority(auth));
+        // 权限代码
+        for (final String permissionCode : user.getPermissionCodeList()) {
+            authorities.add(new SimpleGrantedAuthority(permissionCode));
         }
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),

@@ -1,24 +1,24 @@
 <template>
   <div class="login-container">
     <el-form class="card-box login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left" label-width="0px">
-      <h3 class="title">登录</h3>
+      <h3 class="title">Login</h3>
        <el-form-item prop="username">
         <span class="svg-container svg-container_login">
           <icon-svg icon-class="username" />
         </span>
-        <el-input type="text" @keyup.enter.native="handleLogin" v-model="loginForm.username" autoComplete="on" placeholder="请输入用户名" />
+        <el-input type="text" @keyup.enter.native="handleLogin" v-model="loginForm.username" autoComplete="on" placeholder="please input username" />
       </el-form-item>
       <el-form-item prop="password">
         <span class="svg-container">
           <icon-svg icon-class="password" />
         </span>
-        <el-input :type="passwordType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on" placeholder="请输入密码" />
+        <el-input :type="passwordType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on" placeholder="please input password" />
         <span class="show-pwd" @click="showPwd">
           <icon-svg icon-class="eye" />
         </span>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="handleLogin">登录</el-button>
+        <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="handleLogin">login</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -30,14 +30,14 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (value.length < 3) {
-        callback(new Error('用户名不能小于3位'))
+        callback(new Error('username length not less than 3'))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('密码不能小于6位'))
+        callback(new Error('password length not less than 6'))
       } else {
         callback()
       }
@@ -78,7 +78,7 @@ export default {
             this.loading = false
           })
         } else {
-          console.log('error submit!!')
+          console.log('form not validate')
           return false
         }
       })

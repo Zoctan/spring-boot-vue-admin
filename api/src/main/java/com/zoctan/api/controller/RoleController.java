@@ -6,6 +6,7 @@ import com.zoctan.api.core.response.Result;
 import com.zoctan.api.core.response.ResultGenerator;
 import com.zoctan.api.model.Role;
 import com.zoctan.api.service.RoleService;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -44,11 +45,12 @@ public class RoleController {
         return ResultGenerator.genOkResult(role);
     }
 
+    @PreAuthorize("hasAuthority('role:list')")
     @GetMapping
     public Result list(@RequestParam(defaultValue = "0") final Integer page,
                        @RequestParam(defaultValue = "0") final Integer size) {
         PageHelper.startPage(page, size);
-        final List<Role> list = this.roleService.findAll();
+        final List<Role> list = this.roleService.findAllRoleWithPermission();
         final PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genOkResult(pageInfo);
     }

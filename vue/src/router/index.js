@@ -27,7 +27,7 @@ export const constantRouterMap = [
     noDropDown: true,
     children: [{
       path: 'dashboard',
-      name: '仪表盘',
+      name: 'Dashboard',
       component: _import('dashboard/index'),
       meta: { title: 'dashboard', noCache: true }
     }]
@@ -49,9 +49,9 @@ export const asyncRouterMap = [
     noDropDown: true,
     children: [{
       path: 'index',
-      name: '角色管理',
+      name: 'Role',
       component: _import('role/index'),
-      meta: { auth: ['role:list'] }
+      meta: { permission: ['role:list'] }
     }]
   },
 
@@ -63,9 +63,9 @@ export const asyncRouterMap = [
     noDropDown: true,
     children: [{
       path: 'index',
-      name: '用户管理',
+      name: 'User',
       component: _import('user/index'),
-      meta: { auth: ['user:list'] }
+      meta: { permission: ['user:list'] }
     }]
   },
 

@@ -1,7 +1,7 @@
 <template>
   <el-menu class="navbar" mode="horizontal">
     <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened" />
-    <levelbar />
+    <LevelBar />
     <el-dropdown class="user-container" trigger="click">
       <div class="avatar-wrapper">
         <img class="user-avatar" :src="avatar+'?imageView2/1/w/80/h/80'">
@@ -9,8 +9,8 @@
         <i class="el-icon-caret-bottom"></i>
       </div>
       <el-dropdown-menu slot="dropdown">
-        <router-link class='inlineBlock' to="/"><el-dropdown-item>用户中心</el-dropdown-item></router-link>
-        <el-dropdown-item divided><span @click="logout" style="display:block;">注销</span></el-dropdown-item>
+        <router-link class='inlineBlock' to="/"><el-dropdown-item>user center</el-dropdown-item></router-link>
+        <el-dropdown-item divided><span @click="logout" style="display:block;">logout</span></el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
   </el-menu>
@@ -18,12 +18,12 @@
 
 <script>
 import { mapGetters } from 'vuex'
-import Levelbar from './Levelbar'
+import LevelBar from './LevelBar'
 import Hamburger from '@/components/Hamburger'
 
 export default {
   components: {
-    Levelbar,
+    LevelBar,
     Hamburger
   },
   computed: {

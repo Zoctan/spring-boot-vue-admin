@@ -25,10 +25,9 @@ DROP TABLE IF EXISTS `role`;
 CREATE TABLE `role` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '角色Id',
   `name` varchar(64) DEFAULT NULL COMMENT '角色名称',
-  `name_zh` varchar(64) DEFAULT NULL COMMENT '角色中文',
   PRIMARY KEY (`id`),
   UNIQUE KEY `name` (`name`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8mb4 COMMENT='角色表';
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8mb4 COMMENT='角色表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -37,8 +36,9 @@ CREATE TABLE `role` (
 
 LOCK TABLES `role` WRITE;
 /*!40000 ALTER TABLE `role` DISABLE KEYS */;
-INSERT INTO `role` VALUES (1,'ROLE_ADMIN', '超级管理员');
-INSERT INTO `role` VALUES (2,'ROLE_USER', '普通用户');
+INSERT INTO `role` VALUES (1,'ROLE_ADMIN');
+INSERT INTO `role` VALUES (2,'ROLE_USER');
+INSERT INTO `role` VALUES (3,'ROLE_TEST');
 /*!40000 ALTER TABLE `role` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;

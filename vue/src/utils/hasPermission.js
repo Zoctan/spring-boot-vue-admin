@@ -1,6 +1,5 @@
 import store from '../store'
 
-export function hasPermission(auth) {
-  const authList = store.getters.authList
-  return authList.indexOf(auth) >= 0
+export function hasPermission(permission) {
+  return store.getters.permissionCodeList.indexOf(permission) >= 0
 }

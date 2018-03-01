@@ -77,14 +77,8 @@ public class User {
     private String roleName;
 
     /**
-     * 用户的角色中文名
+     * 用户的角色对应的权限code
      */
     @Transient
-    private String roleNameZh;
-
-    /**
-     * 用户的角色对应的权限
-     */
-    @Transient
-    private List<String> authList;
+    private List<String> permissionCodeList;
 }

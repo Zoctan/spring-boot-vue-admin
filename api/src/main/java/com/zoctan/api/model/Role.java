@@ -2,10 +2,11 @@ package com.zoctan.api.model;
 
 import lombok.Data;
 
-import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.Transient;
+import java.util.List;
 
 @Data
 public class Role {
@@ -21,9 +22,11 @@ public class Role {
      */
     private String name;
 
+    /* ---------- 以下字段来自联表查询 ------------*/
+
     /**
-     * 角色中文
+     * 角色对应的权限
      */
-    @Column(name = "name_zh")
-    private String nameZh;
+    @Transient
+    private List<Permission> permissionList;
 }

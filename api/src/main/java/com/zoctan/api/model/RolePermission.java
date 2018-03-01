@@ -7,8 +7,8 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Data
-@Table(name = "role_auth")
-public class RoleAuth {
+@Table(name = "role_permission")
+public class RolePermission {
     /**
      * 角色Id
      */
@@ -19,6 +19,6 @@ public class RoleAuth {
     /**
      * 权限Id
      */
-    @Column(name = "auth_id")
-    private Long authId;
+    @Column(name = "permission_id")
+    private Long permissionId;
 }

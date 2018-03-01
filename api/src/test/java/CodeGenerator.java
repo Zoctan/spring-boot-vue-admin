@@ -50,19 +50,10 @@ public class CodeGenerator {
         if (scanner.next().equals("y")) {
             overwrite = true;
         }
-        genCode("contest");
-        genCode("contest_result");
-        genCode("notice");
-        genCode("problem");
-        genCode("problem_post");
-        genCode("user_code");
-        genCode("user_problem_code");
-        genCode("user_problem_collection");
-        genCode("user_problem_note");
-        genCode("auth");
+        genCode("permission");
         genCode("role");
         genCode("user_role");
-        genCode("role_auth");
+        genCode("role_permission");
         //genCodeByCustomModelName("输入表名","输入自定义Model名称");
     }
 

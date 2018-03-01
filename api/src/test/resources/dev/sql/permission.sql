@@ -16,32 +16,33 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
--- Table structure for table `user_role`
+-- Table structure for table `permission`
 --
 
-DROP TABLE IF EXISTS `user_role`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `user_role` (
-  `user_id` bigint(20) unsigned NOT NULL COMMENT '用户Id',
-  `role_id` bigint(20) unsigned NOT NULL COMMENT '角色Id',
-  PRIMARY KEY (`user_id`,`role_id`),
-  KEY `role_id` (`role_id`),
-  CONSTRAINT `user_role_fk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  CONSTRAINT `user_role_fk_2` FOREIGN KEY (`user_id`) REFERENCES `user` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8mb4 COMMENT='用户角色表';
-/*!40101 SET character_set_client = @saved_cs_client */;
+DROP TABLE IF EXISTS `permission`;
+CREATE TABLE `permission` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT '权限Id',
+  `resource` varchar(256) NOT NULL COMMENT '权限对应的资源',
+  `code` varchar(256) NOT NULL COMMENT '权限的代码/通配符,对应代码中@hasAuthority(xx)',
+  `handle` varchar(256) NOT NULL COMMENT '对应的资源操作',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COMMENT='权限表';
 
 --
--- Dumping data for table `user_role`
+-- Dumping data for table `permission`
 --
 
-LOCK TABLES `user_role` WRITE;
-/*!40000 ALTER TABLE `user_role` DISABLE KEYS */;
-INSERT INTO `user_role` VALUES (1,1);
-INSERT INTO `user_role` VALUES (2,2);
-INSERT INTO `user_role` VALUES (3,3);
-/*!40000 ALTER TABLE `user_role` ENABLE KEYS */;
+LOCK TABLES `permission` WRITE;
+/*!40000 ALTER TABLE `permission` DISABLE KEYS */;
+INSERT INTO `permission` VALUES (1,'user','user:list','list');
+INSERT INTO `permission` VALUES (2,'user','user:add','add');
+INSERT INTO `permission` VALUES (3,'user','user:update','update');
+INSERT INTO `permission` VALUES (4,'user','user:delete','delete');
+INSERT INTO `permission` VALUES (5,'role','role:list','list');
+INSERT INTO `permission` VALUES (6,'role','role:add','add');
+INSERT INTO `permission` VALUES (7,'role','role:update','update');
+INSERT INTO `permission` VALUES (8,'role','role:delete','delete');
+/*!40000 ALTER TABLE `permission` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
@@ -53,4 +54,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-02-16 19:26:13
+-- Dump completed on 2018-02-16 20:28:17

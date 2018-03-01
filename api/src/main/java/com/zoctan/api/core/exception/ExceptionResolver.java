@@ -53,7 +53,7 @@ public class ExceptionResolver {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({SQLException.class, DataAccessException.class})
     public Result handle400() {
-        return ResultGenerator.genFailedResult("数据库出错");
+        return ResultGenerator.genFailedResult("database error");
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
@@ -71,7 +71,7 @@ public class ExceptionResolver {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoHandlerFoundException.class)
     public Result handle404(final HttpServletRequest request) {
-        return ResultGenerator.genFailedResult("接口 [" + request.getRequestURI() + "] 不存在");
+        return ResultGenerator.genFailedResult("API [" + request.getRequestURI() + "] not existed");
     }
 
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)

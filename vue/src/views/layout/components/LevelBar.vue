@@ -1,5 +1,5 @@
 <template>
-  <el-breadcrumb class="app-levelBar" separator="/">
+  <el-breadcrumb class="app-levelBar" separator-class="el-icon-arrow-right">
     <el-breadcrumb-item v-for="(item, index)  in levelList" :key="item.path">
       <router-link v-if="item.redirect === 'noRedirect' || index === levelList.length - 1" to="" class="no-redirect">{{ item.name }}</router-link>
       <router-link v-else :to="item.redirect || item.path">{{ item.name }}</router-link>
@@ -21,8 +21,8 @@ export default {
     getBreadcrumb() {
       let matched = this.$route.matched.filter(item => item.name)
       const first = matched[0]
-      if (first && (first.name !== '首页' || first.path !== '')) {
-        matched = [{ name: '首页', path: '/' }].concat(matched)
+      if (first && (first.name !== 'Home' || first.path !== '')) {
+        matched = [{ name: 'Home', path: '/' }].concat(matched)
       }
       this.levelList = matched
     }

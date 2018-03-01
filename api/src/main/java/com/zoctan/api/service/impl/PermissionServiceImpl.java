@@ -1,9 +1,9 @@
 package com.zoctan.api.service.impl;
 
 import com.zoctan.api.core.service.AbstractService;
-import com.zoctan.api.mapper.AuthMapper;
-import com.zoctan.api.model.Auth;
-import com.zoctan.api.service.AuthService;
+import com.zoctan.api.mapper.PermissionMapper;
+import com.zoctan.api.model.Permission;
+import com.zoctan.api.service.PermissionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -14,8 +14,8 @@ import javax.annotation.Resource;
  */
 @Service
 @Transactional
-public class AuthServiceImpl extends AbstractService<Auth> implements AuthService {
+public class PermissionServiceImpl extends AbstractService<Permission> implements PermissionService {
     @Resource
-    private AuthMapper authMapper;
+    private PermissionMapper authMapper;
 
 }

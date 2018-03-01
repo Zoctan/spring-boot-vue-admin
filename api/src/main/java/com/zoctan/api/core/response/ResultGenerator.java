@@ -7,8 +7,8 @@ import org.springframework.http.HttpStatus;
  */
 public class ResultGenerator {
     private static final String DEFAULT_OK_MESSAGE = "OK";
-    private static final String DEFAULT_UNAUTHORIZED_MESSAGE = "需要认证";
-    private static final String DEFAULT_METHOD_NOT_ALLOWED_MESSAGE = "请求方式出错";
+    private static final String DEFAULT_UNAUTHORIZED_MESSAGE = "need token";
+    private static final String DEFAULT_METHOD_NOT_ALLOWED_MESSAGE = "request method error";
 
     public static Result genOkResult() {
         return new Result()
@@ -50,6 +50,6 @@ public class ResultGenerator {
     public static Result genInternalServerErrorResult(final String url) {
         return new Result()
                 .setStatus(HttpStatus.INTERNAL_SERVER_ERROR.value())
-                .setMessage("接口 [" + url + "] 内部出错");
+                .setMessage("API [" + url + "] internal error");
     }
 }

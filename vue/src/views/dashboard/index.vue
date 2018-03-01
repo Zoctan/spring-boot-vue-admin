@@ -1,9 +1,9 @@
 <template>
   <div class="dashboard-container">
-    <div class='dashboard-text'>
-      <h4>用户权限</h4>
+    <div class="dashboard-text">
+      <h4>用户权限Code</h4>
       <ol>
-        <li v-for='auth in authList' :key='auth'>{{ auth }}</li>
+        <li v-for="code in permissionCodeList" :key="permission">{{ code }}</li>
       </ol>
     </div>
   </div>
@@ -15,7 +15,7 @@ export default {
   name: 'dashboard',
   computed: {
     ...mapGetters([
-      'authList'
+      'permissionCodeList'
     ])
   }
 }
