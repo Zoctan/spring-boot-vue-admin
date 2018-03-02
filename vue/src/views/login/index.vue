@@ -1,24 +1,44 @@
 <template>
   <div class="login-container">
-    <el-form class="card-box login-form" autoComplete="on" :model="loginForm" :rules="loginRules" ref="loginForm" label-position="left" label-width="0px">
+    <el-form class="card-box login-form"
+             autoComplete="on"
+             :model="loginForm"
+             :rules="loginRules"
+             ref="loginForm"
+             status-icon
+             label-position="left"
+             label-width="0px">
       <h3 class="title">Login</h3>
        <el-form-item prop="username">
         <span class="svg-container svg-container_login">
           <icon-svg icon-class="username" />
         </span>
-        <el-input type="text" @keyup.enter.native="handleLogin" v-model="loginForm.username" autoComplete="on" placeholder="please input username" />
+        <el-input type="text"
+                  autoComplete="on"
+                  minlength="3"
+                  v-model="loginForm.username"
+                  placeholder="please input username"
+                  @keyup.enter.native="handleLogin" />
       </el-form-item>
       <el-form-item prop="password">
         <span class="svg-container">
           <icon-svg icon-class="password" />
         </span>
-        <el-input :type="passwordType" @keyup.enter.native="handleLogin" v-model="loginForm.password" autoComplete="on" placeholder="please input password" />
+        <el-input :type="passwordType"
+                  autoComplete="on"
+                  minlength="6"
+                  v-model="loginForm.password"
+                  placeholder="please input password"
+                  @keyup.enter.native="handleLogin" />
         <span class="show-pwd" @click="showPwd">
           <icon-svg icon-class="eye" />
         </span>
       </el-form-item>
       <el-form-item>
-        <el-button type="primary" style="width:100%;" :loading="loading" @click.native.prevent="handleLogin">login</el-button>
+        <el-button type="primary"
+                   style="width:100%;"
+                   :loading="loading"
+                   @click.native.prevent="handleLogin">login</el-button>
       </el-form-item>
     </el-form>
   </div>
@@ -30,14 +50,14 @@ export default {
   data() {
     const validateUsername = (rule, value, callback) => {
       if (value.length < 3) {
-        callback(new Error('username length not less than 3'))
+        callback(new Error('username must be 3 or more characters'))
       } else {
         callback()
       }
     }
     const validatePassword = (rule, value, callback) => {
       if (value.length < 6) {
-        callback(new Error('password length not less than 6'))
+        callback(new Error('password must be 6 or more characters'))
       } else {
         callback()
       }

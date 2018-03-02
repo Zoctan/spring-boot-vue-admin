@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import ElementUI from 'element-ui'
 import './styles/element-variables.scss'
-import en from 'element-ui/lib/locale/lang/en'
 import App from './App'
 import router from './router'
 import store from './store'
@@ -9,8 +8,13 @@ import '@/icons' // icon
 import '@/permission' // 权限
 import { default as request } from './utils/request'
 import { hasPermission } from './utils/hasPermission'
+import lang from 'element-ui/lib/locale/lang/en'
+import locale from 'element-ui/lib/locale'
 
-Vue.use(ElementUI, { en, size: 'medium' })
+// 设置语言
+locale.use(lang)
+
+Vue.use(ElementUI, { size: 'medium' })
 
 // 全局的常量
 Vue.prototype.request = request

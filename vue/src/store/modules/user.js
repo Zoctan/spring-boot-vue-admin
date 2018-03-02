@@ -48,14 +48,14 @@ const user = {
     // 登录
     Login({ commit }, loginForm) {
       return new Promise((resolve, reject) => {
-        login(loginForm).then(data => {
-          if (data.status === 200) {
+        login(loginForm).then(response => {
+          if (response.status === 200) {
             // cookie中保存前端登录状态
-            setToken(data.data)
-            commit('SET_TOKEN', data.data)
+            setToken(response.data)
+            commit('SET_TOKEN', response.data)
           }
           // 传递给/login/index.vue : store.dispatch('Login').then(data)
-          resolve(data)
+          resolve(response)
         }).catch(error => {
           reject(error)
         })

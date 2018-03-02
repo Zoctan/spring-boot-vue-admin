@@ -1,5 +1,6 @@
 package com.zoctan.api.controller;
 
+import com.alibaba.fastjson.JSONObject;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import com.zoctan.api.core.response.Result;
@@ -48,7 +49,7 @@ public class PermissionController {
     public Result list(@RequestParam(defaultValue = "0") final Integer page,
                        @RequestParam(defaultValue = "0") final Integer size) {
         PageHelper.startPage(page, size);
-        final List<Permission> list = this.permissionService.findAll();
+        final List<JSONObject> list = this.permissionService.findAllSameResource();
         final PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genOkResult(pageInfo);
     }

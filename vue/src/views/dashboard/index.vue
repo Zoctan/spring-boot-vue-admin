@@ -1,7 +1,7 @@
 <template>
   <div class="dashboard-container">
     <div class="dashboard-text">
-      <h4>用户权限Code</h4>
+      <h4>Permission Code</h4>
       <ol>
         <li v-for="code in permissionCodeList" :key="permission">{{ code }}</li>
       </ol>
