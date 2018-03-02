@@ -93,7 +93,7 @@
                     prefix-icon="el-icon-edit"
                     auto-complete="off"
                     :readonly="readonly"
-                    v-model="tmpUser.password"/>
+                    v-model="tmpUser.password" />
         </el-form-item>
         <el-form-item label="Role" required>
           <el-select placeholder="please select"
@@ -101,7 +101,7 @@
             <el-option v-for="item in allRole"
                        :key="item.id"
                        :label="item.name"
-                       :value="item.id"/>
+                       :value="item.id" />
           </el-select>
         </el-form-item>
       </el-form>

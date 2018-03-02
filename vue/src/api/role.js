@@ -8,6 +8,14 @@ export function list(params) {
   })
 }
 
+export function listResourcePermission(params) {
+  return request({
+    url: '/role/permission',
+    method: 'get',
+    params
+  })
+}
+
 export function add(role) {
   return request({
     url: '/role',

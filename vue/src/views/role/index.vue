@@ -72,7 +72,7 @@
                status-icon
                label-position="left"
                label-width="100px"
-               style='width: 500px; margin-left:50px;'>
+               style="width: 500px; margin-left:50px;">
         <el-form-item label="Role name"
                       prop="name"
                       required>
@@ -84,13 +84,15 @@
         <el-form-item label="Permission" required>
             <div v-for="(permission, index) in allPermission">
               <el-button size="mini"
-                         :type="isMenuNone(index)?'':(isMenuAll(index)?'success':'primary')"
+                         :type="isMenuNone(index) ? '' : (isMenuAll(index) ? 'success' : 'primary')"
                          @click="checkAll(index)">{{ permission.resource }}</el-button>
               <el-checkbox-group v-model="tempRole.permissionIdList">
                 <el-checkbox v-for="item in permission.resourceHandleList"
                              :key="item.id"
-                             :label="item.handle"
-                             :value="item.id" />
+                             :label="item.id"
+                             @change="handleChecked(item, _index)">
+                  <span>{{ item.handle }}</span>
+                </el-checkbox>
               </el-checkbox-group>
             </div>
           </el-form-item>
@@ -98,7 +100,7 @@
       <div slot="footer" class="dialog-footer">
         <el-button @click="dialogFormVisible = false">cancel</el-button>
         <el-button type="success"
-                   v-if="dialogStatus==='create'"
+                   v-if="dialogStatus === 'create'"
                    :loading="btnLoading"
                    @click.native.prevent="createRole">create</el-button>
         <el-button type="primary"
@@ -109,8 +111,7 @@
   </div>
 </template>
 <script>
-  import { list as getRoleList, add as addRole } from '@/api/role'
-  import { list as getPermissionList } from '@/api/permission'
+  import { list as getRoleList, listResourcePermission, add as addRole } from '@/api/role'
   import { isValidateRoleName } from '@/utils/validate'
   import { mapGetters } from 'vuex'
 
@@ -162,7 +163,7 @@
     },
     methods: {
       getAllPermission() {
-        getPermissionList().then(response => {
+        listResourcePermission().then(response => {
           this.allPermission = response.data.list
         })
       },
@@ -317,23 +318,22 @@
         return result
       },
       checkAll(index) {
-        // 点击菜单   相当于全选按钮
         if (this.isMenuAll(index)) {
           // 如果已经全选了,则全部取消
-          this.noPerm(index)
+          this.cancelAll(index)
         } else {
           // 如果尚未全选,则全选
-          this.allPerm(index)
+          this.selectAll(index)
         }
       },
-      allPerm(index) {
+      selectAll(index) {
         // 全部选中
         const handleList = this.allPermission[index].resourceHandleList
         for (let i = 0; i < handleList.length; i++) {
           this.addUnique(handleList[i].id, this.tempRole.permissionIdList)
         }
       },
-      noPerm(index) {
+      cancelAll(index) {
         // 全部取消选中
         const handleList = this.allPermission[index].resourceHandleList
         for (let i = 0; i < handleList.length; i++) {
@@ -341,6 +341,25 @@
           if (idIndex > -1) {
             this.tempRole.permissionIdList.splice(idIndex, 1)
           }
+        }
+      },
+      handleChecked(item, index) {
+        // 本方法会在勾选状态改变之后触发
+        if (this.tempRole.permissionIdList.indexOf(item.id) > -1) {
+          // 选中事件
+          // 如果之前未勾选本权限,现在勾选完之后,tempRole里就会包含本id
+          // 那么就要将必选的权限勾上
+          this.makePermissionChecked(index)
+        } else {
+          // 取消选中事件
+          this.cancelAll(index)
+        }
+      },
+      makePermissionChecked(index) {
+        // 将本菜单必选的权限勾上
+        const handleList = this.allPermission[index].resourceHandleList
+        for (let i = 0; i < handleList.length; i++) {
+          this.addUnique(handleList[i].id, this.tempRole.permissionIdList)
         }
       },
       addUnique(val, arr) {
