@@ -1,7 +1,7 @@
 <template>
   <!-- http://element-cn.eleme.io/#/zh-CN/component/menu -->
   <el-menu mode="vertical" :default-active="$route.path">
-    <sidebar-item :routes="permission_routers" />
+    <sidebar-item :routes="permissionRouters" />
   </el-menu>
 </template>
 
@@ -12,7 +12,7 @@ export default {
   components: { SidebarItem },
   computed: {
     ...mapGetters([
-      'permission_routers'
+      'permissionRouters'
     ])
   }
 }

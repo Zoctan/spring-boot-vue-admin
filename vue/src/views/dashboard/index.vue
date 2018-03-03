@@ -1,9 +1,9 @@
 <template>
   <div class="dashboard-container">
     <div class="dashboard-text">
-      <h4>Permission Code</h4>
+      <h4>Permission</h4>
       <ol>
-        <li v-for="code in permissionCodeList" :key="permission">{{ code }}</li>
+        <li v-for="code in permissionCodeList" :key="code">{{ code }}</li>
       </ol>
     </div>
   </div>

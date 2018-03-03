@@ -16,11 +16,26 @@ export function listResourcePermission(params) {
   })
 }
 
-export function add(role) {
+export function add(roleForm) {
   return request({
     url: '/role',
     method: 'post',
-    data: role
+    data: roleForm
+  })
+}
+
+export function update(roleForm) {
+  return request({
+    url: '/role',
+    method: 'put',
+    data: roleForm
+  })
+}
+
+export function remove(roleId) {
+  return request({
+    url: '/role/' + roleId,
+    method: 'delete'
   })
 }
 

@@ -27,7 +27,7 @@ public class PermissionController {
     }
 
     @DeleteMapping("/{id}")
-    public Result delete(@PathVariable final Integer id) {
+    public Result delete(@PathVariable final Long id) {
         this.permissionService.deleteById(id);
         return ResultGenerator.genOkResult();
     }
@@ -39,7 +39,7 @@ public class PermissionController {
     }
 
     @GetMapping("/{id}")
-    public Result detail(@PathVariable final Integer id) {
+    public Result detail(@PathVariable final Long id) {
         final Permission permission = this.permissionService.findById(id);
         return ResultGenerator.genOkResult(permission);
     }

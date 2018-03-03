@@ -15,7 +15,6 @@
         </span>
         <el-input type="text"
                   autoComplete="on"
-                  minlength="3"
                   v-model="loginForm.username"
                   placeholder="please input username"
                   @keyup.enter.native="handleLogin" />
@@ -26,7 +25,6 @@
         </span>
         <el-input :type="passwordType"
                   autoComplete="on"
-                  minlength="6"
                   v-model="loginForm.password"
                   placeholder="please input password"
                   @keyup.enter.native="handleLogin" />
@@ -98,7 +96,7 @@ export default {
             this.loading = false
           })
         } else {
-          console.log('form not validate')
+          // console.log('form not validate')
           return false
         }
       })
@@ -116,6 +114,7 @@ export default {
   .login-container {
     @include relative;
     height: 100vh;
+    overflow-y: hidden;
     background-color: $bg;
     input:-webkit-autofill {
       -webkit-box-shadow: 0 0 0 1000px #293444 inset !important;

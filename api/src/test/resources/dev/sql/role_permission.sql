@@ -29,7 +29,7 @@ CREATE TABLE `role_permission` (
   KEY `permission_id` (`permission_id`),
   CONSTRAINT `role_permission_fk_1` FOREIGN KEY (`role_id`) REFERENCES `role` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `role_permission_fk_2` FOREIGN KEY (`permission_id`) REFERENCES `permission` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8mb4 COMMENT='角色权限表';
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COMMENT='角色权限表';
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

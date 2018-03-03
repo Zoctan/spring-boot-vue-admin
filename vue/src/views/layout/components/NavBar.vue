@@ -4,12 +4,12 @@
     <LevelBar />
     <el-dropdown class="user-container" trigger="click">
       <div class="avatar-wrapper">
-        <img class="user-avatar" :src="avatar+'?imageView2/1/w/80/h/80'">
+        <img class="user-avatar" :src="avatar + '?imageView2/1/w/80/h/80'">
         <div class="user-name">{{ username }}</div>
         <i class="el-icon-caret-bottom"></i>
       </div>
       <el-dropdown-menu slot="dropdown">
-        <router-link class='inlineBlock' to="/"><el-dropdown-item>user center</el-dropdown-item></router-link>
+        <router-link class="inlineBlock" to="/user/center"><el-dropdown-item>user center</el-dropdown-item></router-link>
         <el-dropdown-item divided><span @click="logout" style="display:block;">logout</span></el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>

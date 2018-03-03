@@ -3,11 +3,14 @@
     <div class="filter-container">
       <el-form>
         <el-form-item>
+          <el-button type="success"
+                     icon="el-icon-refresh"
+                     v-if="hasPermission('user:list')"
+                     @click.native.prevent="getUserList">refresh</el-button>
           <el-button type="primary"
                      icon="el-icon-plus"
                      v-if="hasPermission('user:add')"
-                     @click.native.prevent="showCreate">add
-          </el-button>
+                     @click.native.prevent="showCreate">add</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -25,6 +28,23 @@
       <el-table-column label="Username"
                        align="center"
                        prop="username"/>
+      <el-table-column label="Email"
+                       align="center"
+                       prop="email"/>
+      <el-table-column label="Register Time"
+                       align="center"
+                       prop="registerTime">
+        <template slot-scope="scope">
+          {{ unix2CurrentTime(scope.row.registerTime) }}
+        </template>
+      </el-table-column>
+      <el-table-column label="Last Login Time"
+                       align="center"
+                       prop="lastLoginTime">
+        <template slot-scope="scope">
+          {{ unix2CurrentTime(scope.row.lastLoginTime) }}
+        </template>
+      </el-table-column>
       <el-table-column label="Role"
                        align="center"
                        prop="roleName"
@@ -38,14 +58,20 @@
                        align="center"
                        v-if="hasPermission('role:update') || hasPermission('user:delete')">
         <template slot-scope="scope">
+          <div style="margin-bottom: 10px">
           <el-button type="primary"
+                     size="mini"
                      icon="el-icon-edit-outline"
                      v-if="hasPermission('role:update') && scope.row.id !== userId"
                      @click.native.prevent="showUpdate(scope.$index)">update</el-button>
+          </div>
+          <div>
           <el-button type="danger"
+                     size="mini"
                      icon="el-icon-delete"
                      v-if="hasPermission('user:delete') && scope.row.id !== userId"
                      @click.native.prevent="removeUser(scope.$index)">delete</el-button>
+          </div>
         </template>
       </el-table-column>
     </el-table>
@@ -79,7 +105,6 @@
         <el-form-item label="Username"
                       prop="username" required>
           <el-input type="text"
-                    minlength="3"
                     prefix-icon="el-icon-edit"
                     auto-complete="off"
                     :readonly="readonly"
@@ -89,7 +114,6 @@
                       prop="password"
                       v-if="dialogStatus === 'create'" required>
           <el-input type="password"
-                    minlength="6"
                     prefix-icon="el-icon-edit"
                     auto-complete="off"
                     :readonly="readonly"
@@ -126,6 +150,7 @@
   import { list as getUserList, register, remove } from '@/api/user'
   import { list as getRoleList, updateUserRole } from '@/api/role'
   import { isValidateEmail } from '@/utils/validate'
+  import { unix2CurrentTime } from '@/utils/date'
   import { mapGetters } from 'vuex'
 
   export default {
@@ -150,11 +175,6 @@
           callback(new Error('username must be 3 or more characters'))
         } else {
           callback()
-        }
-        for (let i = 0; i < this.userList.length; i++) {
-          if (this.userList[i].username === value) {
-            callback(new Error('username already existed'))
-          }
         }
       }
       const validatePassword = (rule, value, callback) => {
@@ -221,6 +241,9 @@
           this.listLoading = false
         })
       },
+      unix2CurrentTime(timestamp) {
+        return unix2CurrentTime(timestamp)
+      },
       handleSizeChange(size) {
         // 改变每页数量
         this.listQuery.size = size
@@ -257,7 +280,7 @@
       },
       createUser() {
         this.$refs.tmpUser.validate(valid => {
-          if (valid) {
+          if (valid && this.isUniqueInfo(this.tmpUser)) {
             this.btnLoading = true
             register(this.tmpUser).then(response => {
               if (response.status === 200) {
@@ -270,7 +293,7 @@
               this.btnLoading = false
             })
           } else {
-            console.log('form not validate')
+            // console.log('form not validate')
             return false
           }
         })
@@ -297,6 +320,19 @@
           }
         })
       },
+      isUniqueInfo(user) {
+        for (let i = 0; i < this.userList.length; i++) {
+          if (this.userList[i].username === user.username) {
+            this.$message.error('username already existed')
+            return false
+          }
+          if (this.userList[i].email === user.email) {
+            this.$message.error('email already existed')
+            return false
+          }
+        }
+        return true
+      },
       removeUser(index) {
         this.$confirm('delete this user?', 'tip', {
           confirmButtonText: 'yes',
@@ -305,7 +341,6 @@
         }).then(() => {
           const id = this.userList[index].id
           remove(id).then(response => {
-            console.info(response)
             if (response.status === 200) {
               this.$message.success('delete success')
               this.getUserList()

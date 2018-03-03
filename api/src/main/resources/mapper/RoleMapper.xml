@@ -9,11 +9,12 @@
 
     <resultMap id="RoleWithPermissionMap" type="com.zoctan.api.model.Role" extends="RoleMap">
         <!-- 1角色对应多权限 -->
-        <collection property="permissionList" ofType="com.zoctan.api.model.Permission">
-            <result column="permission_id" jdbcType="BIGINT" property="id"/>
+        <collection property="resourceList" ofType="com.zoctan.api.model.Resource">
             <result column="permission_resource" jdbcType="VARCHAR" property="resource"/>
-            <result column="permission_code" jdbcType="VARCHAR" property="code"/>
-            <result column="permission_handle" jdbcType="VARCHAR" property="handle"/>
+            <collection property="handleList" ofType="com.alibaba.fastjson.JSONObject">
+                <id column="permission_id" jdbcType="BIGINT" property="id"/>
+                <result column="permission_handle" jdbcType="VARCHAR" property="handle"/>
+            </collection>
         </collection>
     </resultMap>
 
@@ -22,7 +23,6 @@
         r.*,
         p.id as permission_id,
         p.resource as permission_resource,
-        p.code as permission_code,
         p.handle as permission_handle
         FROM `role` r
         LEFT JOIN `role_permission` rp ON r.id = rp.role_id

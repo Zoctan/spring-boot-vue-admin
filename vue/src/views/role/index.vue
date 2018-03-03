@@ -3,6 +3,10 @@
     <div class="filter-container">
       <el-form>
         <el-form-item>
+          <el-button type="success"
+                     icon="el-icon-refresh"
+                     v-if="hasPermission('role:list')"
+                     @click.native.prevent="getRoleList">refresh</el-button>
           <el-button type="primary"
                      icon="el-icon-plus"
                      v-if="hasPermission('role:add')"
@@ -30,13 +34,16 @@
           <el-tag type="success"
                   v-if="scope.row.name === 'ROLE_ADMIN'">all</el-tag>
           <el-tag type="success"
-                  v-else-if="scope.row.permissionList.length === 0">none</el-tag>
-          <span v-else
-                v-for="permission in scope.row.permissionList"
-                style="margin-right: 3px;">
-          <el-tag type="success"
-                  v-text="permission.code" />
-          </span>
+                  v-else-if="scope.row.resourceList.length === 0">none</el-tag>
+          <div v-else
+                v-for="item in scope.row.resourceList">
+            <span style="margin-right: 3px;">{{ item.resource }}</span>
+            <span v-for="item2 in item.handleList"
+                  style="margin-right: 3px;">
+              <el-tag type="success"
+                      v-text="item2.handle" />
+            </span>
+          </div>
         </template>
       </el-table-column>
       <el-table-column label="Admin"
@@ -45,11 +52,11 @@
         <template slot-scope="scope">
           <el-button type="primary"
                      icon="el-icon-edit-outline"
-                     v-if="hasPermission('role:update')"
+                     v-if="hasPermission('role:update') && scope.row.name !== 'ROLE_ADMIN'"
                      @click="showUpdate(scope.$index)">update</el-button>
           <el-button type="danger"
                      icon="el-icon-delete"
-                     v-if="roleName === 'ROLE_ADMIN' && scope.row.name !== 'ROLE_ADMIN'"
+                     v-if="hasPermission('role:delete') && scope.row.name !== 'ROLE_ADMIN'"
                      @click="removeRole(scope.$index)">delete</el-button>
         </template>
       </el-table-column>
@@ -79,7 +86,9 @@
           <el-input type="text"
                     prefix-icon="el-icon-edit"
                     auto-complete="off"
-                    v-model="tempRole.name" />
+                    v-model="tempRole.name">
+            <template slot="prepend">ROLE_</template>
+          </el-input>
         </el-form-item>
         <el-form-item label="Permission" required>
             <div v-for="(permission, index) in allPermission">
@@ -87,7 +96,7 @@
                          :type="isMenuNone(index) ? '' : (isMenuAll(index) ? 'success' : 'primary')"
                          @click="checkAll(index)">{{ permission.resource }}</el-button>
               <el-checkbox-group v-model="tempRole.permissionIdList">
-                <el-checkbox v-for="item in permission.resourceHandleList"
+                <el-checkbox v-for="item in permission.handleList"
                              :key="item.id"
                              :label="item.id"
                              @change="handleChecked(item, _index)">
@@ -111,20 +120,23 @@
   </div>
 </template>
 <script>
-  import { list as getRoleList, listResourcePermission, add as addRole } from '@/api/role'
+  import { list as getRoleList, listResourcePermission, add as addRole, update as updateRole, remove } from '@/api/role'
   import { isValidateRoleName } from '@/utils/validate'
   import { mapGetters } from 'vuex'
 
   export default {
     created() {
-      if (this.hasPermission('role:list')) {
+      if (this.hasPermission('role:update')) {
         this.getAllPermission()
+      }
+      if (this.hasPermission('role:list')) {
         this.getRoleList()
       }
     },
     data() {
       const validateRoleName = (rule, value, callback) => {
-        if (!isValidateRoleName(value)) {
+        const roleName = 'ROLE_' + value
+        if (!isValidateRoleName(roleName)) {
           callback(new Error('role name format error. eg. ROLE_ABC'))
         } else {
           callback()
@@ -199,7 +211,7 @@
         // 显示新增对话框
         this.dialogFormVisible = true
         this.dialogStatus = 'create'
-        this.tempRole.name = 'ROLE_'
+        this.tempRole.name = ''
         this.tempRole.id = ''
         this.tempRole.permissionIdList = []
       },
@@ -210,112 +222,102 @@
         this.tempRole.name = role.name
         this.tempRole.id = role.id
         this.tempRole.permissionIdList = []
-        for (let i = 0; i < role.menus.length; i++) {
-          const perm = role.menus[i].permissionList
-          for (let i = 0; i < perm.length; i++) {
-            this.tempRole.permissionIdList.push(perm[i].permissionId)
+        for (let i = 0; i < role.resourceList.length; i++) {
+          const handleList = role.resourceList[i].handleList
+          for (let j = 0; j < handleList.length; j++) {
+            const handle = handleList[j]
+            this.tempRole.permissionIdList.push(handle.id)
           }
         }
       },
       createRole() {
-        if (!this.checkRoleNameUnique()) {
-          return
-        }
-        if (!this.checkPermissionNum()) {
-          return
-        }
         // 添加新角色
-        addRole().then(response => {
-          this.getList()
-          this.dialogFormVisible = false
+        this.$refs.tempRole.validate(valid => {
+          if (valid && this.isRoleNameUnique(this.tempRole.id, this.tempRole.name)) {
+            this.btnLoading = true
+            addRole(this.tempRole).then(response => {
+              if (response.status === 200) {
+                this.$message.success('add success')
+                this.getRoleList()
+                this.dialogFormVisible = false
+              } else {
+                this.$message.error(response.message)
+              }
+              this.btnLoading = false
+            })
+          } else {
+            console.log('form not validate')
+            return false
+          }
         })
       },
       updateRole() {
-        if (!this.checkRoleNameUnique(this.tempRole.roleId)) {
-          return
-        }
-        if (!this.checkPermissionNum()) {
-          return
-        }
         // 修改角色
-        this.request({
-          url: '/user/updateRole',
-          method: 'post',
-          data: this.tempRole
-        }).then(() => {
-          this.getList()
-          this.dialogFormVisible = false
+        this.$refs.tempRole.validate(valid => {
+          if (valid && this.isRoleNameUnique(this.tempRole.id, this.tempRole.name)) {
+            this.btnLoading = true
+            updateRole(this.tempRole).then(response => {
+              if (response.status === 200) {
+                this.$message.success('update success')
+                this.getRoleList()
+                this.dialogFormVisible = false
+              } else {
+                this.$message.error(response.message)
+              }
+              this.btnLoading = false
+            })
+          } else {
+            console.log('form not validate')
+            return false
+          }
         })
       },
-      checkPermissionNum() {
-        // 校验至少有一种权限
-        if (this.tempRole.permissionIdList.length === 0) {
-          this.$message.error('请至少选择一种权限')
-          return false
+      isRoleNameUnique(id, name) {
+        // 校验名称重复
+        for (let i = 0; i < this.roleList.length; i++) {
+          if (this.roleList[i].id !== id && this.roleList[i].name === name) {
+            this.$message.error('role name already existed')
+            return false
+          }
         }
         return true
       },
-      checkRoleNameUnique(roleId) {
-        // 校验名称重复
-        const roleName = this.tempRole.roleName
-        if (!roleName) {
-          this.$message.error('请填写角色名称')
-          return false
-        }
-        const roles = this.list
-        let result = true
-        for (let i = 0; i < roles.length; i++) {
-          if (roles[i].roleName === roleName && (!roleId || roles[i].roleId !== roleId)) {
-            this.$message.error('角色名称已存在')
-            result = false
-            break
-          }
-        }
-        return result
-      },
       removeRole(index) {
-        const _vue = this
-        this.$confirm('确定删除此角色?', '提示', {
-          confirmButtonText: '确定',
+        this.$confirm('delete this role?', 'tip', {
+          confirmButtonText: 'yes',
           showCancelButton: false,
           type: 'warning'
         }).then(() => {
-          const role = _vue.list[index]
-          _vue.request({
-            url: '/user/deleteRole',
-            method: 'post',
-            data: {
-              roleId: role.roleId
+          const roleId = this.roleList[index].id
+          remove(roleId).then(response => {
+            if (response.status === 200) {
+              this.$message.success('delete success')
+              this.getRoleList()
+            } else {
+              this.$message.error('delete failed')
             }
-          }).then(() => {
-            _vue.getList()
-          }).catch(e => {
           })
         })
       },
       isMenuNone(index) {
         // 判断本级菜单内的权限是否一个都没选
-        const handleList = this.allPermission[index].resourceHandleList
-        let result = true
+        const handleList = this.allPermission[index].handleList
         for (let i = 0; i < handleList.length; i++) {
           if (this.tempRole.permissionIdList.indexOf(handleList[i].id) > -1) {
-            result = false
-            break
+            return false
           }
         }
-        return result
+        return true
       },
       isMenuAll(index) {
         // 判断本级菜单内的权限是否全选了
-        const handleList = this.allPermission[index].resourceHandleList
-        let result = true
+        const handleList = this.allPermission[index].handleList
         for (let i = 0; i < handleList.length; i++) {
           if (this.tempRole.permissionIdList.indexOf(handleList[i].id) < 0) {
-            result = false
-            break
+            return false
           }
         }
-        return result
+        return true
       },
       checkAll(index) {
         if (this.isMenuAll(index)) {
@@ -328,14 +330,14 @@
       },
       selectAll(index) {
         // 全部选中
-        const handleList = this.allPermission[index].resourceHandleList
+        const handleList = this.allPermission[index].handleList
         for (let i = 0; i < handleList.length; i++) {
           this.addUnique(handleList[i].id, this.tempRole.permissionIdList)
         }
       },
       cancelAll(index) {
         // 全部取消选中
-        const handleList = this.allPermission[index].resourceHandleList
+        const handleList = this.allPermission[index].handleList
         for (let i = 0; i < handleList.length; i++) {
           const idIndex = this.tempRole.permissionIdList.indexOf(handleList[i].id)
           if (idIndex > -1) {
@@ -357,7 +359,7 @@
       },
       makePermissionChecked(index) {
         // 将本菜单必选的权限勾上
-        const handleList = this.allPermission[index].resourceHandleList
+        const handleList = this.allPermission[index].handleList
         for (let i = 0; i < handleList.length; i++) {
           this.addUnique(handleList[i].id, this.tempRole.permissionIdList)
         }
@@ -372,8 +374,3 @@
     }
   }
 </script>
-<style scoped>
-  .requiredPerm {
-    color: #ff0e13;
-  }
-</style>

@@ -4,6 +4,7 @@ import store from '../store'
 import { getToken } from '@/utils/token'
 
 // 创建axios实例
+// https://www.kancloud.cn/yunye/axios/234845
 const service = axios.create({
   baseURL: process.env.BASE_API, // api的base_url
   timeout: 5000, // 请求超时时间
@@ -40,29 +41,29 @@ service.interceptors.response.use(
         type: 'error',
         duration: 5 * 1000
       })
-
-      // 401:需要认证
-      if (result.status === 401) {
-        MessageBox.confirm('需要认证', '确定登出', {
-          confirmButtonText: '重新登录',
-          cancelButtonText: '取消',
-          type: 'warning'
-        }).then(() => {
-          store.dispatch('FedLogout').then(() => {
-            location.reload()// 为了重新实例化vue-router对象 避免bug
-          })
-        })
-      }
       return Promise.reject('error')
     }
   },
   error => {
-    console.log('err' + error)// for debug
-    Message({
-      message: error.message,
-      type: 'error',
-      duration: 5 * 1000
-    })
+    console.error(error.response.status)// for debug
+    // 401:需要认证
+    if (error.response.status === 401) {
+      MessageBox.confirm('need login', 'logout', {
+        confirmButtonText: 'login',
+        cancelButtonText: 'cancel',
+        type: 'warning'
+      }).then(() => {
+        store.dispatch('FedLogout').then(() => {
+          location.reload()// 为了重新实例化vue-router对象 避免bug
+        })
+      })
+    } else {
+      Message({
+        message: error.response.data.message,
+        type: 'error',
+        duration: 5 * 1000
+      })
+    }
     return Promise.reject(error)
   }
 )

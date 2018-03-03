@@ -17,12 +17,12 @@ import java.util.TimeZone;
 @EnableTransactionManagement
 @MapperScan(basePackages = ProjectConstant.MAPPER_PACKAGE)
 public class Application {
+    public static void main(final String[] args) {
+        SpringApplication.run(Application.class, args);
+    }
+
     @PostConstruct
     void started() {
         TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-    }
-
-    public static void main(final String[] args) {
-        SpringApplication.run(Application.class, args);
     }
 }

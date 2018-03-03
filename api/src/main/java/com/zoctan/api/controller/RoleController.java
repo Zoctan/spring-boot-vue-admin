@@ -25,18 +25,21 @@ public class RoleController {
     @Resource
     private PermissionService permissionService;
 
+    @PreAuthorize("hasAuthority('role:add')")
     @PostMapping
     public Result add(@RequestBody final Role role) {
         this.roleService.save(role);
         return ResultGenerator.genOkResult();
     }
 
+    @PreAuthorize("hasAuthority('role:delete')")
     @DeleteMapping("/{id}")
-    public Result delete(@PathVariable final Integer id) {
+    public Result delete(@PathVariable final Long id) {
         this.roleService.deleteById(id);
         return ResultGenerator.genOkResult();
     }
 
+    @PreAuthorize("hasAuthority('role:update')")
     @PutMapping
     public Result update(@RequestBody final Role role) {
         this.roleService.update(role);
@@ -44,7 +47,7 @@ public class RoleController {
     }
 
     @GetMapping("/{id}")
-    public Result detail(@PathVariable final Integer id) {
+    public Result detail(@PathVariable final Long id) {
         final Role role = this.roleService.findById(id);
         return ResultGenerator.genOkResult(role);
     }
@@ -54,7 +57,7 @@ public class RoleController {
     public Result list(@RequestParam(defaultValue = "0") final Integer page,
                        @RequestParam(defaultValue = "0") final Integer size) {
         PageHelper.startPage(page, size);
-        final List<Role> list = this.roleService.findAllRoleWithPermission();
+        final List<com.zoctan.api.model.Resource> list = this.roleService.findAllRoleWithPermission();
         final PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genOkResult(pageInfo);
     }

@@ -11,9 +11,9 @@ Vue.use(Router)
 /**
   * icon : the icon show in the sidebar
   * hidden : if `hidden:true` will not show in the sidebar
-  * redirect : if `redirect:noRedirect` will not redirect in the levelbar
+  * redirect : if `redirect:noRedirect` will not redirect in the levelBar
   * noDropDown : if `noDropDown:true` will not has submenu in the sidebar
-  * meta : `{ role: ['admin'] }`  will control the page role
+  * meta : `{ permission: ['a:xx'] }`  will control the page permission
   **/
 export const constantRouterMap = [
   { path: '/login', component: _import('login/index'), hidden: true },
@@ -66,6 +66,18 @@ export const asyncRouterMap = [
       name: 'User',
       component: _import('user/index'),
       meta: { permission: ['user:list'] }
+    }]
+  },
+
+  {
+    path: '/user/center',
+    component: Layout,
+    redirect: '/user/center/index',
+    hidden: true,
+    children: [{
+      path: 'index',
+      name: 'UserCenter',
+      component: _import('userCenter/index')
     }]
   },
 

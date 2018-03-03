@@ -11,5 +11,5 @@ import java.util.List;
  * 对MyBatis源码有研究的同学看DefaultResultSetHandler.instantiateCollectionPropertyIfAppropriate()就明白了
  */
 public class Resource extends JSONObject {
-    private List<JSONObject> resourceHandleList;
+    private List<JSONObject> handleList;
 }

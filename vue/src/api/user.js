@@ -23,19 +23,19 @@ export function remove(userId) {
   })
 }
 
-export function register(registerForm) {
+export function register(userForm) {
   return request({
     url: '/user',
     method: 'post',
-    data: registerForm
+    data: userForm
   })
 }
 
-export function login(loginForm) {
+export function login(userForm) {
   return request({
     url: '/user/login',
     method: 'post',
-    data: loginForm
+    data: userForm
   })
 }
 

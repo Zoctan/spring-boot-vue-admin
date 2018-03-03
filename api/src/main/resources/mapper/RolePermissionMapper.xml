@@ -1,8 +1,16 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zoctan.api.mapper.RolePermissionMapper">
-  <resultMap id="BaseResultMap" type="com.zoctan.api.model.RolePermission">
-    <id column="role_id" jdbcType="BIGINT" property="roleId" />
-    <id column="permission_id" jdbcType="BIGINT" property="permissionId" />
-  </resultMap>
+    <resultMap id="BaseResultMap" type="com.zoctan.api.model.RolePermission">
+        <id column="role_id" jdbcType="BIGINT" property="roleId"/>
+        <id column="permission_id" jdbcType="BIGINT" property="permissionId"/>
+    </resultMap>
+
+    <insert id="saveRolePermission">
+        insert into `role_permission` (role_id, permission_id)
+        values
+        <foreach collection="permissionIdList" item="item" index="index" separator=",">
+            (#{roleId}, #{item})
+        </foreach>
+    </insert>
 </mapper>
