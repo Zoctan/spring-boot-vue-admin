@@ -31,6 +31,7 @@ role_permission 表：角色所对应的权限，一对多。
 <img width="20%" height="20%" src="https://github.com/Zoctan/spring-boot-vue-admin/blob/master/api/README/role_permission.png"/>
 
 > 为什么 ROLE_ADMIN 角色在数据库没有权限？
+> 
 > ROLE_ADMIN 作为超级管理员这类角色，应该是具有所有权限的，但是对于数据库来说，没必要保存所有权限，只要在查询到该角色时返回所有权限即可。
 
 ## 角色权限控制
