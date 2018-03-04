@@ -10,11 +10,11 @@
 
 # 预览
 
-<img width="80%" height="80%" src="https://github.com/Zoctan/spring-boot-vue-admin/blob/master/README/1.png"/>
+<img src="https://github.com/Zoctan/spring-boot-vue-admin/blob/master/README/1.png"/>
 
-<img width="80%" height="80%" src="https://github.com/Zoctan/spring-boot-vue-admin/blob/master/README/2.png"/>
+<img src="https://github.com/Zoctan/spring-boot-vue-admin/blob/master/README/2.png"/>
 
-<img width="80%" height="80%" src="https://github.com/Zoctan/spring-boot-vue-admin/blob/master/README/3.png"/>
+<img src="https://github.com/Zoctan/spring-boot-vue-admin/blob/master/README/3.png"/>
 
 # Demo
 
