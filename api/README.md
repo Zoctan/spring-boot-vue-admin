@@ -1,6 +1,6 @@
 # RESTful API
 
-本篇主要介绍后端 API 的搭建思路，以及角色权限的控制。参考博文[RBAC新解](http://globeeip.iteye.com/blog/1236167)。
+主要介绍后端 API 的角色权限控制。参考博文[RBAC新解](http://globeeip.iteye.com/blog/1236167)。
 
 ## 数据库设计
 
@@ -8,19 +8,19 @@
 
 数据库关系模型如下：
 
-<img width="30%" height="30%" src="https://github.com/Zoctan/spring-boot-vue-admin/blob/master/api/README/database.png"/>
+<img width="70%" height="70%" src="https://github.com/Zoctan/spring-boot-vue-admin/blob/master/api/README/database.png"/>
 
 user 表：用户信息。
 
-<img width="30%" height="30%" src="https://github.com/Zoctan/spring-boot-vue-admin/blob/master/api/README/user.png"/>
+<img width="70%" height="70%" src="https://github.com/Zoctan/spring-boot-vue-admin/blob/master/api/README/user.png"/>
 
 role 表：角色信息。
 
-<img width="30%" height="30%" src="https://github.com/Zoctan/spring-boot-vue-admin/blob/master/api/README/role.png"/>
+<img width="20%" height="20%" src="https://github.com/Zoctan/spring-boot-vue-admin/blob/master/api/README/role.png"/>
 
 user_role 表：用户对应的角色，一对一。
 
-<img width="30%" height="30%" src="https://github.com/Zoctan/spring-boot-vue-admin/blob/master/api/README/user_role.png"/>
+<img width="20%" height="20%" src="https://github.com/Zoctan/spring-boot-vue-admin/blob/master/api/README/user_role.png"/>
 
 permission 表：权限能操作的资源以及操作方式。
 
@@ -28,13 +28,13 @@ permission 表：权限能操作的资源以及操作方式。
 
 role_permission 表：角色所对应的权限，一对多。
 
-<img width="30%" height="30%" src="https://github.com/Zoctan/spring-boot-vue-admin/blob/master/api/README/role_permission.png"/>
+<img width="20%" height="20%" src="https://github.com/Zoctan/spring-boot-vue-admin/blob/master/api/README/role_permission.png"/>
 
 ## 角色权限控制
 
 Spring Security + Json Web Token 鉴权：
 
-在控制器上的注解：
+最终效果，在控制器上的注解：
 
 ```java
 @PreAuthorize("hasAuthority('user:list')")
@@ -72,7 +72,7 @@ Jwts.builder()
         .compact();
 ```
 
-Base64解码 JWT 生成的 token：
+Base64 解码 JWT 生成的 token：
 
 ```
 {"alg":"RS256"}{"sub":"test","auth":"ROLE_TEST,role:list,user:list,"exp":1519742226}<wZJ69e,x	옮J܃a}
