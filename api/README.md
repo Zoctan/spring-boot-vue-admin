@@ -8,11 +8,11 @@
 
 数据库关系模型如下：
 
-<img width="70%" height="70%" src="https://github.com/Zoctan/spring-boot-vue-admin/blob/master/api/README/database.png"/>
+<img width="80%" height="80%" src="https://github.com/Zoctan/spring-boot-vue-admin/blob/master/api/README/database.png"/>
 
 user 表：用户信息。
 
-<img width="70%" height="70%" src="https://github.com/Zoctan/spring-boot-vue-admin/blob/master/api/README/user.png"/>
+<img width="80%" height="80%" src="https://github.com/Zoctan/spring-boot-vue-admin/blob/master/api/README/user.png"/>
 
 role 表：角色信息。
 
