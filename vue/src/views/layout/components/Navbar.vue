@@ -1,7 +1,7 @@
 <template>
   <el-menu class="navbar" mode="horizontal">
     <hamburger class="hamburger-container" :toggleClick="toggleSideBar" :isActive="sidebar.opened" />
-    <LevelBar />
+    <Levelbar />
     <el-dropdown class="user-container" trigger="click">
       <div class="avatar-wrapper">
         <img class="user-avatar" :src="avatar + '?imageView2/1/w/80/h/80'">
@@ -9,41 +9,45 @@
         <i class="el-icon-caret-bottom"></i>
       </div>
       <el-dropdown-menu slot="dropdown">
-        <router-link class="inlineBlock" to="/user/center"><el-dropdown-item>user center</el-dropdown-item></router-link>
-        <el-dropdown-item divided><span @click="logout" style="display:block;">logout</span></el-dropdown-item>
+        <router-link class="inlineBlock" to="/user/center">
+          <el-dropdown-item>user center</el-dropdown-item>
+        </router-link>
+        <el-dropdown-item divided>
+          <span @click="logout" style="display:block;">logout</span>
+        </el-dropdown-item>
       </el-dropdown-menu>
     </el-dropdown>
   </el-menu>
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-import LevelBar from './LevelBar'
-import Hamburger from '@/components/Hamburger'
+  import { mapGetters } from 'vuex'
+  import Levelbar from './Levelbar'
+  import Hamburger from '@/components/Hamburger'
 
-export default {
-  components: {
-    LevelBar,
-    Hamburger
-  },
-  computed: {
-    ...mapGetters([
-      'username',
-      'sidebar',
-      'avatar'
-    ])
-  },
-  methods: {
-    toggleSideBar() {
-      this.$store.dispatch('ToggleSideBar')
+  export default {
+    components: {
+      Levelbar,
+      Hamburger
     },
-    logout() {
-      this.$store.dispatch('Logout').then(() => {
-        location.reload() // 为了重新实例化vue-router对象 避免bug
-      })
+    computed: {
+      ...mapGetters([
+        'username',
+        'sidebar',
+        'avatar'
+      ])
+    },
+    methods: {
+      toggleSideBar() {
+        this.$store.dispatch('ToggleSideBar')
+      },
+      logout() {
+        this.$store.dispatch('Logout').then(() => {
+          location.reload() // 为了重新实例化vue-router对象 避免bug
+        })
+      }
     }
   }
-}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>

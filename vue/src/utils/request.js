@@ -32,12 +32,11 @@ service.interceptors.request.use(config => {
 // response拦截器
 service.interceptors.response.use(
   response => {
-    const result = response.data
-    if (result.status === 200) {
+    if (response.data.status === 200) {
       return response.data
     } else {
       Message({
-        message: result.data,
+        message: response.data.message,
         type: 'error',
         duration: 5 * 1000
       })
@@ -45,7 +44,6 @@ service.interceptors.response.use(
     }
   },
   error => {
-    console.error(error.response.status)// for debug
     // 401:需要认证
     if (error.response.status === 401) {
       MessageBox.confirm('need login', 'logout', {

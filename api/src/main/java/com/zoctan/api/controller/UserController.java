@@ -53,10 +53,7 @@ public class UserController {
             final String msg = bindingResult.getFieldError().getDefaultMessage();
             return ResultGenerator.genFailedResult(msg);
         } else {
-            // 保存后密码加密了，而登录需要没加密的密码
-            final String rawPassword = user.getPassword();
             this.userService.save(user);
-            user.setPassword(rawPassword);
             return this.getToken(user);
         }
     }
@@ -70,12 +67,19 @@ public class UserController {
         return ResultGenerator.genOkResult();
     }
 
+    @PostMapping("/password")
+    public Result validatePassword(@RequestBody final User user) {
+        final User oldUser = this.userService.findById(user.getId());
+        final boolean isValidate = this.userService.verifyPassword(user.getPassword(), oldUser.getPassword());
+        return ResultGenerator.genOkResult(isValidate);
+    }
+
     @ApiOperation(value = "更新用户信息", notes = "根据传过来的user信息来更新用户详细信息")
     @ApiImplicitParam(name = "user", value = "用户实体", required = true, dataType = "User")
     @PutMapping
     public Result update(@RequestBody final User user) {
         this.userService.update(user);
-        return ResultGenerator.genOkResult();
+        return this.getToken(this.userService.findById(user.getId()));
     }
 
     @ApiOperation(value = "获取Id用户信息")
@@ -115,8 +119,32 @@ public class UserController {
     @PostMapping("/login")
     public Result login(@RequestBody final User user) {
         // {"username":"admin", "password":"123456"}
-        if (user.getUsername() == null || user.getPassword() == null) {
-            return ResultGenerator.genFailedResult("用户名或密码不能为空");
+        // {"email":"admin@qq.com", "password":"123456"}
+        if (user.getUsername() == null && user.getEmail() == null) {
+            return ResultGenerator.genFailedResult("username or email empty");
+        }
+        if (user.getPassword() == null) {
+            return ResultGenerator.genFailedResult("password empty");
+        }
+        // 用户名登录
+        User dbUser = null;
+        if (user.getUsername() != null) {
+            dbUser = this.userService.findBy("username", user.getUsername());
+            if (dbUser == null) {
+                return ResultGenerator.genFailedResult("username error");
+            }
+        }
+        // 邮箱登录
+        if (user.getEmail() != null) {
+            dbUser = this.userService.findBy("email", user.getEmail());
+            if (dbUser == null) {
+                return ResultGenerator.genFailedResult("email error");
+            }
+            user.setUsername(dbUser.getUsername());
+        }
+        // 验证密码
+        if (!this.userService.verifyPassword(user.getPassword(), dbUser.getPassword())) {
+            return ResultGenerator.genFailedResult("password error");
         }
         return this.getToken(user);
     }
@@ -133,15 +161,10 @@ public class UserController {
 
     private Result getToken(final User user) {
         final String username = user.getUsername();
-        final String password = user.getPassword();
         final UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-        if (this.userService.verifyPassword(password, userDetails.getPassword())) {
-            // 更新登录时间
-            this.userService.updateLoginTime(username);
-            final String token = this.jwtUtil.sign(username, userDetails.getAuthorities());
-            return ResultGenerator.genOkResult(token);
-        } else {
-            return ResultGenerator.genFailedResult("密码错误");
-        }
+        // 更新登录时间
+        this.userService.updateLoginTime(username);
+        final String token = this.jwtUtil.sign(username, userDetails.getAuthorities());
+        return ResultGenerator.genOkResult(token);
     }
 }

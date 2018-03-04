@@ -2,7 +2,7 @@
   "name": "vue",
   "version": "1.0.0",
   "license": "APACHE 2.0",
-  "description": "A vue admin",
+  "description": "Vue Admin",
   "author": "Zoctan <752481828@qq.com>",
   "scripts": {
     "dev": "node build/dev-server.js",

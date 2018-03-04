@@ -50,8 +50,9 @@ const user = {
       return new Promise((resolve, reject) => {
         login(loginForm).then(response => {
           if (response.status === 200) {
-            // cookie中保存前端登录状态
+            // cookie中保存token
             setToken(response.data)
+            // vuex中保存token
             commit('SET_TOKEN', response.data)
           }
           // 传递给/login/index.vue : store.dispatch('Login').then(data)
@@ -66,10 +67,9 @@ const user = {
     Info({ commit }) {
       return new Promise((resolve, reject) => {
         info().then(response => {
-          const data = response.data
           // 储存用户信息
-          commit('SET_USER', data)
-          resolve(data)
+          commit('SET_USER', response.data)
+          resolve(response)
         }).catch(error => {
           reject(error)
         })

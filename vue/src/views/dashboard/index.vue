@@ -10,25 +10,25 @@
 </template>
 
 <script>
-import { mapGetters } from 'vuex'
-export default {
-  name: 'dashboard',
-  computed: {
-    ...mapGetters([
-      'permissionCodeList'
-    ])
+  import { mapGetters } from 'vuex'
+  export default {
+    name: 'dashboard',
+    computed: {
+      ...mapGetters([
+        'permissionCodeList'
+      ])
+    }
   }
-}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-.dashboard {
-  &-container {
-    margin: 30px;
+  .dashboard {
+    &-container {
+      margin: 30px;
+    }
+    &-text {
+      font-size: 30px;
+      line-height: 46px;
+    }
   }
-  &-text {
-    font-size: 30px;
-    line-height: 46px;
-  }
-}
 </style>

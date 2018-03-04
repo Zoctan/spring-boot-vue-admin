@@ -9,14 +9,14 @@
              label-position="left"
              label-width="0px">
       <h3 class="title">Login</h3>
-       <el-form-item prop="username">
+       <el-form-item prop="usernameOrEmail">
         <span class="svg-container svg-container_login">
           <icon-svg icon-class="username" />
         </span>
         <el-input type="text"
                   autoComplete="on"
-                  v-model="loginForm.username"
-                  placeholder="please input username"
+                  v-model="loginForm.usernameOrEmail"
+                  placeholder="please input username or email"
                   @keyup.enter.native="handleLogin" />
       </el-form-item>
       <el-form-item prop="password">
@@ -35,7 +35,7 @@
       <el-form-item>
         <el-button type="primary"
                    style="width:100%;"
-                   :loading="loading"
+                   :loading="btnLoading"
                    @click.native.prevent="handleLogin">login</el-button>
       </el-form-item>
     </el-form>
@@ -43,66 +43,70 @@
 </template>
 
 <script>
-export default {
-  name: 'login',
-  data() {
-    const validateUsername = (rule, value, callback) => {
-      if (value.length < 3) {
-        callback(new Error('username must be 3 or more characters'))
-      } else {
-        callback()
+  import { isValidateEmail } from '@/utils/validate'
+
+  export default {
+    name: 'login',
+    data() {
+      const validateUsernameOrEmail = (rule, value, callback) => {
+        if (value.length < 3) {
+          callback(new Error('username must be 3 or more characters'))
+        } else {
+          callback()
+        }
       }
-    }
-    const validatePassword = (rule, value, callback) => {
-      if (value.length < 6) {
-        callback(new Error('password must be 6 or more characters'))
-      } else {
-        callback()
+      const validatePassword = (rule, value, callback) => {
+        if (value.length < 6) {
+          callback(new Error('password must be 6 or more characters'))
+        } else {
+          callback()
+        }
       }
-    }
-    return {
-      loginForm: {
-        username: 'admin',
-        password: '123456'
-      },
-      loginRules: {
-        username: [{ required: true, trigger: 'blur', validator: validateUsername }],
-        password: [{ required: true, trigger: 'blur', validator: validatePassword }]
-      },
-      passwordType: 'password',
-      loading: false
-    }
-  },
-  methods: {
-    showPwd() {
-      if (this.passwordType === 'password') {
-        this.passwordType = ''
-      } else {
-        this.passwordType = 'password'
+      return {
+        loginForm: {
+          usernameOrEmail: 'admin',
+          password: 'admin123'
+        },
+        loginRules: {
+          usernameOrEmail: [{ required: true, trigger: 'blur', validator: validateUsernameOrEmail }],
+          password: [{ required: true, trigger: 'blur', validator: validatePassword }]
+        },
+        passwordType: 'password',
+        btnLoading: false
       }
     },
-    handleLogin() {
-      this.$refs.loginForm.validate(valid => {
-        if (valid) {
-          this.loading = true
-          this.$store.dispatch('Login', this.loginForm).then(data => {
-            this.loading = false
-            if (data.status === 200) {
-              this.$router.push({ path: '/' })
-            } else {
-              this.$message.error(data.message)
-            }
-          }).catch(() => {
-            this.loading = false
-          })
+    methods: {
+      showPwd() {
+        if (this.passwordType === 'password') {
+          this.passwordType = ''
         } else {
-          // console.log('form not validate')
-          return false
+          this.passwordType = 'password'
         }
-      })
+      },
+      handleLogin() {
+        this.$refs.loginForm.validate(valid => {
+          if (valid) {
+            const user = {}
+            if (isValidateEmail(this.loginForm.usernameOrEmail)) {
+              user.email = this.loginForm.usernameOrEmail
+            } else {
+              user.username = this.loginForm.usernameOrEmail
+            }
+            user.password = this.loginForm.password
+            this.loading = true
+            this.$store.dispatch('Login', user).then(() => {
+              this.loading = false
+              this.$router.push({ path: '/' })
+            }).catch(() => {
+              this.loading = false
+            })
+          } else {
+            return false
+          }
+        })
+      }
     }
   }
-}
 </script>
 
 <style rel="stylesheet/scss" lang="scss">

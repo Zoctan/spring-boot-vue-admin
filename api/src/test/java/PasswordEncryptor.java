@@ -15,9 +15,8 @@ public class PasswordEncryptor {
 
     @Test
     public void encode() throws Exception {
-        final String admin = this.passwordEncoder.encode("123456");
-        final String user = this.passwordEncoder.encode("test");
-        System.err.println("123456 password = " + admin);
-        System.err.println("test password = " + user);
+        System.err.println("admin123 password = " + this.passwordEncoder.encode("admin123"));
+        System.err.println("user123 password = " + this.passwordEncoder.encode("user123"));
+        System.err.println("test123 password = " + this.passwordEncoder.encode("test123"));
     }
 }

@@ -235,14 +235,10 @@
         this.$refs.tempRole.validate(valid => {
           if (valid && this.isRoleNameUnique(this.tempRole.id, this.tempRole.name)) {
             this.btnLoading = true
-            addRole(this.tempRole).then(response => {
-              if (response.status === 200) {
-                this.$message.success('add success')
-                this.getRoleList()
-                this.dialogFormVisible = false
-              } else {
-                this.$message.error(response.message)
-              }
+            addRole(this.tempRole).then(() => {
+              this.$message.success('add success')
+              this.getRoleList()
+              this.dialogFormVisible = false
               this.btnLoading = false
             })
           } else {
@@ -256,14 +252,10 @@
         this.$refs.tempRole.validate(valid => {
           if (valid && this.isRoleNameUnique(this.tempRole.id, this.tempRole.name)) {
             this.btnLoading = true
-            updateRole(this.tempRole).then(response => {
-              if (response.status === 200) {
-                this.$message.success('update success')
-                this.getRoleList()
-                this.dialogFormVisible = false
-              } else {
-                this.$message.error(response.message)
-              }
+            updateRole(this.tempRole).then(() => {
+              this.$message.success('update success')
+              this.getRoleList()
+              this.dialogFormVisible = false
               this.btnLoading = false
             })
           } else {
@@ -289,13 +281,9 @@
           type: 'warning'
         }).then(() => {
           const roleId = this.roleList[index].id
-          remove(roleId).then(response => {
-            if (response.status === 200) {
-              this.$message.success('delete success')
-              this.getRoleList()
-            } else {
-              this.$message.error('delete failed')
-            }
+          remove(roleId).then(() => {
+            this.$message.success('delete success')
+            this.getRoleList()
           })
         })
       },

@@ -100,7 +100,7 @@
                     prefix-icon="el-icon-message"
                     auto-complete="off"
                     :readonly="readonly"
-                    v-model="tmpUser.email"/>
+                    v-model="tmpUser.email" />
         </el-form-item>
         <el-form-item label="Username"
                       prop="username" required>
@@ -108,7 +108,7 @@
                     prefix-icon="el-icon-edit"
                     auto-complete="off"
                     :readonly="readonly"
-                    v-model="tmpUser.username"/>
+                    v-model="tmpUser.username" />
         </el-form-item>
         <el-form-item label="Password"
                       prop="password"
@@ -282,18 +282,13 @@
         this.$refs.tmpUser.validate(valid => {
           if (valid && this.isUniqueInfo(this.tmpUser)) {
             this.btnLoading = true
-            register(this.tmpUser).then(response => {
-              if (response.status === 200) {
-                this.$message.success('add success')
-                this.getUserList()
-                this.dialogFormVisible = false
-              } else {
-                this.$message.error(response.message)
-              }
+            register(this.tmpUser).then(() => {
+              this.$message.success('add success')
+              this.getUserList()
+              this.dialogFormVisible = false
               this.btnLoading = false
             })
           } else {
-            // console.log('form not validate')
             return false
           }
         })
@@ -310,14 +305,10 @@
         this.readonly = true
       },
       updateUserRole() {
-        updateUserRole(this.tmpUser).then(data => {
-          if (data.status === 200) {
-            this.$message.success('update success')
-            this.getUserList()
-            this.dialogFormVisible = false
-          } else {
-            this.$message.error(data.message)
-          }
+        updateUserRole(this.tmpUser).then(() => {
+          this.$message.success('update success')
+          this.getUserList()
+          this.dialogFormVisible = false
         })
       },
       isUniqueInfo(user) {
@@ -340,13 +331,9 @@
           type: 'warning'
         }).then(() => {
           const id = this.userList[index].id
-          remove(id).then(response => {
-            if (response.status === 200) {
-              this.$message.success('delete success')
-              this.getUserList()
-            } else {
-              this.$message.error('delete failed')
-            }
+          remove(id).then(() => {
+            this.$message.success('delete success')
+            this.getUserList()
           })
         })
       }

@@ -22,23 +22,23 @@
 </template>
 
 <script>
-export default {
-  name: 'SidebarItem',
-  props: {
-    routes: {
-      type: Array
+  export default {
+    name: 'SidebarItem',
+    props: {
+      routes: {
+        type: Array
+      }
     }
   }
-}
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-.svg-icon {
-  margin-right: 10px;
-}
-.hideSidebar .menu-indent{
-  display: block;
-  text-indent: 10px;
-}
+  .svg-icon {
+    margin-right: 10px;
+  }
+  .hideSidebar .menu-indent{
+    display: block;
+    text-indent: 10px;
+  }
 </style>
 

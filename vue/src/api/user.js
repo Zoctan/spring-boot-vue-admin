@@ -8,6 +8,14 @@ export function list(params) {
   })
 }
 
+export function validatePassword(userForm) {
+  return request({
+    url: '/user/password',
+    method: 'post',
+    data: userForm
+  })
+}
+
 export function update(userForm) {
   return request({
     url: '/user',
