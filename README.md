@@ -2,7 +2,7 @@
 
 ## 简介
 
-提供一套前后端分离的后台权限管理模版，权限细化。
+提供一套前后端分离的后台权限管理模版。
 
 前端 Vue 模板来自 [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)，其他功能可以根据该项目再进行拓展。
 
