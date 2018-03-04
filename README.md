@@ -23,13 +23,17 @@
 ## 快速开始
 
 \# 克隆项目
+
 git clone https://github.com/Zoctan/spring-boot-vue-admin.git
    
 \# 使用其他源，解决 npm 下载速度慢的问题
+
 npm install --registry=https://registry.npm.taobao.org
 
 \# 安装依赖
+
 npm install
 
 \# 启动服务
+
 npm run dev

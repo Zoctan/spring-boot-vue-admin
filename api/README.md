@@ -109,3 +109,9 @@ if (request.getMethod().equals("OPTIONS")) {
     return;
 }
 ```
+
+## redis 缓存
+
+项目默认开了 redis 服务，密码 root。
+
+如不需要请清除所有 redis 相关代码。
