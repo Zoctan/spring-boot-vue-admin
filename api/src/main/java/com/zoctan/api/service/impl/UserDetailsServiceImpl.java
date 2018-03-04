@@ -25,7 +25,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         final List<SimpleGrantedAuthority> authorities = new ArrayList<>();
         // 角色
         authorities.add(new SimpleGrantedAuthority(user.getRoleName()));
-        // 权限代码
+        // 权限
         for (final String permissionCode : user.getPermissionCodeList()) {
             authorities.add(new SimpleGrantedAuthority(permissionCode));
         }
