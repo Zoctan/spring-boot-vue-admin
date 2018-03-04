@@ -16,7 +16,7 @@
         </collection>
     </resultMap>
 
-    <select id="findAllSameResource" resultMap="ResourceHandleMap">
+    <select id="findAllResourcePermission" resultMap="ResourceHandleMap">
         SELECT
         p.resource,
         p.id,

@@ -50,10 +50,7 @@ public class CodeGenerator {
         if (scanner.next().equals("y")) {
             overwrite = true;
         }
-        genCode("permission");
-        genCode("role");
-        genCode("user_role");
-        genCode("role_permission");
+        genCode("表名");
         //genCodeByCustomModelName("输入表名","输入自定义Model名称");
     }
 

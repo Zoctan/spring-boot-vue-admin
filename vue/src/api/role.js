@@ -10,7 +10,7 @@ export function list(params) {
 
 export function listResourcePermission(params) {
   return request({
-    url: '/role/permission',
+    url: '/permission',
     method: 'get',
     params
   })

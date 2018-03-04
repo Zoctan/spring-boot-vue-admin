@@ -12,7 +12,6 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
 import io.swagger.annotations.ApiImplicitParams;
 import io.swagger.annotations.ApiOperation;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
@@ -29,7 +28,6 @@ import java.util.List;
 @RestController
 @RequestMapping("/user")
 @Validated
-@Slf4j
 public class UserController {
     @Resource
     private UserService userService;
@@ -43,7 +41,7 @@ public class UserController {
         this.jwtUtil = jwtUtil;
     }
 
-    @ApiOperation(value = "用户注册", notes = "根据传过来的user信息来注册用户")
+    @ApiOperation(value = "用户注册")
     @ApiImplicitParam(name = "user", value = "用户实体", required = true, dataType = "User")
     @PostMapping
     public Result register(@RequestBody @Valid final User user,
@@ -59,7 +57,7 @@ public class UserController {
     }
 
     @PreAuthorize("hasAuthority('user:delete')")
-    @ApiOperation(value = "删除用户", notes = "根据url的id来指定删除对象")
+    @ApiOperation(value = "根据Id删除用户")
     @ApiImplicitParam(name = "id", value = "用户Id", required = true, dataType = "Long")
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable final Long id) {
@@ -67,6 +65,8 @@ public class UserController {
         return ResultGenerator.genOkResult();
     }
 
+    @ApiOperation(value = "验证用户密码")
+    @ApiImplicitParam(name = "user", value = "用户实体", required = true, dataType = "User")
     @PostMapping("/password")
     public Result validatePassword(@RequestBody final User user) {
         final User oldUser = this.userService.findById(user.getId());
@@ -74,7 +74,7 @@ public class UserController {
         return ResultGenerator.genOkResult(isValidate);
     }
 
-    @ApiOperation(value = "更新用户信息", notes = "根据传过来的user信息来更新用户详细信息")
+    @ApiOperation(value = "更新用户信息")
     @ApiImplicitParam(name = "user", value = "用户实体", required = true, dataType = "User")
     @PutMapping
     public Result update(@RequestBody final User user) {
@@ -82,7 +82,7 @@ public class UserController {
         return this.getToken(this.userService.findById(user.getId()));
     }
 
-    @ApiOperation(value = "获取Id用户信息")
+    @ApiOperation(value = "根据Id获取用户信息")
     @ApiImplicitParam(name = "id", value = "用户Id", required = true, dataType = "Long")
     @GetMapping("/{id}")
     public Result detail(@PathVariable final Long id) {
@@ -90,6 +90,9 @@ public class UserController {
         return ResultGenerator.genOkResult(user);
     }
 
+    /**
+     * AuthenticationPrincipal 注解可以获得当前用户
+     */
     @ApiOperation(value = "获取用户信息")
     @GetMapping("/info")
     public Result info(@AuthenticationPrincipal final UserDetails userDetails) {
@@ -103,11 +106,9 @@ public class UserController {
             @ApiImplicitParam(name = "page", value = "页号", dataType = "Integer"),
             @ApiImplicitParam(name = "size", value = "页数", dataType = "Integer")
     })
-    //@Cacheable(value = "userList")
     @GetMapping
     public Result list(@RequestParam(defaultValue = "0") final Integer page,
                        @RequestParam(defaultValue = "0") final Integer size) {
-        //log.info("no cache => find in database");
         PageHelper.startPage(page, size);
         final List<User> list = this.userService.findAllUserWithRole();
         final PageInfo pageInfo = new PageInfo(list);
@@ -146,12 +147,11 @@ public class UserController {
         if (!this.userService.verifyPassword(user.getPassword(), dbUser.getPassword())) {
             return ResultGenerator.genFailedResult("password error");
         }
+        // 更新登录时间
+        this.userService.updateLoginTime(user.getUsername());
         return this.getToken(user);
     }
 
-    /**
-     * @AuthenticationPrincipal 该注解可以获得当前用户
-     */
     @ApiOperation(value = "用户注销")
     @GetMapping("/logout")
     public Result logout(@AuthenticationPrincipal final UserDetails userDetails) {
@@ -159,11 +159,12 @@ public class UserController {
         return ResultGenerator.genOkResult();
     }
 
+    /**
+     * 获得 token
+     */
     private Result getToken(final User user) {
         final String username = user.getUsername();
         final UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-        // 更新登录时间
-        this.userService.updateLoginTime(username);
         final String token = this.jwtUtil.sign(username, userDetails.getAuthorities());
         return ResultGenerator.genOkResult(token);
     }

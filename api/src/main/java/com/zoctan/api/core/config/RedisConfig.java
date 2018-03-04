@@ -32,6 +32,11 @@ public class RedisConfig extends CachingConfigurerSupport {
     private int EXPIRATION;
 
     @Bean
+    public RedisUtil redisUtil() {
+        return new RedisUtil();
+    }
+
+    @Bean
     @ConfigurationProperties(prefix = "spring.redis.pool")
     public JedisPoolConfig getRedisConfig() {
         return new JedisPoolConfig();
@@ -71,8 +76,6 @@ public class RedisConfig extends CachingConfigurerSupport {
         return (target, method, objects) -> {
             final StringBuilder sb = new StringBuilder();
             String[] value = new String[1];
-            // sb.append(target.getClass().getName());
-            // sb.append(":" + method.getName());
             final Cacheable cacheable = method.getAnnotation(Cacheable.class);
             if (cacheable != null) {
                 value = cacheable.value();
@@ -136,10 +139,5 @@ public class RedisConfig extends CachingConfigurerSupport {
                 super.handleCacheClearError(exception, cache);
             }
         };
-    }
-
-    @Bean
-    public RedisUtil redisUtil() {
-        return new RedisUtil();
     }
 }

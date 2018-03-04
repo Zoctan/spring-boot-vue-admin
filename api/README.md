@@ -1,6 +1,6 @@
 # RESTful API
 
-主要介绍后端 API 的角色权限控制。参考博文[RBAC新解](http://globeeip.iteye.com/blog/1236167)。
+主要介绍后端 API 的角色权限控制。参考博文 [RBAC 新解](http://globeeip.iteye.com/blog/1236167)。
 
 ## 数据库设计
 
@@ -29,6 +29,9 @@ permission 表：权限能操作的资源以及操作方式。
 role_permission 表：角色所对应的权限，一对多。
 
 <img width="20%" height="20%" src="https://github.com/Zoctan/spring-boot-vue-admin/blob/master/api/README/role_permission.png"/>
+
+> 为什么 ROLE_ADMIN 角色在数据库没有权限？
+> ROLE_ADMIN 作为超级管理员这类角色，应该是具有所有权限的，但是对于数据库来说，没必要保存所有权限，只要在查询到该角色时返回所有权限即可。
 
 ## 角色权限控制
 
@@ -84,4 +87,25 @@ Base64 解码 JWT 生成的 token：
 
 ```java
 @PreAuthorize("hasRole('ROLE_ADMIN') or hasAuthority('user:list')")
+```
+
+## axios 预请求和跨域
+
+由于前后端分离，会出现跨域问题，参考[跨域资源共享 CORS 详解](http://www.ruanyifeng.com/blog/2016/04/cors)。
+
+```java
+// core/jwt/JwtAuthenticationFilter.java
+// 解决跨域问题
+response.setHeader("Access-Control-Allow-Origin", "*");
+response.setHeader("Access-Control-Allow-Credentials", "true");
+response.setHeader("Access-Control-Allow-Headers", "Content-Type, Content-Length, Authorization, Accept, X-Requested-With");
+// 明确允许通过的方法，不建议使用*
+response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
+response.setHeader("Access-Control-Max-Age", "3600");
+response.setHeader("Access-Control-Expose-Headers", "*");
+// axios 预请求后，直接返回
+// 返回码必须为 200 否则视为请求失败
+if (request.getMethod().equals("OPTIONS")) {
+    return;
+}
 ```

@@ -21,7 +21,7 @@ public class PermissionServiceImpl extends AbstractService<Permission> implement
     private PermissionMapper permissionMapper;
 
     @Override
-    public List<JSONObject> findAllSameResource() {
-        return this.permissionMapper.findAllSameResource();
+    public List<JSONObject> findAllResourcePermission() {
+        return this.permissionMapper.findAllResourcePermission();
     }
 }
