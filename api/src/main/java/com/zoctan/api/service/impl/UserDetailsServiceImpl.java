@@ -8,13 +8,14 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
-import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Created by Zoctan on 2018/02/04.
  */
 @Service
+@SuppressWarnings("SpringJavaAutowiringInspection")
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Resource
     private UserService userService;
@@ -22,13 +23,13 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(final String username) {
         final User user = this.userService.findDetailByUsername(username);
-        final List<SimpleGrantedAuthority> authorities = new ArrayList<>();
+        // 权限
+        final List<SimpleGrantedAuthority> authorities =
+                user.getPermissionCodeList().stream()
+                        .map(SimpleGrantedAuthority::new)
+                        .collect(Collectors.toList());
         // 角色
         authorities.add(new SimpleGrantedAuthority(user.getRoleName()));
-        // 权限
-        for (final String permissionCode : user.getPermissionCodeList()) {
-            authorities.add(new SimpleGrantedAuthority(permissionCode));
-        }
         return new org.springframework.security.core.userdetails.User(
                 user.getUsername(),
                 user.getPassword(),

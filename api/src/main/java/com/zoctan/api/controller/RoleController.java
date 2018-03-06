@@ -5,7 +5,6 @@ import com.github.pagehelper.PageInfo;
 import com.zoctan.api.core.response.Result;
 import com.zoctan.api.core.response.ResultGenerator;
 import com.zoctan.api.model.Role;
-import com.zoctan.api.service.PermissionService;
 import com.zoctan.api.service.RoleService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiImplicitParam;
@@ -26,8 +25,6 @@ import java.util.List;
 public class RoleController {
     @Resource
     private RoleService roleService;
-    @Resource
-    private PermissionService permissionService;
 
     @PreAuthorize("hasAuthority('role:add')")
     @ApiOperation(value = "角色添加")
@@ -67,6 +64,7 @@ public class RoleController {
                        @RequestParam(defaultValue = "0") final Integer size) {
         PageHelper.startPage(page, size);
         final List<com.zoctan.api.model.Resource> list = this.roleService.findAllRoleWithPermission();
+        //noinspection unchecked
         final PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genOkResult(pageInfo);
     }

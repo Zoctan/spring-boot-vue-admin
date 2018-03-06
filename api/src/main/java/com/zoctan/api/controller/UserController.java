@@ -111,6 +111,7 @@ public class UserController {
                        @RequestParam(defaultValue = "0") final Integer size) {
         PageHelper.startPage(page, size);
         final List<User> list = this.userService.findAllUserWithRole();
+        //noinspection unchecked
         final PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genOkResult(pageInfo);
     }
@@ -144,6 +145,7 @@ public class UserController {
             user.setUsername(dbUser.getUsername());
         }
         // 验证密码
+        //noinspection ConstantConditions
         if (!this.userService.verifyPassword(user.getPassword(), dbUser.getPassword())) {
             return ResultGenerator.genFailedResult("password error");
         }

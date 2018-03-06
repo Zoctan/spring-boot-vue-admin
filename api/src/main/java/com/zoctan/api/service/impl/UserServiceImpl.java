@@ -25,6 +25,7 @@ import java.util.Map;
 @Service
 @Transactional
 @Slf4j
+@SuppressWarnings("SpringJavaAutowiringInspection")
 public class UserServiceImpl extends AbstractService<User> implements UserService {
     @Resource
     private UserMapper userMapper;

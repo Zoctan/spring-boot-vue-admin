@@ -40,6 +40,7 @@ public class PermissionController {
                                          @RequestParam(defaultValue = "0") final Integer size) {
         PageHelper.startPage(page, size);
         final List<JSONObject> list = this.permissionService.findAllResourcePermission();
+        //noinspection unchecked
         final PageInfo pageInfo = new PageInfo(list);
         return ResultGenerator.genOkResult(pageInfo);
     }

@@ -16,6 +16,7 @@ import javax.annotation.Resource;
  */
 @Service
 @Transactional
+@SuppressWarnings("SpringJavaAutowiringInspection")
 public class UserRoleServiceImpl extends AbstractService<UserRole> implements UserRoleService {
     @Resource
     private UserRoleMapper userRoleMapper;

@@ -12,10 +12,12 @@ import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
 
+/**
+ * RSA 工具类
+ */
 @Slf4j
 public class RSAUtil {
-    private final String PROJECT_PATH = System.getProperty("user.dir");
-    private final String RESOURCES_PATH = "/src/main/resources/rsa/";
+    private final String RESOURCES_PATH = System.getProperty("user.dir") + "/src/main/resources/rsa/";
     private final String algorithm = "RSA";
 
     /**
@@ -62,7 +64,7 @@ public class RSAUtil {
     }
 
     private byte[] replaceAndBase64Decode(final String file, final String headReplace, final String tailReplace) throws Exception {
-        final File f = new File(this.PROJECT_PATH + this.RESOURCES_PATH + file);
+        final File f = new File(this.RESOURCES_PATH + file);
         final FileInputStream fis = new FileInputStream(f);
         final DataInputStream dis = new DataInputStream(fis);
         final byte[] keyBytes = new byte[(int) f.length()];

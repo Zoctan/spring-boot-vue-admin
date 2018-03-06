@@ -19,7 +19,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import java.sql.SQLException;
-import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * 统一异常处理
@@ -30,23 +30,15 @@ public class ExceptionResolver {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ConstraintViolationException.class)
     public Result handle400(final ConstraintViolationException e) {
-        final Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
-        final StringBuilder strBuilder = new StringBuilder();
-        for (final ConstraintViolation<?> violation : violations) {
-            strBuilder.append(violation.getMessage()).append(",");
-        }
-        return ResultGenerator.genFailedResult(strBuilder.toString());
+        final String msg = e.getConstraintViolations().stream()
+                .map(ConstraintViolation::getMessage)
+                .collect(Collectors.joining(","));
+        return ResultGenerator.genFailedResult(msg);
     }
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler({ServiceException.class, ServletException.class})
     public Result handle400(final Throwable e) {
-        return ResultGenerator.genFailedResult(e.getMessage());
-    }
-
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
-    @ExceptionHandler({UtilException.class})
-    public Result handle400(final UtilException e) {
         return ResultGenerator.genFailedResult(e.getMessage());
     }
 

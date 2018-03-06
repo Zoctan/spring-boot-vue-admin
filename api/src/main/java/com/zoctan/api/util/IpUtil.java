@@ -14,14 +14,15 @@ import java.net.URL;
 /**
  * IP工具类
  */
-public class IpUtil {
+@SuppressWarnings("unused")
+class IpUtil {
     /**
      * 获取登录用户的IP地址
      *
-     * @param request
-     * @return
+     * @param request request
+     * @return IP地址
      */
-    public static String getIpAddr(final HttpServletRequest request) {
+    public static String getIpAddress(final HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");
         if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
@@ -44,8 +45,8 @@ public class IpUtil {
     /**
      * 通过IP获取地址(需要联网，调用淘宝的IP库)
      *
-     * @param ip
-     * @return
+     * @param ip ip
+     * @return 地址
      */
     public static String getIpInfo(String ip) {
         if (ip.equals("127.0.0.1")) {

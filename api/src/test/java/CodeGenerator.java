@@ -16,9 +16,9 @@ import static com.zoctan.api.core.ProjectConstant.*;
 /**
  * 代码生成器，根据数据表名称生成对应的Model、MyMapper、Service、Controller简化开发。
  */
-public class CodeGenerator {
+class CodeGenerator {
     // JDBC配置，请修改为你项目的实际配置
-    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/wyuoj_dev" + "?useUnicode=true&characterEncoding=utf-8&useLegacyDatetimeCode=false&serverTimezone=UTC";
+    private static final String JDBC_URL = "jdbc:mysql://localhost:3306/api_dev" + "?useUnicode=true&characterEncoding=utf-8&useLegacyDatetimeCode=false&serverTimezone=UTC";
     private static final String JDBC_USERNAME = "root";
     private static final String JDBC_PASSWORD = "root";
     private static final String JDBC_DIVER_CLASS_NAME = "com.mysql.jdbc.Driver";
@@ -135,11 +135,11 @@ public class CodeGenerator {
             generator = new MyBatisGenerator(config, callback, warnings);
             generator.generate(null);
         } catch (final Exception e) {
-            throw new RuntimeException("生成Model和Mapper失败", e);
+            throw new RuntimeException("生成 Model和 Mapper 失败", e);
         }
 
         if (generator.getGeneratedJavaFiles().isEmpty() || generator.getGeneratedXmlFiles().isEmpty()) {
-            throw new RuntimeException("生成Model和Mapper失败：" + warnings);
+            throw new RuntimeException("生成 Model 和 Mapper 失败：" + warnings);
         }
         if (StringUtils.isEmpty(modelName)) {
             modelName = tableNameConvertUpperCamel(tableName);
@@ -163,7 +163,10 @@ public class CodeGenerator {
 
             final File file = new File(PROJECT_PATH + JAVA_PATH + PACKAGE_PATH_SERVICE + modelNameUpperCamel + "Service.java");
             if (!file.getParentFile().exists()) {
-                file.getParentFile().mkdirs();
+                final boolean isMake = file.getParentFile().mkdirs();
+                if (!isMake) {
+                    throw new IOException("新建文件失败");
+                }
             }
             cfg.getTemplate("service.ftl").process(data,
                     new FileWriter(file));
@@ -171,13 +174,16 @@ public class CodeGenerator {
 
             final File file1 = new File(PROJECT_PATH + JAVA_PATH + PACKAGE_PATH_SERVICE_IMPL + modelNameUpperCamel + "ServiceImpl.java");
             if (!file1.getParentFile().exists()) {
-                file1.getParentFile().mkdirs();
+                final boolean isMake = file1.getParentFile().mkdirs();
+                if (!isMake) {
+                    throw new IOException("新建文件失败");
+                }
             }
             cfg.getTemplate("service-impl.ftl").process(data,
                     new FileWriter(file1));
             System.out.println(modelNameUpperCamel + "ServiceImpl.java 生成成功");
         } catch (final Exception e) {
-            throw new RuntimeException("生成Service失败", e);
+            throw new RuntimeException("生成 Service 失败，", e);
         }
     }
 
@@ -196,7 +202,10 @@ public class CodeGenerator {
 
             final File file = new File(PROJECT_PATH + JAVA_PATH + PACKAGE_PATH_CONTROLLER + modelNameUpperCamel + "Controller.java");
             if (!file.getParentFile().exists()) {
-                file.getParentFile().mkdirs();
+                final boolean isMake = file.getParentFile().mkdirs();
+                if (!isMake) {
+                    throw new IOException("新建文件失败");
+                }
             }
 
             if (isRestful) {
@@ -206,7 +215,7 @@ public class CodeGenerator {
             }
             System.out.println(modelNameUpperCamel + "Controller.java 生成成功");
         } catch (final Exception e) {
-            throw new RuntimeException("生成Controller失败", e);
+            throw new RuntimeException("生成 Controller 失败，", e);
         }
 
     }

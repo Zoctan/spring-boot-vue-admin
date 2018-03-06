@@ -1,6 +1,6 @@
 # RESTful API
 
-主要介绍后端 API 的角色权限控制。参考博文 [RBAC 新解](http://globeeip.iteye.com/blog/1236167)。
+主要介绍后端 API 的角色权限控制。参考博文 [Role-Based Access Control 新解](http://globeeip.iteye.com/blog/1236167)。
 
 ## 数据库设计
 

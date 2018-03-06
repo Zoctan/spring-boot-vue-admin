@@ -17,11 +17,13 @@ import java.util.List;
 public abstract class AbstractService<T> implements Service<T> {
     // 当前泛型真实类型的Class
     private final Class<T> modelClass;
+    @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
     @Autowired
     protected MyMapper<T> mapper;
 
-    public AbstractService() {
+    protected AbstractService() {
         final ParameterizedType pt = (ParameterizedType) this.getClass().getGenericSuperclass();
+        //noinspection unchecked
         this.modelClass = (Class<T>) pt.getActualTypeArguments()[0];
     }
 

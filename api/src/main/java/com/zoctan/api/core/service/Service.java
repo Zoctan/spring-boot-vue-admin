@@ -8,6 +8,7 @@ import java.util.List;
 /**
  * Service层基础接口，其他Service接口 请继承该接口
  */
+@SuppressWarnings("unused")
 public interface Service<T> {
     // 持久化
     void save(T model);

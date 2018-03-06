@@ -3,7 +3,7 @@ package com.zoctan.api.core.config;
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.zoctan.api.core.redis.RedisUtil;
+import com.zoctan.api.util.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.context.properties.ConfigurationProperties;
@@ -48,7 +48,7 @@ public class RedisConfig extends CachingConfigurerSupport {
         final JedisConnectionFactory factory = new JedisConnectionFactory();
         factory.setUsePool(true);
         factory.setPoolConfig(this.getRedisConfig());
-        log.info("JedisConnectionFactory bean init success.");
+        log.debug("JedisConnectionFactory bean init success.");
         return factory;
     }
 
@@ -66,7 +66,7 @@ public class RedisConfig extends CachingConfigurerSupport {
         redisTemplate.setValueSerializer(jackson2JsonRedisSerializer);
         redisTemplate.setHashValueSerializer(jackson2JsonRedisSerializer);
         redisTemplate.afterPropertiesSet();
-        log.info("RedisTemplate bean init success.");
+        log.debug("RedisTemplate bean init success.");
         return redisTemplate;
     }
 
@@ -74,7 +74,6 @@ public class RedisConfig extends CachingConfigurerSupport {
     @Override
     public KeyGenerator keyGenerator() {
         return (target, method, objects) -> {
-            final StringBuilder sb = new StringBuilder();
             String[] value = new String[1];
             final Cacheable cacheable = method.getAnnotation(Cacheable.class);
             if (cacheable != null) {
@@ -88,6 +87,7 @@ public class RedisConfig extends CachingConfigurerSupport {
             if (cacheEvict != null) {
                 value = cacheEvict.value();
             }
+            final StringBuilder sb = new StringBuilder();
             sb.append(value[0]);
             for (final Object obj : objects) {
                 sb.append(":").append(obj.toString());

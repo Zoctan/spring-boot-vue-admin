@@ -6,7 +6,6 @@ import com.alibaba.fastjson.support.spring.FastJsonHttpMessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.converter.HttpMessageConverter;
-import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
@@ -20,8 +19,9 @@ import java.util.List;
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
 
+    // 当前激活的配置文件
     @Value("${spring.profiles.active}")
-    private String env;    // 当前激活的配置文件
+    private String env;
 
     // 使用阿里 FastJson 作为JSON MessageConverter
     @Override
@@ -36,12 +36,6 @@ public class WebMvcConfig extends WebMvcConfigurerAdapter {
         converter.setFastJsonConfig(config);
         converter.setDefaultCharset(Charset.forName("UTF-8"));
         converters.add(converter);
-    }
-
-    // 拦截器
-    @Override
-    public void addInterceptors(final InterceptorRegistry registry) {
-        super.addInterceptors(registry);
     }
 
     @Override

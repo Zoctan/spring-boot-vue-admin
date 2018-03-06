@@ -14,6 +14,7 @@ import javax.annotation.Resource;
  */
 @Service
 @Transactional
+@SuppressWarnings({"SpringJavaAutowiringInspection", "unused"})
 public class RolePermissionServiceImpl extends AbstractService<RolePermission> implements RolePermissionService {
     @Resource
     private RolePermissionMapper rolePermissionMapper;

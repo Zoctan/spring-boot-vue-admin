@@ -10,7 +10,8 @@ import java.util.UUID;
 /**
  * ID工具类
  */
-public class IdUtil {
+@SuppressWarnings({"WeakerAccess", "unused"})
+class IdUtil {
     private static final SimpleDateFormat timeSdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
 
     public static String uuid() {

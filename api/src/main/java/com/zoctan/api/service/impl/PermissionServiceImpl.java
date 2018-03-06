@@ -16,6 +16,7 @@ import java.util.List;
  */
 @Service
 @Transactional
+@SuppressWarnings("SpringJavaAutowiringInspection")
 public class PermissionServiceImpl extends AbstractService<Permission> implements PermissionService {
     @Resource
     private PermissionMapper permissionMapper;

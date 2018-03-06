@@ -5,6 +5,7 @@ import com.alibaba.fastjson.JSON;
 /**
  * 统一API响应结果封装
  */
+@SuppressWarnings({"unused", "WeakerAccess"})
 public class Result {
     private int status;
     private String message;

@@ -7,6 +7,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
+@SuppressWarnings("FieldCanBeLocal")
 public class UserControllerTest extends BaseControllerTest {
 
     private final String resource = "/user";
@@ -14,7 +15,7 @@ public class UserControllerTest extends BaseControllerTest {
     /**
      * MockMvc 测试 SpringSecurity
      * 可以参考官网 https://docs.spring.io/spring-security/site/docs/4.2.x/reference/html/
-     * 带上JWT测试可以参考 stackoverflow
+     * 带上 JWT 测试可以参考 stackoverflow
      * https://stackoverflow.com/questions/29510759/how-to-test-spring-security-oauth2-resource-server-security
      */
     @Test(timeout = 5000)

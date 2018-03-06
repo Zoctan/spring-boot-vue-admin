@@ -20,6 +20,7 @@ import java.util.List;
 @Service
 @Transactional
 @Slf4j
+@SuppressWarnings("SpringJavaAutowiringInspection")
 public class RoleServiceImpl extends AbstractService<Role> implements RoleService {
     @Resource
     private RoleMapper roleMapper;
