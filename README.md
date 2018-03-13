@@ -35,6 +35,8 @@ cd api
 # 导入数据库文件（记得修改数据库信息）
 sudo chmod a+x resetDB.sh && ./resetDB.sh
 
+# 启动后端服务...
+
 # 前端
 cd vue
 
@@ -44,7 +46,7 @@ npm install --registry=https://registry.npm.taobao.org
 # 安装依赖
 npm install
 
-# 启动服务
+# 启动前端服务
 npm run dev
 ```
 
