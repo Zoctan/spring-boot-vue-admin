@@ -51,12 +51,13 @@ Spring Security + Json Web Token 鉴权：
 ```java
 // service/impl/UserDetailsServiceImpl.java
 // 为了方便，角色和权限都放在一起
-// 角色名
-authorities.add(new SimpleGrantedAuthority(user.getRoleName()));
 // 权限
-for (final String permissionCode : user.getPermissionCodeList()) {
-    authorities.add(new SimpleGrantedAuthority(permissionCode));
-}
+final List<SimpleGrantedAuthority> authorities =
+        user.getPermissionCodeList().stream()
+                .map(SimpleGrantedAuthority::new)
+                .collect(Collectors.toList());
+// 角色
+authorities.add(new SimpleGrantedAuthority(user.getRoleName()));
 // [ROLE_TEST, role:list, user:list]
 ```
 
