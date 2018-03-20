@@ -2,6 +2,7 @@ package com.zoctan.api.util;
 
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.stereotype.Component;
 import sun.misc.BASE64Decoder;
 
 import javax.crypto.Cipher;
@@ -16,6 +17,7 @@ import java.security.spec.X509EncodedKeySpec;
  * RSA 工具类
  */
 @Slf4j
+@Component
 public class RSAUtil {
     private final String RESOURCES_PATH = System.getProperty("user.dir") + "/src/main/resources/rsa/";
     private final String algorithm = "RSA";

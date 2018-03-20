@@ -18,7 +18,6 @@ import java.util.List;
  */
 @Configuration
 public class WebMvcConfig extends WebMvcConfigurerAdapter {
-
     // 当前激活的配置文件
     @Value("${spring.profiles.active}")
     private String env;

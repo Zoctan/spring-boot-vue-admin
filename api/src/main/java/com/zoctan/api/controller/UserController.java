@@ -120,8 +120,8 @@ public class UserController {
     @ApiImplicitParam(name = "user", value = "用户实体", required = true, dataType = "User")
     @PostMapping("/login")
     public Result login(@RequestBody final User user) {
-        // {"username":"admin", "password":"123456"}
-        // {"email":"admin@qq.com", "password":"123456"}
+        // {"username":"admin", "password":"admin123"}
+        // {"email":"admin@qq.com", "password":"admin123"}
         if (user.getUsername() == null && user.getEmail() == null) {
             return ResultGenerator.genFailedResult("username or email empty");
         }

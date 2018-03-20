@@ -6,7 +6,6 @@ import com.zoctan.api.mapper.RolePermissionMapper;
 import com.zoctan.api.model.Role;
 import com.zoctan.api.model.RolePermission;
 import com.zoctan.api.service.RoleService;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Condition;
@@ -19,7 +18,6 @@ import java.util.List;
  */
 @Service
 @Transactional
-@Slf4j
 @SuppressWarnings("SpringJavaAutowiringInspection")
 public class RoleServiceImpl extends AbstractService<Role> implements RoleService {
     @Resource
