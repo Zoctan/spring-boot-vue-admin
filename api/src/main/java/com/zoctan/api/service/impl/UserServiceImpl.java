@@ -10,7 +10,6 @@ import com.zoctan.api.model.UserRole;
 import com.zoctan.api.service.UserService;
 import com.zoctan.api.util.DateUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -33,12 +32,8 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     private UserRoleMapper userRoleMapper;
     @Resource
     private PermissionMapper permissionMapper;
-    private final PasswordEncoder passwordEncoder;
-
-    @Autowired
-    public UserServiceImpl(final PasswordEncoder passwordEncoder) {
-        this.passwordEncoder = passwordEncoder;
-    }
+    @Resource
+    private PasswordEncoder passwordEncoder;
 
     /**
      * 重写save方法，密码加密后再存

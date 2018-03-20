@@ -50,6 +50,7 @@ Spring Security + Json Web Token 鉴权：
 
 ```java
 // service/impl/UserDetailsServiceImpl.java
+
 // 为了方便，角色和权限都放在一起
 // 权限
 final List<SimpleGrantedAuthority> authorities =
@@ -65,6 +66,7 @@ JWT 生成 token：
 
 ```java
 // core/jwt/JwtUtil.java
+
 Jwts.builder()
         // 设置用户名
         .setSubject(username)
@@ -97,14 +99,17 @@ Base64 解码 JWT 生成的 token：
 
 ```java
 // core/jwt/JwtAuthenticationFilter.java
+
 // 解决跨域问题
 response.setHeader("Access-Control-Allow-Origin", "*");
 response.setHeader("Access-Control-Allow-Credentials", "true");
 response.setHeader("Access-Control-Allow-Headers", "Content-Type, Content-Length, Authorization, Accept, X-Requested-With");
+
 // 明确允许通过的方法，不建议使用*
 response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
 response.setHeader("Access-Control-Max-Age", "3600");
 response.setHeader("Access-Control-Expose-Headers", "*");
+
 // axios 预请求后，直接返回
 // 返回码必须为 200 否则视为请求失败
 if (request.getMethod().equals("OPTIONS")) {
