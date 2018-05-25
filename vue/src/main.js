@@ -20,7 +20,7 @@ Vue.use(ElementUI, { size: 'medium' })
 Vue.prototype.request = request
 Vue.prototype.hasPermission = hasPermission
 
-// 生产环境时自动设置为 false 以阻止 vue 在启动时生成生产提示。
+// 生产环境时自动设置为 false 以阻止 vue 在启动时生成生产提示
 Vue.config.productionTip = false
 
 new Vue({

@@ -40,11 +40,8 @@ sudo chmod a+x resetDB.sh && ./resetDB.sh
 # 前端
 cd vue
 
-# 使用其他源，解决 npm 下载速度慢的问题
+# 安装依赖，使用其他源，解决 npm 下载速度慢的问题
 npm install --registry=https://registry.npm.taobao.org
-
-# 安装依赖
-npm install
 
 # 启动前端服务
 npm run dev
