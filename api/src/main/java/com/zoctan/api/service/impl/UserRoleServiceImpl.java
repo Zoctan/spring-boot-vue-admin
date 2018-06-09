@@ -12,11 +12,11 @@ import tk.mybatis.mapper.entity.Condition;
 import javax.annotation.Resource;
 
 /**
- * Created by Zoctan on 2018/02/17.
+ * @author Zoctan
+ * @date 2018/06/09
  */
 @Service
-@Transactional
-@SuppressWarnings("SpringJavaAutowiringInspection")
+@Transactional(rollbackFor = Exception.class)
 public class UserRoleServiceImpl extends AbstractService<UserRole> implements UserRoleService {
     @Resource
     private UserRoleMapper userRoleMapper;

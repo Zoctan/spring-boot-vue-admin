@@ -29,7 +29,7 @@ CREATE TABLE `user` (
   `password` varchar(1024) CHARACTER SET utf8 COLLATE utf8_bin NOT NULL COMMENT '密码',
   `avatar` varchar(1024) DEFAULT 'https://www.tupianku.com/view/large/13862/640.jpeg' COMMENT '头像',
   `resume` varchar(512) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '简介',
-  `register_time` datetime DEFAULT NULL COMMENT '注册时间',
+  `register_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
   `last_login_time` datetime DEFAULT NULL COMMENT '上一次登录时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `ix_user_username` (`username`),

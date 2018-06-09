@@ -8,8 +8,6 @@ import com.zoctan.api.mapper.UserRoleMapper;
 import com.zoctan.api.model.User;
 import com.zoctan.api.model.UserRole;
 import com.zoctan.api.service.UserService;
-import com.zoctan.api.util.DateUtil;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -17,14 +15,17 @@ import org.springframework.transaction.annotation.Transactional;
 import tk.mybatis.mapper.entity.Condition;
 
 import javax.annotation.Resource;
+import java.sql.Timestamp;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * @author Zoctan
+ * @date 2018/06/09
+ */
 @Service
-@Transactional
-@Slf4j
-@SuppressWarnings("SpringJavaAutowiringInspection")
+@Transactional(rollbackFor = Exception.class)
 public class UserServiceImpl extends AbstractService<User> implements UserService {
     @Resource
     private UserMapper userMapper;
@@ -51,7 +52,6 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
                 //log.info("before password : {}", user.getPassword().trim());
                 user.setPassword(this.passwordEncoder.encode(user.getPassword().trim()));
                 //log.info("after password : {}", user.getPassword());
-                user.setRegisterTime(DateUtil.getNowTimestamp());
                 this.userMapper.insertSelective(user);
                 //log.info("User<{}> id : {}", user.getUsername(), user.getId());
                 // 如果没有指定角色Id，以默认普通用户roleId保存
@@ -86,7 +86,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
 
     @Override
     public User findDetailBy(final String column, final Object param) {
-        final Map<String, Object> map = new HashMap<>();
+        final Map<String, Object> map = new HashMap<>(1);
         map.put(column, param);
         return this.userMapper.findDetailBy(map);
     }
@@ -97,7 +97,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         if (user == null) {
             throw new UsernameNotFoundException("not found this username");
         }
-        if (user.getRoleName().equals("ROLE_ADMIN")) {
+        if ("ROLE_ADMIN".equals(user.getRoleName())) {
             // 超级管理员所有权限都有
             user.setPermissionCodeList(this.permissionMapper.findAllCode());
         }
@@ -115,7 +115,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
         condition.createCriteria()
                 .andCondition("username = ", username);
         final User user = new User();
-        user.setLastLoginTime(DateUtil.getNowTimestamp());
+        user.setLastLoginTime(new Timestamp(System.currentTimeMillis()));
         this.userMapper.updateByConditionSelective(user, condition);
     }
 }

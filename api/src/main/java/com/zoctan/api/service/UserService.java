@@ -6,9 +6,9 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 
 import java.util.List;
 
-
 /**
- * Created by Zoctan on 2018/02/04.
+ * @author Zoctan
+ * @date 2018/06/09
  */
 public interface UserService extends Service<User> {
     @Override

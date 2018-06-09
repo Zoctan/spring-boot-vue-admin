@@ -1,16 +1,18 @@
 package com.zoctan.api.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import lombok.Data;
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.*;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
 import java.sql.Timestamp;
 import java.util.List;
 
-@Data
+/**
+ * @author Zoctan
+ * @date 2018/06/09
+ */
 public class User {
     /**
      * 用户Id
@@ -81,4 +83,93 @@ public class User {
      */
     @Transient
     private List<String> permissionCodeList;
+
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(final Long id) {
+        this.id = id;
+    }
+
+    public String getEmail() {
+        return this.email;
+    }
+
+    public void setEmail(final String email) {
+        this.email = email;
+    }
+
+    public String getUsername() {
+        return this.username;
+    }
+
+    public void setUsername(final String username) {
+        this.username = username;
+    }
+
+    public String getPassword() {
+        return this.password;
+    }
+
+    public void setPassword(final String password) {
+        this.password = password;
+    }
+
+    public String getAvatar() {
+        return this.avatar;
+    }
+
+    public void setAvatar(final String avatar) {
+        this.avatar = avatar;
+    }
+
+    public String getResume() {
+        return this.resume;
+    }
+
+    public void setResume(final String resume) {
+        this.resume = resume;
+    }
+
+    public Timestamp getRegisterTime() {
+        return this.registerTime;
+    }
+
+    public void setRegisterTime(final Timestamp registerTime) {
+        this.registerTime = registerTime;
+    }
+
+    public Timestamp getLastLoginTime() {
+        return this.lastLoginTime;
+    }
+
+    public void setLastLoginTime(final Timestamp lastLoginTime) {
+        this.lastLoginTime = lastLoginTime;
+    }
+
+    public Long getRoleId() {
+        return this.roleId;
+    }
+
+    public void setRoleId(final Long roleId) {
+        this.roleId = roleId;
+    }
+
+    public String getRoleName() {
+        return this.roleName;
+    }
+
+    public void setRoleName(final String roleName) {
+        this.roleName = roleName;
+    }
+
+    public List<String> getPermissionCodeList() {
+        return this.permissionCodeList;
+    }
+
+    public void setPermissionCodeList(final List<String> permissionCodeList) {
+        this.permissionCodeList = permissionCodeList;
+    }
 }

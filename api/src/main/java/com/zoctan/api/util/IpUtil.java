@@ -12,10 +12,16 @@ import java.net.HttpURLConnection;
 import java.net.URL;
 
 /**
- * IP工具类
+ * IP工具
+ *
+ * @author Zoctan
+ * @date 2018/06/09
  */
-@SuppressWarnings("unused")
-class IpUtil {
+public class IpUtil {
+    private final static String UNKNOWN = "unknown";
+    private final static String LOCALHOST_IPV4 = "127.0.0.1";
+    private final static String LOCALHOST_IPV6 = "0:0:0:0:0:0:0:1";
+
     /**
      * 获取登录用户的IP地址
      *
@@ -24,17 +30,17 @@ class IpUtil {
      */
     public static String getIpAddress(final HttpServletRequest request) {
         String ip = request.getHeader("x-forwarded-for");
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getHeader("Proxy-Client-IP");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getHeader("WL-Proxy-Client-IP");
         }
-        if (ip == null || ip.length() == 0 || "unknown".equalsIgnoreCase(ip)) {
+        if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
             ip = request.getRemoteAddr();
         }
-        if (ip.equals("0:0:0:0:0:0:0:1")) {
-            ip = "127.0.0.1";
+        if (LOCALHOST_IPV6.equals(ip)) {
+            ip = LOCALHOST_IPV4;
         }
         if (ip.split(",").length > 1) {
             ip = ip.split(",")[0];
@@ -48,10 +54,7 @@ class IpUtil {
      * @param ip ip
      * @return 地址
      */
-    public static String getIpInfo(String ip) {
-        if (ip.equals("127.0.0.1")) {
-            ip = "127.0.0.1";
-        }
+    public static String getIpInfo(final String ip) {
         String info = "";
         try {
             final URL url = new URL("http://ip.taobao.com/service/getIpInfo.php?ip=" + ip);

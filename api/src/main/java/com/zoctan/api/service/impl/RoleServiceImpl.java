@@ -14,11 +14,11 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
- * Created by Zoctan on 2018/02/17.
+ * @author Zoctan
+ * @date 2018/06/09
  */
 @Service
-@Transactional
-@SuppressWarnings("SpringJavaAutowiringInspection")
+@Transactional(rollbackFor = Exception.class)
 public class RoleServiceImpl extends AbstractService<Role> implements RoleService {
     @Resource
     private RoleMapper roleMapper;

@@ -1,12 +1,13 @@
 package com.zoctan.api.model;
 
-import lombok.Data;
-
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Data
+/**
+ * @author Zoctan
+ * @date 2018/06/09
+ */
 @Table(name = "role_permission")
 public class RolePermission {
     /**
@@ -21,4 +22,20 @@ public class RolePermission {
      */
     @Column(name = "permission_id")
     private Long permissionId;
+
+    public Long getRoleId() {
+        return this.roleId;
+    }
+
+    public void setRoleId(final Long roleId) {
+        this.roleId = roleId;
+    }
+
+    public Long getPermissionId() {
+        return this.permissionId;
+    }
+
+    public void setPermissionId(final Long permissionId) {
+        this.permissionId = permissionId;
+    }
 }

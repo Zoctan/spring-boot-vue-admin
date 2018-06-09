@@ -8,13 +8,7 @@ import com.zoctan.api.core.response.ResultGenerator;
 import com.zoctan.api.model.User;
 import com.zoctan.api.service.UserService;
 import com.zoctan.api.service.impl.UserDetailsServiceImpl;
-import io.swagger.annotations.Api;
-import io.swagger.annotations.ApiImplicitParam;
-import io.swagger.annotations.ApiImplicitParams;
-import io.swagger.annotations.ApiOperation;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
@@ -22,9 +16,13 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
-@Api(value = "用户接口")
+/**
+ * @author Zoctan
+ * @date 2018/06/09
+ */
 @RestController
 @RequestMapping("/user")
 @Validated
@@ -33,16 +31,9 @@ public class UserController {
     private UserService userService;
     @Resource
     private UserDetailsServiceImpl userDetailsService;
+    @Resource
+    private JwtUtil jwtUtil;
 
-    private final JwtUtil jwtUtil;
-
-    @Autowired
-    public UserController(final JwtUtil jwtUtil) {
-        this.jwtUtil = jwtUtil;
-    }
-
-    @ApiOperation(value = "用户注册")
-    @ApiImplicitParam(name = "user", value = "用户实体", required = true, dataType = "User")
     @PostMapping
     public Result register(@RequestBody @Valid final User user,
                            final BindingResult bindingResult) {
@@ -57,16 +48,12 @@ public class UserController {
     }
 
     @PreAuthorize("hasAuthority('user:delete')")
-    @ApiOperation(value = "根据Id删除用户")
-    @ApiImplicitParam(name = "id", value = "用户Id", required = true, dataType = "Long")
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable final Long id) {
         this.userService.deleteById(id);
         return ResultGenerator.genOkResult();
     }
 
-    @ApiOperation(value = "验证用户密码")
-    @ApiImplicitParam(name = "user", value = "用户实体", required = true, dataType = "User")
     @PostMapping("/password")
     public Result validatePassword(@RequestBody final User user) {
         final User oldUser = this.userService.findById(user.getId());
@@ -74,38 +61,25 @@ public class UserController {
         return ResultGenerator.genOkResult(isValidate);
     }
 
-    @ApiOperation(value = "更新用户信息")
-    @ApiImplicitParam(name = "user", value = "用户实体", required = true, dataType = "User")
     @PutMapping
     public Result update(@RequestBody final User user) {
         this.userService.update(user);
         return this.getToken(this.userService.findById(user.getId()));
     }
 
-    @ApiOperation(value = "根据Id获取用户信息")
-    @ApiImplicitParam(name = "id", value = "用户Id", required = true, dataType = "Long")
     @GetMapping("/{id}")
     public Result detail(@PathVariable final Long id) {
         final User user = this.userService.findById(id);
         return ResultGenerator.genOkResult(user);
     }
 
-    /**
-     * AuthenticationPrincipal 注解可以获得当前用户
-     */
-    @ApiOperation(value = "获取用户信息")
     @GetMapping("/info")
-    public Result info(@AuthenticationPrincipal final UserDetails userDetails) {
-        final User user = this.userService.findDetailByUsername(userDetails.getUsername());
-        return ResultGenerator.genOkResult(user);
+    public Result info(final Principal user) {
+        final User userDB = this.userService.findDetailByUsername(user.getName());
+        return ResultGenerator.genOkResult(userDB);
     }
 
     @PreAuthorize("hasAuthority('user:list')")
-    @ApiOperation(value = "获取用户列表")
-    @ApiImplicitParams({
-            @ApiImplicitParam(name = "page", value = "页号", dataType = "Integer"),
-            @ApiImplicitParam(name = "size", value = "页数", dataType = "Integer")
-    })
     @GetMapping
     public Result list(@RequestParam(defaultValue = "0") final Integer page,
                        @RequestParam(defaultValue = "0") final Integer size) {
@@ -116,8 +90,6 @@ public class UserController {
         return ResultGenerator.genOkResult(pageInfo);
     }
 
-    @ApiOperation(value = "用户登录")
-    @ApiImplicitParam(name = "user", value = "用户实体", required = true, dataType = "User")
     @PostMapping("/login")
     public Result login(@RequestBody final User user) {
         // {"username":"admin", "password":"admin123"}
@@ -154,10 +126,8 @@ public class UserController {
         return this.getToken(user);
     }
 
-    @ApiOperation(value = "用户注销")
     @GetMapping("/logout")
-    public Result logout(@AuthenticationPrincipal final UserDetails userDetails) {
-        this.jwtUtil.invalidRedisStore(userDetails.getUsername());
+    public Result logout(final Principal user) {
         return ResultGenerator.genOkResult();
     }
 

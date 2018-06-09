@@ -18,6 +18,12 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 import javax.annotation.Resource;
 
+/**
+ * 安全设置
+ *
+ * @author Zoctan
+ * @date 2018/06/09
+ */
 @Configuration
 @EnableWebSecurity
 @EnableGlobalMethodSecurity(prePostEnabled = true)
@@ -61,13 +67,6 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .exceptionHandling().authenticationEntryPoint(this.jwtAuthenticationEntryPoint).and()
                 // 对所有的请求都做权限校验
                 .authorizeRequests()
-                // 允许匿名请求
-                .antMatchers(
-                        "/swagger-ui.html**",
-                        "/swagger-resources**",
-                        "/webjars/**",
-                        "/v2/**"
-                ).permitAll()
                 // 允许登录和注册
                 .antMatchers(
                         HttpMethod.POST,

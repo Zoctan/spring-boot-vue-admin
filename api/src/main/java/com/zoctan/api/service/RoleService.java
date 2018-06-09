@@ -7,7 +7,8 @@ import com.zoctan.api.model.Role;
 import java.util.List;
 
 /**
- * Created by Zoctan on 2018/02/17.
+ * @author Zoctan
+ * @date 2018/06/09
  */
 public interface RoleService extends Service<Role> {
     List<Resource> findAllRoleWithPermission();

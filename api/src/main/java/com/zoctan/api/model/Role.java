@@ -1,7 +1,6 @@
 package com.zoctan.api.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import lombok.Data;
 import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.GeneratedValue;
@@ -10,7 +9,10 @@ import javax.persistence.Id;
 import javax.persistence.Transient;
 import java.util.List;
 
-@Data
+/**
+ * @author Zoctan
+ * @date 2018/06/09
+ */
 public class Role {
     /**
      * 角色Id
@@ -41,4 +43,36 @@ public class Role {
     @JSONField(serialize = false)
     @Transient
     private List<Integer> permissionIdList;
+
+    public Long getId() {
+        return this.id;
+    }
+
+    public void setId(final Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return this.name;
+    }
+
+    public void setName(final String name) {
+        this.name = name;
+    }
+
+    public List<Resource> getResourceList() {
+        return this.resourceList;
+    }
+
+    public void setResourceList(final List<Resource> resourceList) {
+        this.resourceList = resourceList;
+    }
+
+    public List<Integer> getPermissionIdList() {
+        return this.permissionIdList;
+    }
+
+    public void setPermissionIdList(final List<Integer> permissionIdList) {
+        this.permissionIdList = permissionIdList;
+    }
 }

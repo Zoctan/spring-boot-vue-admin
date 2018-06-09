@@ -23,6 +23,9 @@ import java.util.stream.Collectors;
 
 /**
  * 统一异常处理
+ *
+ * @author Zoctan
+ * @date 2018/06/09
  */
 @RestControllerAdvice
 public class ExceptionResolver {
@@ -75,10 +78,6 @@ public class ExceptionResolver {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(Exception.class)
     public Result globalException(final HttpServletRequest request, final Throwable e) {
-        final Integer status = (Integer) request.getAttribute("javax.servlet.error.status_code");
-        if (status == null) {
-            return ResultGenerator.genInternalServerErrorResult(request.getRequestURI());
-        }
-        return ResultGenerator.genFailedResult(e.getMessage());
+        return ResultGenerator.genInternalServerErrorResult(String.format("%s => %s", request.getRequestURI(), e.getMessage()));
     }
 }

@@ -1,12 +1,13 @@
 package com.zoctan.api.model;
 
-import lombok.Data;
-
 import javax.persistence.Column;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
-@Data
+/**
+ * @author Zoctan
+ * @date 2018/06/09
+ */
 @Table(name = "user_role")
 public class UserRole {
     /**
@@ -30,5 +31,13 @@ public class UserRole {
     public UserRole setUserId(final Long userId) {
         this.userId = userId;
         return this;
+    }
+
+    public Long getUserId() {
+        return this.userId;
+    }
+
+    public Long getRoleId() {
+        return this.roleId;
     }
 }

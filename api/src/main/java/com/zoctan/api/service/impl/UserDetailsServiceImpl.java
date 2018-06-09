@@ -6,16 +6,18 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.Resource;
 import java.util.List;
 import java.util.stream.Collectors;
 
 /**
- * Created by Zoctan on 2018/02/04.
+ * @author Zoctan
+ * @date 2018/06/09
  */
 @Service
-@SuppressWarnings("SpringJavaAutowiringInspection")
+@Transactional(rollbackFor = Exception.class)
 public class UserDetailsServiceImpl implements UserDetailsService {
     @Resource
     private UserService userService;
