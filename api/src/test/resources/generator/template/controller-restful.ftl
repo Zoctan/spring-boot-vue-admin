@@ -12,8 +12,9 @@ import javax.annotation.Resource;
 import java.util.List;
 
 /**
-* Created by ${author} on ${date}.
-*/
+ * @author ${author}
+ * @date ${date}
+ */
 @RestController
 @RequestMapping("${baseRequestMapping}")
 public class ${modelNameUpperCamel}Controller {
@@ -22,25 +23,25 @@ public class ${modelNameUpperCamel}Controller {
 
     @PostMapping
     public Result add(@RequestBody ${modelNameUpperCamel} ${modelNameLowerCamel}) {
-        ${modelNameLowerCamel}Service.save(${modelNameLowerCamel});
+${modelNameLowerCamel}Service.save(${modelNameLowerCamel});
         return ResultGenerator.genOkResult();
     }
 
     @DeleteMapping("/{id}")
     public Result delete(@PathVariable Long id) {
-        ${modelNameLowerCamel}Service.deleteById(id);
+${modelNameLowerCamel}Service.deleteById(id);
         return ResultGenerator.genOkResult();
     }
 
     @PutMapping
     public Result update(@RequestBody ${modelNameUpperCamel} ${modelNameLowerCamel}) {
-        ${modelNameLowerCamel}Service.update(${modelNameLowerCamel});
+${modelNameLowerCamel}Service.update(${modelNameLowerCamel});
         return ResultGenerator.genOkResult();
     }
 
     @GetMapping("/{id}")
     public Result detail(@PathVariable Long id) {
-        ${modelNameUpperCamel} ${modelNameLowerCamel} = ${modelNameLowerCamel}Service.findById(id);
+${modelNameUpperCamel} ${modelNameLowerCamel} = ${modelNameLowerCamel}Service.findById(id);
         return ResultGenerator.genOkResult(${modelNameLowerCamel});
     }
 

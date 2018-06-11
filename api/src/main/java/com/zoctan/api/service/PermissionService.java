@@ -7,8 +7,14 @@ import com.zoctan.api.model.Permission;
 import java.util.List;
 
 /**
- * Created by Zoctan on 2018/02/17.
+ * @author Zoctan
+ * @date 2018/05/17
  */
 public interface PermissionService extends Service<Permission> {
+    /**
+     * 找到所有权限可控资源
+     *
+     * @return Json对象列表
+     */
     List<JSONObject> findAllResourcePermission();
 }

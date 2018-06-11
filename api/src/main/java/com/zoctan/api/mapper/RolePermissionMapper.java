@@ -11,5 +11,12 @@ import java.util.List;
  * @date 2018/06/09
  */
 public interface RolePermissionMapper extends MyMapper<RolePermission> {
-    void saveRolePermission(@Param("roleId") Object roleId, @Param("permissionIdList") List<Integer> permissionIdList);
+    /**
+     * 保存角色以及对应的权限ID
+     *
+     * @param roleId           角色ID
+     * @param permissionIdList 权限ID列表
+     */
+    void saveRolePermission(@Param("roleId") Long roleId,
+                            @Param("permissionIdList") List<Integer> permissionIdList);
 }

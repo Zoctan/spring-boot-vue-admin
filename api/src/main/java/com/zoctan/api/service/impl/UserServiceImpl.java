@@ -110,7 +110,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     }
 
     @Override
-    public void updateLoginTime(final String username) {
+    public void updateLastLoginTimeByUsername(final String username) {
         final Condition condition = new Condition(User.class);
         condition.createCriteria()
                 .andCondition("username = ", username);

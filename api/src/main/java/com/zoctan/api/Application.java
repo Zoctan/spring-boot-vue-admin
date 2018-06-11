@@ -17,7 +17,7 @@ import static com.zoctan.api.core.ProjectConstant.MAPPER_PACKAGE;
  */
 @EnableEncryptableProperties
 @SpringBootApplication
-@EnableTransactionManagement
+@EnableTransactionManagement(proxyTargetClass = true)
 @MapperScan(basePackages = MAPPER_PACKAGE)
 public class Application {
     public static void main(final String[] args) {

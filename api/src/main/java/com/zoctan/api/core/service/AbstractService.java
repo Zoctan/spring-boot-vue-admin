@@ -15,13 +15,15 @@ import java.util.List;
  * 基于通用MyBatis Mapper插件的Service接口的实现
  *
  * @author Zoctan
- * @date 2018/06/09
+ * @date 2018/05/07
  */
 public abstract class AbstractService<T> implements Service<T> {
     @SuppressWarnings("SpringAutowiredFieldsWarningInspection")
     @Autowired
     protected MyMapper<T> mapper;
-    // 当前泛型真实类型的Class
+    /**
+     * 当前泛型真实的 Class
+     */
     private final Class<T> modelClass;
 
     protected AbstractService() {
@@ -69,6 +71,11 @@ public abstract class AbstractService<T> implements Service<T> {
     }
 
     @Override
+    public void delete(final T model) {
+        this.mapper.delete(model);
+    }
+
+    @Override
     public void update(final T model) {
         this.mapper.updateByPrimaryKeySelective(model);
     }
@@ -109,5 +116,10 @@ public abstract class AbstractService<T> implements Service<T> {
     @Override
     public List<T> findAll() {
         return this.mapper.selectAll();
+    }
+
+    @Override
+    public int countByCondition(final Condition condition) {
+        return this.mapper.selectCountByCondition(condition);
     }
 }

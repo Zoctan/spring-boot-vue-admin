@@ -39,6 +39,7 @@ public class UserController {
                            final BindingResult bindingResult) {
         // {"username":"123456", "password":"123456", "email": "123456@qq.com"}
         if (bindingResult.hasErrors()) {
+            //noinspection ConstantConditions
             final String msg = bindingResult.getFieldError().getDefaultMessage();
             return ResultGenerator.genFailedResult(msg);
         } else {
@@ -122,7 +123,7 @@ public class UserController {
             return ResultGenerator.genFailedResult("password error");
         }
         // 更新登录时间
-        this.userService.updateLoginTime(user.getUsername());
+        this.userService.updateLastLoginTimeByUsername(user.getUsername());
         return this.getToken(user);
     }
 

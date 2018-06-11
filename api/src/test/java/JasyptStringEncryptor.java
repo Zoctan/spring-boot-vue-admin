@@ -18,7 +18,7 @@ public class JasyptStringEncryptor {
     private StringEncryptor stringEncryptor;
 
     @Test
-    public void encode() throws Exception {
+    public void encode() {
         final String username = this.stringEncryptor.encrypt("root");
         final String password = this.stringEncryptor.encrypt("root");
 

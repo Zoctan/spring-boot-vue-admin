@@ -1,6 +1,5 @@
 package com.zoctan.api;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,7 +25,7 @@ public abstract class BaseControllerTest {
     MockMvc mockMvc;
 
     @Before
-    public void setUp() throws JsonProcessingException {
+    public void setUp() {
         this.mockMvc = MockMvcBuilders.webAppContextSetup(this.context).build();
     }
 }

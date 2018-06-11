@@ -10,8 +10,9 @@ import org.springframework.transaction.annotation.Transactional;
 import javax.annotation.Resource;
 
 /**
-* Created by ${author} on ${date}.
-*/
+ * @author ${author}
+ * @date ${date}
+ */
 @Service
 @Transactional
 @SuppressWarnings("SpringJavaAutowiringInspection")

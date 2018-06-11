@@ -16,7 +16,7 @@ public class RSASignTest {
      * 加载公私钥pem格式文件测试
      */
     @Test
-    public void test1() throws Exception {
+    public void test1() {
         final PublicKey publicKey = this.rsaUtil.loadPemPublicKey("rsa/public-key.pem");
         final PrivateKey privateKey = this.rsaUtil.loadPemPrivateKey("rsa/private-key.pem");
         Assert.assertNotNull(publicKey);

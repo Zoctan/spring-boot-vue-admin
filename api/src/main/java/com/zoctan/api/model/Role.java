@@ -1,12 +1,12 @@
 package com.zoctan.api.model;
 
 import com.alibaba.fastjson.annotation.JSONField;
-import org.hibernate.validator.constraints.NotEmpty;
 
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Transient;
+import javax.validation.constraints.NotEmpty;
 import java.util.List;
 
 /**

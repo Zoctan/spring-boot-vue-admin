@@ -16,6 +16,7 @@ import static com.zoctan.api.core.ProjectConstant.*;
 /**
  * 代码生成器，根据数据表名称生成对应的Model、MyMapper、Service、Controller简化开发。
  */
+@SuppressWarnings("SameParameterValue")
 class CodeGenerator {
     // JDBC配置，请修改为你项目的实际配置
     private static final String JDBC_URL = "jdbc:mysql://localhost:3306/api_dev" + "?useUnicode=true&characterEncoding=utf-8&useLegacyDatetimeCode=false&serverTimezone=UTC";
