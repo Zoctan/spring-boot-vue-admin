@@ -110,12 +110,7 @@ public class UserServiceImpl extends AbstractService<User> implements UserServic
     }
 
     @Override
-    public void updateLastLoginTimeByUsername(final String username) {
-        final Condition condition = new Condition(User.class);
-        condition.createCriteria()
-                .andCondition("username = ", username);
-        final User user = new User();
-        user.setLastLoginTime(new Timestamp(System.currentTimeMillis()));
-        this.userMapper.updateByConditionSelective(user, condition);
+    public void updateLoginTimeByUsername(final String username) {
+        this.userMapper.updateLoginTimeByUsername(username);
     }
 }

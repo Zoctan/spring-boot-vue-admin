@@ -16,6 +16,8 @@
 
 <img src="https://github.com/Zoctan/spring-boot-vue-admin/blob/master/README/3.png"/>
 
+<img src="https://github.com/Zoctan/spring-boot-vue-admin/blob/master/README/4.png"/>
+
 # Demo
 
 在线 Demo：[暂无]()

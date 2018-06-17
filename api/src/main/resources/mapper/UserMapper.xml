@@ -10,7 +10,7 @@
         <result column="avatar" jdbcType="VARCHAR" property="avatar"/>
         <result column="resume" jdbcType="VARCHAR" property="resume"/>
         <result column="register_time" jdbcType="TIMESTAMP" property="registerTime"/>
-        <result column="last_login_time" jdbcType="TIMESTAMP" property="lastLoginTime"/>
+        <result column="login_time" jdbcType="TIMESTAMP" property="loginTime"/>
     </resultMap>
 
     <resultMap id="UserWithRoleMap" type="com.zoctan.api.model.User" extends="UserMap">
@@ -52,5 +52,11 @@
             <if test="username != null">u.username = #{username}</if>
         </where>
     </select>
+
+    <update id="updateLoginTimeByUsername">
+        UPDATE `user` SET
+        login_time = NOW()
+        WHERE username = #{username}
+    </update>
 
 </mapper>

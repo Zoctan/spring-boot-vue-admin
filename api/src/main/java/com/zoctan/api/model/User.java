@@ -62,8 +62,8 @@ public class User {
     /**
      * 上一次登录时间
      */
-    @Column(name = "last_login_time")
-    private Timestamp lastLoginTime;
+    @Column(name = "login_time")
+    private Timestamp loginTime;
 
     /* ---------- 以下字段来自联表查询 ------------*/
     /**
@@ -141,14 +141,6 @@ public class User {
         this.registerTime = registerTime;
     }
 
-    public Timestamp getLastLoginTime() {
-        return this.lastLoginTime;
-    }
-
-    public void setLastLoginTime(final Timestamp lastLoginTime) {
-        this.lastLoginTime = lastLoginTime;
-    }
-
     public Long getRoleId() {
         return this.roleId;
     }
@@ -171,5 +163,13 @@ public class User {
 
     public void setPermissionCodeList(final List<String> permissionCodeList) {
         this.permissionCodeList = permissionCodeList;
+    }
+
+    public Timestamp getLoginTime() {
+        return loginTime;
+    }
+
+    public void setLoginTime(Timestamp loginTime) {
+        this.loginTime = loginTime;
     }
 }

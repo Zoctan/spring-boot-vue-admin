@@ -42,7 +42,7 @@ public interface UserService extends Service<User> {
      *
      * @param username 用户名
      */
-    void updateLastLoginTimeByUsername(String username);
+    void updateLoginTimeByUsername(String username);
 
     /**
      * 验证用户密码

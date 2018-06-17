@@ -123,7 +123,7 @@ public class UserController {
             return ResultGenerator.genFailedResult("password error");
         }
         // 更新登录时间
-        this.userService.updateLastLoginTimeByUsername(user.getUsername());
+        this.userService.updateLoginTimeByUsername(user.getUsername());
         return this.getToken(user);
     }
 

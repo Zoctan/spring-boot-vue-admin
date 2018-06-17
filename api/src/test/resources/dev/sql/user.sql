@@ -1,6 +1,6 @@
 -- MySQL dump 10.16  Distrib 10.1.26-MariaDB, for debian-linux-gnu (x86_64)
 --
--- Host: localhost    Database: api_dev
+-- Host: localhost    Database: admin_dev
 -- ------------------------------------------------------
 -- Server version	10.1.26-MariaDB-0+deb9u1
 
@@ -30,7 +30,7 @@ CREATE TABLE `user` (
   `avatar` varchar(1024) DEFAULT 'https://www.tupianku.com/view/large/13862/640.jpeg' COMMENT '头像',
   `resume` varchar(512) CHARACTER SET utf8 COLLATE utf8_bin DEFAULT NULL COMMENT '简介',
   `register_time` datetime DEFAULT CURRENT_TIMESTAMP COMMENT '注册时间',
-  `last_login_time` datetime DEFAULT NULL COMMENT '上一次登录时间',
+  `login_time` datetime DEFAULT NULL COMMENT '上一次登录时间',
   PRIMARY KEY (`id`),
   UNIQUE KEY `ix_user_username` (`username`),
   UNIQUE KEY `ix_user_email` (`email`)

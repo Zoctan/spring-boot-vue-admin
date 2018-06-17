@@ -113,6 +113,8 @@ public class JwtUtil {
                         .setExpiration(date)
                         // 512位的私钥加密生成签名
                         .signWith(SignatureAlgorithm.RS256, privateKey)
+                        // 哈夫曼压缩
+                        .compressWith(CompressionCodecs.DEFLATE)
                         .compact();
     }
 
