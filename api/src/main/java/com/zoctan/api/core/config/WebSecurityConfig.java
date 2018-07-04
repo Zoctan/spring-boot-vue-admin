@@ -57,9 +57,9 @@ class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(final HttpSecurity http)
             throws Exception {
-        http    // 关闭cors验证
+        http    // 关闭cors
                 .cors().disable()
-                // 关闭csrf验证
+                // 关闭csrf
                 .csrf().disable()
                 // 无状态Session
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()

@@ -2,6 +2,8 @@ package com.zoctan.api.core.exception;
 
 import com.zoctan.api.core.response.Result;
 import com.zoctan.api.core.response.ResultGenerator;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.dao.DataAccessException;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.AccessDeniedException;
@@ -29,55 +31,64 @@ import java.util.stream.Collectors;
  */
 @RestControllerAdvice
 public class ExceptionResolver {
+    private final static Logger log = LoggerFactory.getLogger(ExceptionResolver.class);
 
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     @ExceptionHandler(ConstraintViolationException.class)
-    public Result handle400(final ConstraintViolationException e) {
+    public Result validatorException(final ConstraintViolationException e) {
+        log.error("验证实体异常 => {}", e.getMessage());
         final String msg = e.getConstraintViolations().stream()
                 .map(ConstraintViolation::getMessage)
                 .collect(Collectors.joining(","));
         return ResultGenerator.genFailedResult(msg);
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler({ServiceException.class, ServletException.class})
-    public Result handle400(final Throwable e) {
+    public Result serviceException(final Throwable e) {
+        log.error("服务异常 => {}", e.getMessage());
         return ResultGenerator.genFailedResult(e.getMessage());
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler({SQLException.class, DataAccessException.class})
-    public Result handle400() {
+    public Result databaseException(final Throwable e) {
+        log.error("数据库异常 => {}", e.getMessage());
         return ResultGenerator.genFailedResult("database error");
     }
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
     @ExceptionHandler({BadCredentialsException.class, AuthenticationException.class})
-    public Result handle401(final Throwable e) {
+    public Result authException(final Throwable e) {
+        log.error("身份验证异常 => {}", e.getMessage());
         return ResultGenerator.genUnauthorizedResult(e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.FORBIDDEN)
     @ExceptionHandler({AccessDeniedException.class, UsernameNotFoundException.class})
-    public Result handle403(final Throwable e) {
+    public Result userException(final Throwable e) {
+        log.error("用户异常 => {}", e.getMessage());
         return ResultGenerator.genFailedResult(e.getMessage());
     }
 
     @ResponseStatus(HttpStatus.NOT_FOUND)
     @ExceptionHandler(NoHandlerFoundException.class)
-    public Result handle404(final HttpServletRequest request) {
+    public Result apiNotFound(final Throwable e, final HttpServletRequest request) {
+        log.error("API 不存在 => {}", e.getMessage());
         return ResultGenerator.genFailedResult("API [" + request.getRequestURI() + "] not existed");
     }
 
     @ResponseStatus(HttpStatus.METHOD_NOT_ALLOWED)
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public Result handle405() {
+    public Result methodNotSupport(final Throwable e) {
+        log.error("方法异常 => {}", e.getMessage());
         return ResultGenerator.genMethodErrorResult();
     }
 
-    @ResponseStatus(HttpStatus.BAD_REQUEST)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     @ExceptionHandler(Exception.class)
     public Result globalException(final HttpServletRequest request, final Throwable e) {
+        log.error("全局异常 => {}", e.getMessage());
         return ResultGenerator.genInternalServerErrorResult(String.format("%s => %s", request.getRequestURI(), e.getMessage()));
     }
 }
