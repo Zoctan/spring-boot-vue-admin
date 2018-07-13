@@ -41,9 +41,9 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
         response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTIONS");
         response.setHeader("Access-Control-Max-Age", "3600");
         response.setHeader("Access-Control-Expose-Headers", "*");
+
         // 预请求后，直接返回
         // 返回码必须为 200 否则视为请求失败
-
         if ("OPTIONS".equals(request.getMethod())) {
             return;
         }

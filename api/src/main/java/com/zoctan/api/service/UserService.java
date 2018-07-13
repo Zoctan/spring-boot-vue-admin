@@ -27,7 +27,6 @@ public interface UserService extends Service<User> {
      */
     User findDetailBy(String column, Object param);
 
-
     /**
      * 按用户名查询用户信息
      *
