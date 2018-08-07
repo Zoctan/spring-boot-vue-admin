@@ -26,7 +26,7 @@ public class RoleServiceImpl extends AbstractService<Role> implements RoleServic
     private RolePermissionMapper rolePermissionMapper;
 
     @Override
-    public List<com.zoctan.api.model.Resource> findAllRoleWithPermission() {
+    public List<Role> findAllRoleWithPermission() {
         return this.roleMapper.findAllRoleWithPermission();
     }
 

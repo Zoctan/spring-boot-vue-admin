@@ -16,5 +16,5 @@ public interface RoleService extends Service<Role> {
      *
      * @return 角色可控资源列表
      */
-    List<Resource> findAllRoleWithPermission();
+    List<Role> findAllRoleWithPermission();
 }

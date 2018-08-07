@@ -48,9 +48,9 @@ public class RoleController {
     public Result list(@RequestParam(defaultValue = "0") final Integer page,
                        @RequestParam(defaultValue = "0") final Integer size) {
         PageHelper.startPage(page, size);
-        final List<com.zoctan.api.model.Resource> list = this.roleService.findAllRoleWithPermission();
-        //noinspection unchecked
-        final PageInfo pageInfo = new PageInfo(list);
+        final List<Role> list = this.roleService.findAllRoleWithPermission();
+        final PageInfo<Role> pageInfo = new PageInfo<>(list);
+        pageInfo.setTotal(list.size());
         return ResultGenerator.genOkResult(pageInfo);
     }
 }

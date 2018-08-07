@@ -1,6 +1,6 @@
-# RESTful API
+# RESTFul API
 
-主要介绍后端 API 的角色权限控制。参考博文 [Role-Based Access Control 新解](http://globeeip.iteye.com/blog/1236167)。
+主要介绍后端 API 的角色权限控制。
 
 ## 数据库设计
 
@@ -53,10 +53,10 @@ Spring Security + Json Web Token 鉴权：
 
 // 为了方便，角色和权限都放在一起
 // 权限
-final List<SimpleGrantedAuthority> authorities =
+List<SimpleGrantedAuthority> authorities =
         user.getPermissionCodeList().stream()
-                .map(SimpleGrantedAuthority::new)
-                .collect(Collectors.toList());
+            .map(SimpleGrantedAuthority::new)
+            .collect(Collectors.toList());
 // 角色
 authorities.add(new SimpleGrantedAuthority(user.getRoleName()));
 // [ROLE_TEST, role:list, user:list]
@@ -110,15 +110,9 @@ response.setHeader("Access-Control-Allow-Methods", "GET, POST, PUT, DELETE, OPTI
 response.setHeader("Access-Control-Max-Age", "3600");
 response.setHeader("Access-Control-Expose-Headers", "*");
 
-// axios 预请求后，直接返回
+// 预请求后，直接返回
 // 返回码必须为 200 否则视为请求失败
 if (request.getMethod().equals("OPTIONS")) {
     return;
 }
 ```
-
-## redis 缓存
-
-项目默认开了 redis 服务，密码 root。
-
-如不需要请清除所有 redis 相关代码。

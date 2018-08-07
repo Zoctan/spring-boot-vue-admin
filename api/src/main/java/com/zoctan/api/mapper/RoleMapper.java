@@ -16,5 +16,5 @@ public interface RoleMapper extends MyMapper<Role> {
      *
      * @return 角色可控资源列表
      */
-    List<Resource> findAllRoleWithPermission();
+    List<Role> findAllRoleWithPermission();
 }

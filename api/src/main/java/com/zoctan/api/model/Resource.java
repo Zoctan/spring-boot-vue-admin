@@ -14,6 +14,8 @@ import java.util.List;
  * @date 2018/06/09
  */
 public class Resource extends JSONObject {
+    private String resource;
+
     private List<JSONObject> handleList;
 
     public List<JSONObject> getHandleList() {
@@ -22,5 +24,13 @@ public class Resource extends JSONObject {
 
     public void setHandleList(final List<JSONObject> handleList) {
         this.handleList = handleList;
+    }
+
+    public String getResource() {
+        return resource;
+    }
+
+    public void setResource(String resource) {
+        this.resource = resource;
     }
 }

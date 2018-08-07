@@ -50,7 +50,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         final String token = this.jwtUtil.getTokenFromRequest(request);
         if (token == null) {
-            log.info("JwtFilter => Anonymous<> request URL<{}> Method<{}>", IpUtil.getIpAddress(request), request.getRequestURL(), request.getMethod());
+            log.info("JwtFilter => Anonymous<{}> request URL<{}> Method<{}>", IpUtil.getIpAddress(request), request.getRequestURL(), request.getMethod());
         } else {
             final String username = this.jwtUtil.getUsername(token);
             log.info("JwtFilter => user<{}> token : {}", username, token);
