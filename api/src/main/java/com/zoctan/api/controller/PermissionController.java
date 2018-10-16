@@ -30,8 +30,8 @@ public class PermissionController {
     public Result listResourcePermission(@RequestParam(defaultValue = "0") final Integer page,
                                          @RequestParam(defaultValue = "0") final Integer size) {
         PageHelper.startPage(page, size);
-        final List<JSONObject> list = this.permissionService.findAllResourcePermission();
-        final PageInfo<JSONObject> pageInfo = new PageInfo<>(list);
+        final List<com.zoctan.api.model.Resource> list = this.permissionService.findResourceWithHandle();
+        final PageInfo<com.zoctan.api.model.Resource> pageInfo = new PageInfo<>(list);
         return ResultGenerator.genOkResult(pageInfo);
     }
 }

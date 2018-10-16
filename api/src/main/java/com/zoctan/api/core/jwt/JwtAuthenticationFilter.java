@@ -50,11 +50,11 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
 
         final String token = this.jwtUtil.getTokenFromRequest(request);
         if (token == null) {
-            log.info("JwtFilter => Anonymous<{}> request URL<{}> Method<{}>", IpUtil.getIpAddress(request), request.getRequestURL(), request.getMethod());
+            log.info("=> Anonymous<{}> request URL<{}> Method<{}>", IpUtil.getIpAddress(request), request.getRequestURL(), request.getMethod());
         } else {
             final String username = this.jwtUtil.getUsername(token);
-            log.info("JwtFilter => user<{}> token : {}", username, token);
-            log.info("JwtFilter => request URL<{}> Method<{}>", request.getRequestURL(), request.getMethod());
+            log.info("=> user<{}> token : {}", username, token);
+            log.info("=> request URL<{}> Method<{}>", request.getRequestURL(), request.getMethod());
 
             if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
                 final UsernamePasswordAuthenticationToken authentication = this.jwtUtil.getAuthentication(username, token);
@@ -62,7 +62,7 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter {
                 authentication.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
 
                 SecurityContextHolder.getContext().setAuthentication(authentication);
-                log.info("JwtFilter => user<{}> is authorized, set security context", username);
+                log.info("=> user<{}> is authorized, set security context", username);
             }
         }
         filterChain.doFilter(request, response);

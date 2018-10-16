@@ -1,6 +1,5 @@
 package com.zoctan.api.service.impl;
 
-import com.alibaba.fastjson.JSONObject;
 import com.zoctan.api.core.service.AbstractService;
 import com.zoctan.api.mapper.PermissionMapper;
 import com.zoctan.api.model.Permission;
@@ -22,7 +21,12 @@ public class PermissionServiceImpl extends AbstractService<Permission> implement
     private PermissionMapper permissionMapper;
 
     @Override
-    public List<JSONObject> findAllResourcePermission() {
-        return this.permissionMapper.findAllResourcePermission();
+    public List<com.zoctan.api.model.Resource> findResourceWithHandle() {
+        return this.permissionMapper.findResourceWithHandle();
+    }
+
+    @Override
+    public List<com.zoctan.api.model.Resource> findRoleWithResourceByRoleId(Long roleId) {
+        return this.permissionMapper.findRoleWithResourceByRoleId(roleId);
     }
 }

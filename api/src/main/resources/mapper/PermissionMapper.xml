@@ -8,19 +8,29 @@
         <result column="handle" jdbcType="VARCHAR" property="handle"/>
     </resultMap>
 
-    <resultMap id="ResourceHandleMap" type="com.zoctan.api.model.Resource">
+    <resultMap id="ResourceWithHandleMap" type="com.zoctan.api.model.Resource">
         <result column="resource" jdbcType="VARCHAR" property="resource"/>
-        <collection property="handleList" ofType="com.alibaba.fastjson.JSONObject">
+        <collection property="handleList" ofType="com.zoctan.api.model.Handle">
             <id column="id" jdbcType="BIGINT" property="id"/>
             <result column="handle" jdbcType="VARCHAR" property="handle"/>
         </collection>
     </resultMap>
 
-    <select id="findAllResourcePermission" resultMap="ResourceHandleMap">
+    <select id="findResourceWithHandle" resultMap="ResourceWithHandleMap">
         SELECT
-        p.resource,
         p.id,
+        p.resource,
         p.handle
         FROM `permission` p
+    </select>
+
+    <select id="findRoleWithResourceByRoleId" resultMap="ResourceWithHandleMap">
+        SELECT
+        p.id,
+        p.resource,
+        p.handle
+        FROM `permission` p
+        LEFT JOIN `role_permission` rp ON rp.role_id = #{roleId}
+        WHERE p.id = rp.permission_id
     </select>
 </mapper>
