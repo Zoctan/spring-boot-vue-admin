@@ -11,8 +11,7 @@ import org.springframework.stereotype.Component;
 
 import javax.crypto.Cipher;
 import java.io.DataInputStream;
-import java.io.File;
-import java.io.FileInputStream;
+import java.io.InputStream;
 import java.security.*;
 import java.security.spec.PKCS8EncodedKeySpec;
 import java.security.spec.X509EncodedKeySpec;
@@ -87,10 +86,9 @@ public class RSAUtil {
     private byte[] replaceAndBase64Decode(final String file, final String headReplace, final String tailReplace) throws Exception {
         final ResourceLoader loader = new DefaultResourceLoader();
         final Resource resource = loader.getResource(file);
-        final File f = resource.getFile();
-        final FileInputStream fis = new FileInputStream(f);
+        final InputStream fis = resource.getInputStream();
         final DataInputStream dis = new DataInputStream(fis);
-        final byte[] keyBytes = new byte[(int) f.length()];
+        final byte[] keyBytes = new byte[(int) resource.contentLength()];
         dis.readFully(keyBytes);
         dis.close();
 
