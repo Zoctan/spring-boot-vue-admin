@@ -11,8 +11,6 @@
 
 后端思路参考[《Role-Based Access Control 新解》](http://globeeip.iteye.com/blog/1236167)，模板来自 [spring-boot-api-seedling](https://github.com/Zoctan/spring-boot-api-seedling.git)，设计思路请看 api 的 [README](https://github.com/Zoctan/spring-boot-vue-admin/tree/master/api)。
 
-> 后端模板 seedling 改动比该 admin 项目快，由于代码基本差不多，除了业务逻辑，请尽量参考模板 seedling。
-
 ## 预览
 
 ![权限列表](https://github.com/Zoctan/spring-boot-vue-admin/blob/master/README/1.png)
@@ -31,12 +29,14 @@
 
 前端依赖 | 版本
 --------|------
-node    | 10.5.0
-npm     | 6.1.0
+node    | 8.16.1
+npm     | 6.4.1
 
 后端依赖    | 版本
 -----------|------
-SpringBoot | 2.0.2
+SpringBoot | 2.1.6
+
+其他依赖版本没有测试，请自行测试，如有问题请提 issues。
 
 ## 快速开始
 
@@ -79,4 +79,6 @@ npm ERR! enoent ENOENT: no such file or directory, rename '/workspace/spring-boo
 
 ## 更新日志
 
-2018-06-10 由于 Redis 主要充当缓存数据库，但在该项目没起多大作用，故而移除 Redis。注意，如果需要在注销时使得 token 无效就需要搭配使用 Redis，可以自行根据后端模板进行添加。
+2019-10-16 回退 webpack 版本，暂时没时间修复新版问题。更新已发现的问题，完全按照后端模板 [spring-boot-api-seedling](https://github.com/Zoctan/spring-boot-api-seedling.git) 添加业务。
+
+~~2018-06-10 由于 Redis 主要充当缓存数据库，但在该项目没起多大作用，故而移除 Redis。注意，如果需要在注销时使得 token 无效就需要搭配使用 Redis，可以自行根据后端模板进行添加。~~
