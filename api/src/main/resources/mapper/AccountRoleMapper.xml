@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zoctan.api.entity.AccountRoleMapper">
+    <resultMap id="BaseResultMap" type="com.zoctan.api.entity.AccountRole">
+        <id column="account_id" jdbcType="BIGINT" property="accountId"/>
+        <id column="role_id" jdbcType="BIGINT" property="roleId"/>
+    </resultMap>
+
+    <update id="updateRoleIdByAccountId" parameterType="com.zoctan.api.entity.AccountRole">
+        UPDATE account_role
+        SET role_id = #{accountRole.roleId}
+        WHERE account_id = #{accountRole.accountId}
+    </update>
+</mapper>

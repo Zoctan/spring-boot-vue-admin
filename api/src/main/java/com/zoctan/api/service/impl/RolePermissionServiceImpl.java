@@ -1,11 +1,11 @@
 package com.zoctan.api.service.impl;
 
-import com.zoctan.api.core.service.AbstractService;
-import com.zoctan.api.mapper.RolePermissionMapper;
-import com.zoctan.api.model.RolePermission;
-import com.zoctan.api.service.RolePermissionService;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.zoctan.api.core.service.AbstractService;
+import com.zoctan.api.mapper.RolePermissionMapper;
+import com.zoctan.api.entity.RolePermission;
+import com.zoctan.api.service.RolePermissionService;
 
 import javax.annotation.Resource;
 
@@ -15,8 +15,7 @@ import javax.annotation.Resource;
  */
 @Service
 @Transactional(rollbackFor = Exception.class)
-public class RolePermissionServiceImpl extends AbstractService<RolePermission> implements RolePermissionService {
-    @Resource
-    private RolePermissionMapper rolePermissionMapper;
-
+public class RolePermissionServiceImpl extends AbstractService<RolePermission>
+    implements RolePermissionService {
+  @Resource private RolePermissionMapper rolePermissionMapper;
 }

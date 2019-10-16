@@ -1,0 +1,71 @@
+spring:
+  profiles:
+    # 激活的配置
+    active: dev
+  # 终端彩色输出信息
+  output.ansi.enabled: ALWAYS
+  resources:
+    # 不映射工程中的静态资源文件比如：html、css
+    # 如果某些情况需要映射
+    # 比如 swagger2，可以在 addResourceHandlers 和 addViewControllers 中特别添加，参考 WebMvcConfig
+    add-mappings: false
+  mvc:
+    # 当出现 404 错误时，直接抛出异常（默认是显示一个错误页面）
+    throw-exception-if-no-handler-found: true
+  freemarker:
+    # 关闭模版检查
+    checkTemplateLocation: false
+
+rsa:
+  # 私钥位置
+  # private-key-path: rsa/private-key.pem
+  # 公钥位置
+  # public-key-path: rsa/public-key.pem
+  use-file: false
+  private-key: MIIBVQIBADANBgkqhkiG9w0BAQEFAASCAT8wggE7AgEAAkEA2Xjcb+LtTzoPalaHpRDvCGt10f1AOpMGhmNvJKTewhLZb8ChmcLAkCFhh9C1jqpnin2hbAf05ALtn/xLdboznwIDAQABAkEAhc3iO4kxH9UGVRQmY352xARyOqCKWz/I/PjDEpXKZTdWs1oqTM2lpYBlpnV/fJ3Sf2es6Sv6reLCLP7MZP1KGQIhAP0+wZ0c1YBVJvkkHHmhnGyaU1Bsb1alPY4A2sM97Q0lAiEA29Z7rVhw4Fgx201uhnwb0dqiuXfCZM1+fVDyTSg0XHMCIBZencGgE2fjna6yNuWzldquAx/+hBM2Q2qwvqIybScVAiEAlFhnnNHRWZIqEpJtwtJ8819V71GhG+SPNoEpAGfg7YECIHPReHdJdfBehhD1o63xH+gTZqliK4n6XvBhkcyWNYdS
+  public-key: MFwwDQYJKoZIhvcNAQEBBQADSwAwSAJBANl43G/i7U86D2pWh6UQ7whrddH9QDqTBoZjbySk3sIS2W/AoZnCwJAhYYfQtY6qZ4p9oWwH9OQC7Z/8S3W6M58CAwEAAQ==
+
+jasypt.encryptor:
+  # 先 RSA + 后 Base64 加密的密码
+  # 在 JasyptConfig#myStringEncryptor 中先解密后再使用
+  password: VQoiLSHvARy1uHWnZGb8dLwy8Mx9wvanJq1oDT/0fudbF0tjs8LWYkGGPQdIkBjioms1RcQNOoYQRH8gAtphPg==
+  # 自定义的加密器
+  bean: myStringEncryptor
+  # 自定义被加密值的发现器
+  property:
+    detector-bean: myEncryptablePropertyDetector
+
+mybatis:
+  # 存放实体的位置
+  type-aliases-package: com.zoctan.api.entity
+  # 存放 mapper 映射文件的位置
+  mapper-locations: classpath:mapper/*.xml
+
+mapper:
+  # 多个接口时逗号隔开
+  mappers: com.zoctan.api.core.mapper.MyMapper
+  # insert 和 update 中，判断字符串类型 != ''
+  not-empty: false
+  # 取回主键的方式
+  identity: MYSQL
+
+# 分页插件
+# https://github.com/pagehelper/Mybatis-PageHelper/blob/master/wikis/zh/HowToUse.md
+pagehelper:
+  # pageSize=0 时查出所有结果，相当于没分页
+  page-size-zero: true
+  # 数据库方言
+  helperDialect: mysql
+  # 分页合理化
+  # pageNum <= 0 时会查询第一页
+  # pageNum > pages（超过总数时），会查询最后一页
+  reasonable: true
+  # 支持通过 Mapper 接口参数来传递分页参数
+  supportMethodsArguments: true
+
+# 日志
+#logging:
+#  # 以文件方式记录日志
+#  file: admin.log
+#  # 设置目录
+#  path: /var/log

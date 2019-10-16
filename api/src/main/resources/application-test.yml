@@ -1,0 +1,34 @@
+server:
+  port: 8080
+
+spring:
+  datasource:
+    url: jdbc:mysql://localhost:3306/admin_test?useUnicode=true&useSSL=false&allowMultiQueries=true&characterEncoding=utf-8&useLegacyDatetimeCode=false&serverTimezone=UTC
+    username: root
+    password: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  cache:
+    type: redis
+    redis:
+      key-prefix: admin_test
+      time-to-live: 60s
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    #password: root
+    jedis.pool:
+      max-active: 8
+      max-wait: -1ms
+      max-idle: 8
+      min-idle: 0
+
+logging:
+  level.com.zoctan.api: info
+
+jwt:
+  admin-expire-time: 7d
+  wechat-expire-time: 30d
+  claim-key-auth: auth
+  header: Authorization
+  token-type: Bearer

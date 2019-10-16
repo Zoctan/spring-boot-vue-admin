@@ -1,6 +1,6 @@
 package com.zoctan.api.dto;
 
-import com.zoctan.api.model.Role;
+import com.zoctan.api.entity.Role;
 
 import java.util.List;
 
@@ -9,17 +9,14 @@ import java.util.List;
  * @date 2018/10/16
  */
 public class RoleWithPermission extends Role {
-    /**
-     * 角色对应的权限Id列表
-     */
-    private List<Integer> permissionIdList;
+  /** 角色对应的权限Id列表 */
+  private List<Integer> permissionIdList;
 
-    public List<Integer> getPermissionIdList() {
-        return this.permissionIdList;
-    }
+  public List<Integer> getPermissionIdList() {
+    return this.permissionIdList;
+  }
 
-    public void setPermissionIdList(final List<Integer> permissionIdList) {
-        this.permissionIdList = permissionIdList;
-    }
-
+  public void setPermissionIdList(final List<Integer> permissionIdList) {
+    this.permissionIdList = permissionIdList;
+  }
 }

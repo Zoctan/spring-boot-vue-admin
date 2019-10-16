@@ -1,36 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.zoctan.api.mapper.PermissionMapper">
-    <resultMap id="PermissionMap" type="com.zoctan.api.model.Permission">
+    <resultMap id="PermissionMap" type="com.zoctan.api.entity.Permission">
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="resource" jdbcType="VARCHAR" property="resource"/>
         <result column="code" jdbcType="VARCHAR" property="code"/>
         <result column="handle" jdbcType="VARCHAR" property="handle"/>
     </resultMap>
 
-    <resultMap id="ResourceWithHandleMap" type="com.zoctan.api.model.Resource">
+    <resultMap id="ResourceWithHandleMap" type="com.zoctan.api.entity.Resource">
         <result column="resource" jdbcType="VARCHAR" property="resource"/>
-        <collection property="handleList" ofType="com.zoctan.api.model.Handle">
+        <collection property="handleList" ofType="com.zoctan.api.entity.Handle">
             <id column="id" jdbcType="BIGINT" property="id"/>
             <result column="handle" jdbcType="VARCHAR" property="handle"/>
         </collection>
     </resultMap>
 
-    <select id="findResourceWithHandle" resultMap="ResourceWithHandleMap">
-        SELECT
-        p.id,
-        p.resource,
-        p.handle
-        FROM `permission` p
+    <select id="listResourceWithHandle" resultMap="ResourceWithHandleMap">
+        SELECT p.id,
+               p.resource,
+               p.handle
+        FROM permission p
     </select>
 
-    <select id="findRoleWithResourceByRoleId" resultMap="ResourceWithHandleMap">
-        SELECT
-        p.id,
-        p.resource,
-        p.handle
-        FROM `permission` p
-        LEFT JOIN `role_permission` rp ON rp.role_id = #{roleId}
+    <select id="listRoleWithResourceByRoleId" resultMap="ResourceWithHandleMap">
+        SELECT p.id,
+               p.resource,
+               p.handle
+        FROM permission p
+                 LEFT JOIN role_permission rp ON rp.role_id = #{roleId}
         WHERE p.id = rp.permission_id
     </select>
 </mapper>

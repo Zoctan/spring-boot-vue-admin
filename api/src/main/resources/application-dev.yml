@@ -1,0 +1,62 @@
+server:
+  port: 8080
+
+spring:
+  devtools:
+    restart:
+      # 修改代码后自动重启
+      enabled: true
+  # 数据源（应该全部加密）
+  datasource:
+    # 连接，注意各个配置，尤其是要一次性执行多条 SQL 时，要 allowMultiQueries=true
+    url: jdbc:mysql://localhost:3306/admin_dev?useUnicode=true&useSSL=false&allowMultiQueries=true&characterEncoding=utf-8&useLegacyDatetimeCode=false&serverTimezone=UTC
+    # 用户名 root
+    username: MyEnc({btTSNb3PH7saU2yQ7FeCsQ==})
+    # 密码 root
+    password: MyEnc({VuLn6kkmZXt1402C9w9xUA==})
+    # 驱动类
+    driver-class-name: com.mysql.cj.jdbc.Driver
+  cache:
+    # 缓存类型
+    type: redis
+    redis:
+      # key 前缀
+      key-prefix: admin_dev
+      # 过期时间
+      time-to-live: 60s
+  redis:
+    # 数据库索引（默认为0）
+    database: 0
+    # 服务器地址
+    host: 127.0.0.1
+    # 服务器连接端口
+    port: 6379
+    # 服务器连接密码 root
+    #    password: MyEnc({eCOS8Sk9b/kWt2FK0QFA9g==})
+    jedis.pool:
+      # 连接池最大连接数（使用负值表示没有限制）
+      max-active: 8
+      # 连接池最大阻塞等待时间（使用负值表示没有限制）
+      max-wait: -1ms
+      # 连接池中的最大空闲连接
+      max-idle: 8
+      # 连接池中的最小空闲连接
+      min-idle: 0
+
+logging:
+  # 日志级别
+  level.com.zoctan.api: debug
+
+# Json web token
+jwt:
+  # 管理后台过期时间
+  admin-expire-time: 1d
+  # 小程序前台过期时间
+  wechat-expire-time: 30d
+  # claim 权限 key
+  claim-key-auth: auth
+  # 请求头或请求参数的 key
+  header: Authorization
+  # token 类型
+  token-type: Bearer
+

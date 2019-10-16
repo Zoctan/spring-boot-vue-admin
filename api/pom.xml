@@ -6,21 +6,58 @@
     <groupId>com.github.zoctan</groupId>
     <artifactId>api</artifactId>
     <version>1.0</version>
-    <packaging>jar</packaging>
-
-    <properties>
-        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <java.version>1.8</java.version>
-    </properties>
+    <!-- 打包类型 -->
+    <packaging>war</packaging>
 
     <!-- Inherit defaults from Spring Boot -->
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.0.2.RELEASE</version>
+        <version>2.1.6.RELEASE</version>
     </parent>
+
+    <properties>
+        <!-- 打包配置 -->
+        <java.version>1.8</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+        <!-- 依赖版本 -->
+        <spring-security-test.version>5.1.5.RELEASE</spring-security-test.version>
+        <thumbnailator.version>0.4.8</thumbnailator.version>
+        <http-request.version>6.0</http-request.version>
+        <swagger2.version>2.9.2</swagger2.version>
+        <jjwt.version>0.9.1</jjwt.version>
+        <mysql-connector.version>8.0.17</mysql-connector.version>
+        <jedis.version>2.10.2</jedis.version>
+        <commons-codec.version>1.12</commons-codec.version>
+        <commons-lang3.version>3.9</commons-lang3.version>
+        <commons-beanutils.version>1.9.3</commons-beanutils.version>
+        <guava.version>28.0-jre</guava.version>
+        <bcprov.version>1.62</bcprov.version>
+        <mybatis.version>1.3.2</mybatis.version>
+        <mybatis-generator.version>1.3.7</mybatis-generator.version>
+        <mapper.version>2.1.5</mapper.version>
+        <pagehelper.version>1.2.12</pagehelper.version>
+        <fastjson.version>1.2.58</fastjson.version>
+        <druid.version>1.1.18</druid.version>
+        <!-- latest not work-->
+        <jasypt.version>2.1.0</jasypt.version>
+        <freemarker.version>2.3.28</freemarker.version>
+        <lombok.version>1.18.8</lombok.version>
+    </properties>
+
     <dependencies>
+        <!-- swagger2 -->
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger2</artifactId>
+            <version>${swagger2.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>io.springfox</groupId>
+            <artifactId>springfox-swagger-ui</artifactId>
+            <version>${swagger2.version}</version>
+        </dependency>
         <!-- spring security + json web token -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -29,12 +66,23 @@
         <dependency>
             <groupId>io.jsonwebtoken</groupId>
             <artifactId>jjwt</artifactId>
-            <version>0.9.0</version>
+            <version>${jjwt.version}</version>
+        </dependency>
+        <!-- MySQL JDBC驱动 -->
+        <dependency>
+            <groupId>mysql</groupId>
+            <artifactId>mysql-connector-java</artifactId>
+            <version>${mysql-connector.version}</version>
         </dependency>
         <!-- Spring Boot依赖 -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-jdbc</artifactId>
+            <artifactId>spring-boot-configuration-processor</artifactId>
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>
@@ -44,63 +92,92 @@
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-tomcat</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-jetty</artifactId>
+        </dependency>
+        <!-- MockMvc带Auth测试需要 -->
+        <!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-test -->
+        <dependency>
+            <groupId>org.springframework.security</groupId>
+            <artifactId>spring-security-test</artifactId>
+            <version>${spring-security-test.version}</version>
+            <scope>test</scope>
+        </dependency>
+        <!-- 热部署 -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-devtools</artifactId>
+            <!-- optional=true，依赖不会传递，该项目依赖devtools，之后依赖该项目的子项目要使用devtools，需重新引入 -->
+            <optional>true</optional>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
+        </dependency>
+        <!-- redis -->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.lettuce</groupId>
+                    <artifactId>lettuce-core</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <!-- https://github.com/xetorthio/jedis -->
+        <dependency>
+            <groupId>redis.clients</groupId>
+            <artifactId>jedis</artifactId>
+            <version>${jedis.version}</version>
+        </dependency>
+
         <!-- 常用库依赖 -->
+        <dependency>
+            <groupId>commons-beanutils</groupId>
+            <artifactId>commons-beanutils</artifactId>
+            <version>${commons-beanutils.version}</version>
+        </dependency>
         <dependency>
             <groupId>commons-codec</groupId>
             <artifactId>commons-codec</artifactId>
+            <version>${commons-codec.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
             <artifactId>commons-lang3</artifactId>
-            <version>3.7</version>
+            <version>${commons-lang3.version}</version>
         </dependency>
         <dependency>
             <groupId>com.google.guava</groupId>
             <artifactId>guava</artifactId>
-            <version>23.0</version>
+            <version>${guava.version}</version>
         </dependency>
-        <!-- MySQL JDBC驱动 -->
         <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <scope>runtime</scope>
+            <groupId>org.bouncycastle</groupId>
+            <artifactId>bcprov-jdk15on</artifactId>
+            <version>${bcprov.version}</version>
         </dependency>
-        <!-- MyBatis及插件依赖 -->
-        <!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
-        <dependency>
-            <groupId>org.mybatis.spring.boot</groupId>
-            <artifactId>mybatis-spring-boot-starter</artifactId>
-            <version>1.3.2</version>
-        </dependency>
-
-        <!--mapper-->
-        <!-- https://mvnrepository.com/artifact/tk.mybatis/mapper-spring-boot-starter -->
-        <dependency>
-            <groupId>tk.mybatis</groupId>
-            <artifactId>mapper-spring-boot-starter</artifactId>
-            <version>1.2.4</version>
-        </dependency>
-        <!-- https://mvnrepository.com/artifact/com.github.pagehelper/pagehelper-spring-boot-starter -->
-        <dependency>
-            <groupId>com.github.pagehelper</groupId>
-            <artifactId>pagehelper-spring-boot-starter</artifactId>
-            <version>1.2.9</version>
-        </dependency>
-        <!-- 阿里 FastJson 依赖 -->
-        <!-- https://mvnrepository.com/artifact/com.alibaba/fastjson -->
+        <!-- FastJson -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>fastjson</artifactId>
-            <version>1.2.47</version>
+            <version>${fastjson.version}</version>
         </dependency>
-
-        <!-- 阿里 Druid Spring Boot Starter 依赖 -->
-        <!-- https://mvnrepository.com/artifact/com.alibaba/druid-spring-boot-starter -->
+        <!-- Druid 数据库连接池 -->
         <dependency>
             <groupId>com.alibaba</groupId>
             <artifactId>druid-spring-boot-starter</artifactId>
-            <version>1.1.10</version>
+            <version>${druid.version}</version>
+            <!--            <scope>provided</scope>-->
         </dependency>
 
         <!-- jasypt 用于加密配置文件 -->
@@ -108,49 +185,75 @@
         <dependency>
             <groupId>com.github.ulisesbocchio</groupId>
             <artifactId>jasypt-spring-boot-starter</artifactId>
-            <version>2.0.0</version>
+            <version>${jasypt.version}</version>
         </dependency>
 
+        <!-- pagehelper -->
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>${pagehelper.version}</version>
+        </dependency>
+        <!-- mybatis及插件依赖 -->
+        <!-- https://mvnrepository.com/artifact/org.mybatis.spring.boot/mybatis-spring-boot-starter -->
+        <dependency>
+            <groupId>org.mybatis.spring.boot</groupId>
+            <artifactId>mybatis-spring-boot-starter</artifactId>
+            <version>${mybatis.version}</version>
+        </dependency>
+        <!-- mapper -->
+        <dependency>
+            <groupId>tk.mybatis</groupId>
+            <artifactId>mapper-spring-boot-starter</artifactId>
+            <version>${mapper.version}</version>
+        </dependency>
         <!-- 代码生成器依赖 -->
         <!-- https://mvnrepository.com/artifact/org.freemarker/freemarker -->
         <dependency>
             <groupId>org.freemarker</groupId>
             <artifactId>freemarker</artifactId>
-            <version>2.3.28</version>
+            <version>${freemarker.version}</version>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.mybatis.generator/mybatis-generator-core -->
         <dependency>
             <groupId>org.mybatis.generator</groupId>
             <artifactId>mybatis-generator-core</artifactId>
-            <version>1.3.6</version>
-        </dependency>
-        <!-- 单元测试框架
-        https://junit.org/junit5/docs/current/user-guide/
-         -->
-        <!-- https://mvnrepository.com/artifact/junit/junit -->
-        <dependency>
-            <groupId>junit</groupId>
-            <artifactId>junit</artifactId>
-            <version>4.12</version>
-            <scope>test</scope>
+            <version>${mybatis-generator.version}</version>
         </dependency>
 
+        <!-- https://projectlombok.org/ -->
+        <!-- https://mvnrepository.com/artifact/org.projectlombok/lombok -->
+        <dependency>
+            <groupId>org.projectlombok</groupId>
+            <artifactId>lombok</artifactId>
+            <version>${lombok.version}</version>
+            <scope>provided</scope>
+        </dependency>
     </dependencies>
 
     <build>
+        <finalName>${project.artifactId}</finalName>
         <plugins>
-            <!-- Spring Boot 打包工具 -->
+            <!-- 打包插件 -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <executions>
+                    <execution>
+                        <goals>
+                            <goal>repackage</goal>
+                        </goals>
+                        <configuration>
+                            <mainClass>com.zoctan.api.Application</mainClass>
+                        </configuration>
+                    </execution>
+                </executions>
             </plugin>
-            <!-- 指定JDK编译版本 -->
             <plugin>
                 <artifactId>maven-compiler-plugin</artifactId>
                 <configuration>
                     <source>${java.version}</source>
+                    <!-- 指定JDK编译版本 -->
                     <target>${java.version}</target>
-                    <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
         </plugins>
@@ -158,21 +261,19 @@
 
     <repositories>
         <repository>
-            <id>aliyun-repos</id>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
+            <id>aliyun-snapshots</id>
+            <url>https://maven.aliyun.com/repository/snapshots</url>
+        </repository>
+        <repository>
+            <id>aliyun-repo</id>
+            <url>https://maven.aliyun.com/repository/central</url>
         </repository>
     </repositories>
 
     <pluginRepositories>
         <pluginRepository>
             <id>aliyun-plugin</id>
-            <url>http://maven.aliyun.com/nexus/content/groups/public/</url>
-            <snapshots>
-                <enabled>false</enabled>
-            </snapshots>
+            <url>https://maven.aliyun.com/repository/central</url>
         </pluginRepository>
     </pluginRepositories>
 

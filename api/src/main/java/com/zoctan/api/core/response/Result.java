@@ -1,71 +1,53 @@
 package com.zoctan.api.core.response;
 
 import com.alibaba.fastjson.JSON;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 
 /**
- * 统一API响应结果封装
- *
  * @author Zoctan
- * @date 2018/06/09
+ * @date 2018/07/15
  */
-public class Result {
-    /**
-     * 状态码
-     */
-    private final Integer code;
-    /**
-     * 消息
-     */
-    private final String msg;
-    /**
-     * 数据内容，比如列表，实体
-     */
-    private final Object data;
+@ApiModel(value = "响应结果")
+public class Result<T> {
+  @ApiModelProperty(value = "状态码")
+  private Integer code;
 
-    private Result(final Builder builder) {
-        this.code = builder.code;
-        this.msg = builder.msg;
-        this.data = builder.data;
-    }
+  @ApiModelProperty(value = "消息")
+  private String message;
 
-    public static class Builder {
-        private final Integer code;
-        private String msg;
-        private Object data;
+  @ApiModelProperty(value = "数据")
+  private T data;
 
-        public Builder(final Integer code) {
-            this.code = code;
-        }
+  @Override
+  public String toString() {
+    return JSON.toJSONString(this);
+  }
 
-        public Builder msg(final String msg) {
-            this.msg = msg;
-            return this;
-        }
+  public Integer getCode() {
+    return this.code;
+  }
 
-        public Builder data(final Object data) {
-            this.data = data;
-            return this;
-        }
+  public Result<T> setCode(final Integer code) {
+    this.code = code;
+    return this;
+  }
 
-        public Result build() {
-            return new Result(this);
-        }
-    }
+  public String getMessage() {
+    return this.message;
+  }
 
-    public Integer getCode() {
-        return this.code;
-    }
+  public Result<T> setMessage(final String message) {
+    this.message = message;
+    return this;
+  }
 
-    public String getMsg() {
-        return this.msg;
-    }
+  public T getData() {
+    return this.data;
+  }
 
-    public Object getData() {
-        return this.data;
-    }
-
-    @Override
-    public String toString() {
-        return JSON.toJSONString(this);
-    }
+  public Result<T> setData(final T data) {
+    this.data = data;
+    return this;
+  }
 }
