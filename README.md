@@ -5,11 +5,13 @@ Provides a set of background permission management templates that separate the f
 ![stars](https://img.shields.io/github/stars/Zoctan/spring-boot-vue-admin.svg?style=flat-square&label=Stars)
 ![license](https://img.shields.io/github/license/Zoctan/spring-boot-vue-admin.svg?style=flat-square)
 
+English | [简体中文](./README-zh.md)
+
 Front-end ideas reference ["Hand touch, take you to use vue to touch the background series II (login authority)"](https://juejin.im/post/591aa14f570c35006961acac), the template comes from [vue-element-admin](https: //github.com/PanJiaChen/vue-element-admin), other functions can be expanded according to this project.
 
-Back-end ideas reference ["Role-Based Access Control New Solution"](http://globeeip.iteye.com/blog/1236167), the template comes from [spring-boot-api-seedling] (https://github.com/Zoctan/spring-boot-api-seedling.git), please see the api's [README](https://github.com/Zoctan/spring-boot-vue-admin/tree/master/api) for design ideas.
+Back-end ideas reference ["Role-Based Access Control New Solution"](http://globeeip.iteye.com/blog/1236167), the template comes from [spring-boot-api-seedling](https://github.com/Zoctan/spring-boot-api-seedling.git), please see the api's [README](https://github.com/Zoctan/spring-boot-vue-admin/tree/master/api) for design ideas.
 
-Note: Since the front-end has not been updated for several years, there are loopholes and outdated versions. If necessary, please refer to the new project written in Vue3: [ADMIN-VUE3-Template](https://github.com/Zoctan/admin-vue3-template)。
+Note: Since the front-end has not been updated for several years, there are loopholes and outdated versions. If necessary, please refer to the new project written in Vue3: [admin-vue3-template](https://github.com/Zoctan/admin-vue3-template)。
 
 Welcome friends to star and issues ~ thank you :)
 

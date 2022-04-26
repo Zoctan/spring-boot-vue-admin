@@ -5,11 +5,13 @@
 ![stars](https://img.shields.io/github/stars/Zoctan/spring-boot-vue-admin.svg?style=flat-square&label=Stars)
 ![license](https://img.shields.io/github/license/Zoctan/spring-boot-vue-admin.svg?style=flat-square)
 
+简体中文 | [English](./README.md)
+
 前端思路参考[《手摸手，带你用vue撸后台 系列二(登录权限篇)》](https://juejin.im/post/591aa14f570c35006961acac)，模板来自 [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)，其他功能可以根据该项目进行拓展。
 
 后端思路参考[《Role-Based Access Control 新解》](http://globeeip.iteye.com/blog/1236167)，模板来自 [spring-boot-api-seedling](https://github.com/Zoctan/spring-boot-api-seedling.git)，设计思路请看 api 的 [README](https://github.com/Zoctan/spring-boot-vue-admin/tree/master/api)。
 
-注：由于好几年没更新前端了，所以有漏洞以及版本落后的问题，如有需要请参考用 Vue3 写的新项目：[ADMIN-VUE3-Template](https://github.com/Zoctan/admin-vue3-template)。
+注：由于好几年没更新前端了，所以有漏洞以及版本落后的问题，如有需要请参考用 Vue3 写的新项目：[admin-vue3-template](https://github.com/Zoctan/admin-vue3-template)。
 
 欢迎小伙伴 star 和 issues ~ 谢谢 :）
 
