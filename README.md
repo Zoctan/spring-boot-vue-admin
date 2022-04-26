@@ -1,84 +1,78 @@
 # Spring Boot Vue Admin
 
+Provides a set of background permission management templates that separate the front and back ends.
+
 ![stars](https://img.shields.io/github/stars/Zoctan/spring-boot-vue-admin.svg?style=flat-square&label=Stars)
 ![license](https://img.shields.io/github/license/Zoctan/spring-boot-vue-admin.svg?style=flat-square)
 
-## 简介
+Front-end ideas reference ["Hand touch, take you to use vue to touch the background series II (login authority)"](https://juejin.im/post/591aa14f570c35006961acac), the template comes from [vue-element-admin](https: //github.com/PanJiaChen/vue-element-admin), other functions can be expanded according to this project.
 
-提供一套前后端分离的后台权限管理模版。
+Back-end ideas reference ["Role-Based Access Control New Solution"](http://globeeip.iteye.com/blog/1236167), the template comes from [spring-boot-api-seedling] (https://github.com/Zoctan/spring-boot-api-seedling.git), please see the api's [README](https://github.com/Zoctan/spring-boot-vue-admin/tree/master/api) for design ideas.
 
-前端思路参考[《手摸手，带你用vue撸后台 系列二(登录权限篇)》](https://juejin.im/post/591aa14f570c35006961acac)，模板来自 [vue-element-admin](https://github.com/PanJiaChen/vue-element-admin)，其他功能可以根据该项目进行拓展。
+Note: Since the front-end has not been updated for several years, there are loopholes and outdated versions. If necessary, please refer to the new project written in Vue3: [ADMIN-VUE3-Template](https://github.com/Zoctan/admin-vue3-template)。
 
-后端思路参考[《Role-Based Access Control 新解》](http://globeeip.iteye.com/blog/1236167)，模板来自 [spring-boot-api-seedling](https://github.com/Zoctan/spring-boot-api-seedling.git)，设计思路请看 api 的 [README](https://github.com/Zoctan/spring-boot-vue-admin/tree/master/api)。
+Welcome friends to star and issues ~ thank you :)
 
-## 预览
+# Preview
 
-![权限列表](https://github.com/Zoctan/spring-boot-vue-admin/blob/master/README/1.png)
+![role list](https://github.com/Zoctan/spring-boot-vue-admin/blob/master/README/1.png)
 
-![角色管理](https://github.com/Zoctan/spring-boot-vue-admin/blob/master/README/2.png)
+![role manage](https://github.com/Zoctan/spring-boot-vue-admin/blob/master/README/2.png)
 
-![用户管理](https://github.com/Zoctan/spring-boot-vue-admin/blob/master/README/3.png)
+![user manage](https://github.com/Zoctan/spring-boot-vue-admin/blob/master/README/3.png)
 
-![用户角色控制](https://github.com/Zoctan/spring-boot-vue-admin/blob/master/README/4.png)
+![user role manage](https://github.com/Zoctan/spring-boot-vue-admin/blob/master/README/4.png)
 
-## Demo
+# Dependency version
 
-在线 Demo：[暂无]()
-
-## 依赖版本
-
-前端依赖 | 版本
+frontend | version
 --------|------
 node    | 8.16.1
 npm     | 6.4.1
 
-后端依赖    | 版本
+backend    | version
 -----------|------
 SpringBoot | 2.1.6
 
-其他依赖版本没有测试，请自行测试，如有问题请提 issues。
-
-## 快速开始
+# Quick start
 
 ```markdown
-# 克隆项目
+# clone project
 git clone https://github.com/Zoctan/spring-boot-vue-admin.git
 
-# 进入项目
+# go to project
 cd spring-boot-vue-admin
 
-# 后端
+# go to backend
 cd api
 
-# 导入数据库文件（记得修改数据库信息）
+# import database sql files (Remember to modify the database information)
 sudo chmod a+x resetDB.sh && ./resetDB.sh
 
-# 启动后端服务...
+# start the backend ...
 
-# 前端
+# go to frontend
 cd app
 
-# 安装依赖
+# install dependency
 npm install
 
-# 启动前端服务
+# start the frontend ...
 npm run dev
 ```
 
-欢迎小伙伴 star 和 issues ~ 谢谢 :）
+# Problem solve
 
-## 问题解决
-
-### no such file/ansi-styles/css-loader
-
-如果出现以下错误，请先单独安装 `npm install css-loader`，再安装项目依赖 `npm install`。
+## no such file/ansi-styles/css-loader
 
 ```bash
 npm ERR! enoent ENOENT: no such file or directory, rename '/workspace/spring-boot-vue-admin/app/node_modules/.staging/css-loader-b931fe48/node_modules/ansi-styles' -> '/workspace/spring-boot-vue-admin/app/node_modules/.staging/ansi-styles-6535fafb'
 ```
 
-## 更新日志
+please install css-loader firstly: `npm install css-loader`, and install project dependency secondly: `npm install`.
 
-2019-10-16 回退 webpack 版本，暂时没时间修复新版问题。更新已发现的问题，完全按照后端模板 [spring-boot-api-seedling](https://github.com/Zoctan/spring-boot-api-seedling.git) 添加业务。
+# Update log
 
-~~2018-06-10 由于 Redis 主要充当缓存数据库，但在该项目没起多大作用，故而移除 Redis。注意，如果需要在注销时使得 token 无效就需要搭配使用 Redis，可以自行根据后端模板进行添加。~~
+2019-10-16 The webpack version is rolled back, and there is no time to fix the new version. Update the discovered issues and add services exactly according to the backend template [spring-boot-api-seedling](https://github.com/Zoctan/spring-boot-api-seedling.git).
+
+~~2018-06-10 Redis is removed because Redis is mainly used as a cache database, but it does not play much role in this project. Note that if you need to make the token invalid during logout, you need to use Redis together, you can add it according to the backend template. ~~

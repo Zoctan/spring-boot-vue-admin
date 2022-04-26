@@ -1,11 +1,11 @@
 <template>
   <div class="app-wrapper" :class="{ hideSidebar: !sidebar.opened }">
     <div class="sidebar-wrapper">
-      <sidebar class="sidebar-container" />
+      <Sidebar class="sidebar-container" />
     </div>
     <div class="main-container">
-      <navbar />
-      <app-main />
+      <Navbar />
+      <AppMain />
     </div>
   </div>
 </template>
@@ -29,7 +29,7 @@ export default {
 </script>
 
 <style rel="stylesheet/scss" lang="scss" scoped>
-@import '../../../src/styles/mixin.scss';
+@import "../../../src/styles/mixin.scss";
 
 .app-wrapper {
   @include clearFix;
