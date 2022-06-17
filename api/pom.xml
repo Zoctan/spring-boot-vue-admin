@@ -38,7 +38,7 @@
         <mybatis-generator.version>1.3.7</mybatis-generator.version>
         <mapper.version>2.1.5</mapper.version>
         <pagehelper.version>1.2.12</pagehelper.version>
-        <fastjson.version>1.2.58</fastjson.version>
+        <fastjson.version>1.2.83</fastjson.version>
         <druid.version>1.1.18</druid.version>
         <!-- latest not work-->
         <jasypt.version>2.1.0</jasypt.version>
