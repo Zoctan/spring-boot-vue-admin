@@ -58,7 +58,7 @@
     "express": "^4.16.3",
     "extract-text-webpack-plugin": "^3.0.0",
     "friendly-errors-webpack-plugin": "^1.6.1",
-    "html-webpack-plugin": "^2.30.1",
+    "html-webpack-plugin": "^5.5.0",
     "http-proxy-middleware": "^0.18.0",
     "jest": "^22.0.4",
     "jest-serializer-vue": "^0.3.0",
